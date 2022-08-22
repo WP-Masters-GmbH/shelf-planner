@@ -1,0 +1,50 @@
+.qa-bulk-edit-costs {
+    padding: 20px 20px 0 0;
+}
+.qa-bulk-edit-costs tbody tr {
+    background: #f0f0f1;
+}
+.qa-bulk-edit-costs tbody tr:nth-child(even) {
+    background: #e5e5e5;
+}
+.qa-settings-save-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.qa-settings-save-footer .qa-bulk-pagination {
+    display: flex;
+    align-items: center;
+}
+
+.qa-settings-save-footer .qa-bulk-pagination span {
+    margin: 0 10px;
+}
+.new-price-set {
+    text-align: center;
+    width: 100px;
+}
+
+.qa-bulk-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#bulk-search {
+    padding: 5px 10px;
+}
+
+.products-management-qa .list-actions .qa-management-btn {
+    background: #810000;
+    border: 0;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+    text-decoration: none;
+}
+
+.products-management-qa .list-actions .qa-management-btn:hover {
+    background: #af0000;
+}

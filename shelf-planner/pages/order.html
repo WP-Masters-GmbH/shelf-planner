@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase order</title>
+</head>
+<body class="po-template">
+<div style="padding: 50px 50px 20px;">
+    <!-- All variables escapted at sp_make_order_pdf() -->
+    <table width="100%" style="padding: 0px 50px;">
+        <tr>
+            <td style="text-align: right" colspan="2">[LOGO]</td>
+        </tr>
+        <tr>
+            <td width="50%" style="vertical-align: bottom; font-size: 12px; font-family: 'Courier New';"><b>[company_name]</b><br>[company_address]</td>
+            <td width="50%" style="text-align: right;vertical-align: top">
+                <h2 style=" font-size: 12px; font-family: 'Courier New';">Purchase Order</h2>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="text-align: right;font-size: 12px;">Order Nr.</td>
+                        <td width="50%" style="text-align: right;font-size: 12px;">[order_no]</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;font-size: 12px;">Reference Nr.</td>
+                        <td style="text-align: right;font-size: 12px;">[ref_no]</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="padding: 50px 50px 20px;">
+    <table width="100%" style="border-spacing: 10px;border: 1px solid #000; font-size: 12px; font-family: 'Courier New';">
+        <tr>
+            <td width="25%"><b>Vendor No.</b></td>
+            <td width="25%">[vendor_no]</td>
+            <td width="25%"><b>Delivery Terms</b></td>
+            <td width="25%">[delivery_terms]</td>
+        </tr>
+        <tr>
+            <td width="25%"><b>Order Date</b></td>
+            <td width="25%">[order_date]</td>
+            <td width="25%"><b>Vend VAT Reg.Nr.</b></td>
+            <td width="25%">[vendor_vat]</td>
+        </tr>
+        <tr>
+            <td width="25%"><b>Payment Terms</b></td>
+            <td width="25%">[payment_terms]</td>
+            <td width="25%"><b>Req. Ship Date</b></td>
+            <td width="25%">[ship_date]</td>
+        </tr>
+        <tr>
+            <td width="25%"><b>Your Reference</b></td>
+            <td width="25%">[ref_no]</td>
+            <td width="25%"><b>Purchaser</b></td>
+            <td width="25%">[assigned_to]</td>
+        </tr>
+        <tr>
+            <td width="25%"><b>Currency Code</b></td>
+            <td width="25%">[currency_code]</td>
+        </tr>
+    </table>
+</div>
+<div style="padding: 20px 50px">
+    <table width="100%" style="border-spacing: 10px;border-bottom: 1px solid; font-size: 12px; font-family: 'Courier New';">
+        <tr>
+            <td width="20%"><b>ID</b></td>
+            <td width="45%"><b>Description</b></td>
+            <td width="15%"><b>Quantity</b></td>
+            <td width="15%"><b>Unit Price</b></td>
+            <td width="15%"><b>Amount</b></td>
+        </tr>
+    </table>
+    <table width="100%" style="border-spacing: 10px; font-size: 12px; font-family: 'Courier New';">
+        [product_data] [product_total]
+    </table>
+</div>
+<div style="padding-left: 50px; ">
+    <table width="100%" style="padding: 50px; font-size: 12px; font-family: 'Courier New';">
+        <tr>
+            <td><b>Delivery address:</b> [delivery_address]</td>
+        </tr>
+    </table>
+    <table width="100%" style="padding: 10px 50px 10px; font-size: 12px; font-family: 'Courier New';">
+        <tr>
+            <td>[free_text]</td>
+        </tr>
+    </table>
+</div>
+<div style="padding: 0 50px">
+    <table width="100%" style="border-spacing: 10px;border-top: 1px solid #000;font-size: 10px;">
+        <tr>
+            <td width="20%">[company_name]</td>
+            <td width="20%">Phone</td>
+            <td width="20%">[phone]</td>
+            <td width="20%">Bank</td>
+            <td width="20%">[bank]</td>
+        </tr>
+        <tr>
+            <td width="20%">[street]</td>
+            <td width="20%">Web</td>
+            <td width="20%">[website]</td>
+            <td width="20%">Branch</td>
+            <td width="20%">[branch]</td>
+        </tr>
+        <tr>
+            <td width="20%">[postal_code] [city]</td>
+            <td width="20%">Email</td>
+            <td width="20%">[primary_mail]</td>
+            <td width="20%">Account No</td>
+            <td width="20%">[account_no]</td>
+        </tr>
+        <tr>
+            <td width="20%">[country]</td>
+            <td width="20%">VAT Reg. No.</td>
+            <td width="20%">[vat_reg]</td>
+            <td width="20%">Swift Code</td>
+            <td width="20%">[swift_code]</td>
+        </tr>
+        <tr>
+            <td width="20%"></td>
+            <td width="20%"></td>
+            <td width="20%"></td>
+            <td width="20%">IBAN</td>
+            <td width="20%">[iban]</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

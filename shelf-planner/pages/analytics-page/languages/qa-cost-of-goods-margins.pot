@@ -1,0 +1,1883 @@
+# Copyright (C) 2019 Quick Assortments AB
+# This file is distributed under the same license as the QA Cost of Goods & Margins plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: QA Cost of Goods & Margins 2.0.0-dev\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/qa-cost-of-goods-margins\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-12-21T03:11:01+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.3.0\n"
+"X-Domain: qa-cost-of-goods-margins\n"
+
+#. Plugin Name of the plugin
+msgid "QA Cost of Goods & Margins"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://quickassortments.com/products/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Manage cost prices for your products and variations and instantly see the impact on margin, markup and value on hand in your store."
+msgstr ""
+
+#. Author of the plugin
+#: src/Templates/admin/settings/qa_admin_base_page_content.php:2
+msgid "Quick Assortments AB"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://quickassortments.com/"
+msgstr ""
+
+#: qa-cost-of-goods-margins.php:22
+msgid "2.0.0"
+msgstr ""
+
+#: qa-cost-of-goods-margins.php:85
+msgid "Quick Assortments Error: <b>WooCommerce</b> isn't active."
+msgstr ""
+
+#: src/Admin/Page.php:86
+#: src/Admin/Page.php:87
+msgid "SettingsSPSP"
+msgstr ""
+
+#: src/Assets/Assets.php:148
+#: src/RI/API/Leaderboards.php:216
+msgid "Top Products - Net Profit"
+msgstr ""
+
+#: src/Assets/Assets.php:151
+#: src/Assets/Assets.php:167
+#: src/RI/API/Leaderboards.php:219
+#: src/RI/API/Leaderboards.php:284
+msgid "Product"
+msgstr ""
+
+#: src/Assets/Assets.php:154
+#: src/Assets/Assets.php:170
+#: src/RI/API/Leaderboards.php:222
+#: src/RI/API/Leaderboards.php:287
+msgid "Items Sold"
+msgstr ""
+
+#: src/Assets/Assets.php:157
+#: src/RI/API/Leaderboards.php:225
+#: assets/dist/app/index.js:1875
+#: assets/dist/embedded/index.js:1875
+#: client/analytics/report/retail-insights/config.js:35
+msgid "Net Profit"
+msgstr ""
+
+#: src/Assets/Assets.php:164
+#: src/RI/API/Leaderboards.php:281
+msgid "Top Products - Net Margin"
+msgstr ""
+
+#: src/Assets/Assets.php:173
+#: src/RI/API/Leaderboards.php:290
+msgid "Net Margin"
+msgstr ""
+
+#: src/Assets/Assets.php:183
+#: src/Assets/Assets.php:184
+msgid "Default Date Range"
+msgstr ""
+
+#: src/CoG/Columns.php:80
+#: src/CoG/Fields.php:118
+#: src/CoG/Fields.php:222
+#: src/CoG/Fields.php:305
+msgid "Cost Price"
+msgstr ""
+
+#: src/CoG/Columns.php:81
+#: src/CoG/Fields.php:127
+#: src/CoG/Fields.php:232
+msgid "Stock Value"
+msgstr ""
+
+#: src/CoG/Columns.php:82
+#: src/CoG/Fields.php:139
+#: src/CoG/Fields.php:245
+msgid "Mark Up"
+msgstr ""
+
+#: src/CoG/Columns.php:83
+#: src/CoG/Columns.php:84
+#: src/CoG/Fields.php:150
+#: src/CoG/Fields.php:161
+#: src/CoG/Fields.php:256
+#: src/CoG/Fields.php:266
+msgid "Margin"
+msgstr ""
+
+#: src/CoG/Columns.php:83
+#: src/CoG/Fields.php:150
+#: src/CoG/Fields.php:256
+#: src/CoG/Settings.php:89
+msgid "(incl. Tax)"
+msgstr ""
+
+#: src/CoG/Columns.php:84
+#: src/CoG/Fields.php:161
+#: src/CoG/Fields.php:266
+#: src/CoG/Settings.php:96
+msgid "(excl. Tax)"
+msgstr ""
+
+#: src/CoG/Fields.php:54
+msgid "Cost of Goods & Margins"
+msgstr ""
+
+#: src/CoG/Fields.php:130
+#: src/CoG/Fields.php:236
+msgid "Stock management for this product must need to be turned on"
+msgstr ""
+
+#: src/CoG/Settings.php:21
+msgid "Cost of Goods & Margins SettingsSPSP"
+msgstr ""
+
+#: src/CoG/Settings.php:70
+msgid "Product SettingsSPSP"
+msgstr ""
+
+#: src/CoG/Settings.php:75
+msgid "Show Markup"
+msgstr ""
+
+#: src/CoG/Settings.php:76
+msgid "Show/Hide Markup column in product list"
+msgstr ""
+
+#: src/CoG/Settings.php:82
+msgid "Show Stock Value"
+msgstr ""
+
+#: src/CoG/Settings.php:83
+msgid "Show/Hide Stock Value column in product list"
+msgstr ""
+
+#: src/CoG/Settings.php:89
+#: src/CoG/Settings.php:96
+msgid "Show Margin"
+msgstr ""
+
+#: src/CoG/Settings.php:90
+msgid "Show/Hide Margin(incl. Tax) column in product list"
+msgstr ""
+
+#: src/CoG/Settings.php:97
+msgid "Show/Hide Margin(excl. Tax) column in product list"
+msgstr ""
+
+#: src/CoG/Settings.php:108
+#: src/RI/Settings.php:88
+msgid "Save Changes"
+msgstr ""
+
+#: src/CoG/Settings.php:140
+msgid "Cost of Goods SettingsSPSP"
+msgstr ""
+
+#: src/Helpers/Menu.php:47
+#: src/Helpers/Menu.php:48
+msgid "Shelf Planner"
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:77
+#: src/RI/API/Reports/Products/Controller.php:108
+#: src/RI/API/Reports/Products/Stats/Controller.php:133
+msgid "Current page of the collection."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:85
+#: src/RI/API/Reports/Products/Controller.php:116
+#: src/RI/API/Reports/Products/Stats/Controller.php:141
+msgid "Maximum number of items to be returned in result set."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:94
+#: src/RI/API/Reports/Products/Controller.php:125
+#: src/RI/API/Reports/Products/Stats/Controller.php:150
+msgid "Limit response to resources published after a given ISO8601 compliant date."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:100
+#: src/RI/API/Reports/Products/Controller.php:131
+#: src/RI/API/Reports/Products/Stats/Controller.php:156
+msgid "Limit response to resources published before a given ISO8601 compliant date."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:106
+msgid "URL query to persist across links."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:367
+msgid "Leaderboard ID."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:373
+msgid "Displayed title for the leaderboard."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:379
+msgid "Table headers."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:386
+msgid "Table column header."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:396
+msgid "Table rows."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:403
+msgid "Table cell display."
+msgstr ""
+
+#: src/RI/API/Leaderboards.php:409
+msgid "Table cell value."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:137
+#: src/RI/API/Reports/Products/Stats/Controller.php:162
+msgid "OrderSP sort attribute ascending or descending."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:144
+#: src/RI/API/Reports/Products/Stats/Controller.php:169
+msgid "Sort collection by object attribute."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:159
+#: src/RI/API/Reports/Products/Stats/Controller.php:200
+msgid "Limit result to items from the specified categories."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:168
+msgid "Indicates whether all the conditions should be true for the resulting set, or if any one of them is sufficient. Match affects the following parameters: status_is, status_is_not, product_includes, product_excludes, coupon_includes, coupon_excludes, customer, categories"
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:178
+#: src/RI/API/Reports/Products/Stats/Controller.php:209
+msgid "Limit result to items with specified product ids."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:188
+msgid "Add additional piece of info about each product to the report."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:261
+msgid "Product ID."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:267
+msgid "Total gross revenue of all items sold."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:273
+msgid "Total net revenue of all items sold."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:279
+msgid "Number of orders product appeared in."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:286
+msgid "Product name."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:292
+msgid "Product price."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:298
+msgid "Product image."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:304
+msgid "Product link."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:310
+msgid "Product category IDs."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:316
+msgid "Product inventory status."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:322
+msgid "Product inventory quantity."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:328
+msgid "Product inventory threshold for low stock."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:334
+msgid "Product variations IDs."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Controller.php:340
+msgid "Product SKU."
+msgstr ""
+
+#. translators: %s is product name
+#: src/RI/API/Reports/Products/DataStore.php:335
+msgid "%s (Deleted)"
+msgstr ""
+
+#. translators: %s is product name
+#: src/RI/API/Reports/Products/DataStore.php:335
+msgid "(Deleted)"
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:186
+msgid "Time interval to use for buckets in the returned data."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:218
+msgid "Limit result to items with specified variation ids."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:227
+msgid "Segment the response by additional constraint."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:278
+#: assets/dist/app/index.js:1863
+#: assets/dist/embedded/index.js:1863
+#: client/analytics/report/retail-insights/config.js:21
+msgid "Gross Revenue"
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:279
+msgid "Gross revenue for total number of items sold."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:287
+msgid "Net Revenue."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:294
+msgid "Number of orders."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:303
+msgid "Reports data grouped by segment condition."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:311
+msgid "Segment identificator."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:317
+msgid "Human readable segment label, either product or variation name."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:324
+#: src/RI/API/Reports/Products/Stats/Controller.php:389
+msgid "Interval subtotals."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:343
+msgid "Totals data."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:350
+msgid "Reports data grouped by intervals."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:358
+msgid "Type of interval."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:365
+msgid "The date the report start, in the site's timezone."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:371
+msgid "The date the report start, as GMT."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:377
+msgid "The date the report end, in the site's timezone."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Controller.php:383
+msgid "The date the report end, as GMT."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/DataStore.php:142
+#: src/RI/API/Reports/Products/Stats/DataStore.php:170
+msgid "Sorry, fetching revenue data failed."
+msgstr ""
+
+#: src/RI/API/Reports/Products/Stats/Segmenter.php:145
+msgid "product_includes parameter need to specify exactly one product when segmenting by variation."
+msgstr ""
+
+#. translators: %s: Method name
+#: src/RI/API/Reports/Query.php:26
+msgid "Method '%s' not implemented. Must be overridden in subclass."
+msgstr ""
+
+#: src/RI/RI.php:60
+#: src/RI/RI.php:61
+#: assets/dist/app/index.js:2391
+#: assets/dist/embedded/index.js:2401
+#: client/layout/controller.js:30
+msgid "Retail Insights"
+msgstr ""
+
+#: src/RI/Settings.php:21
+#: src/RI/Settings.php:70
+#: src/RI/Settings.php:120
+msgid "Retail Insights SettingsSPSP"
+msgstr ""
+
+#: src/RI/Settings.php:75
+msgid "Exclude OrderSP Statuses"
+msgstr ""
+
+#: src/RI/Settings.php:76
+msgid "Orders with these statuses are excluded from the totals in your <b>Retail Insights</b> reports. The Refunded status can not be excluded."
+msgstr ""
+
+#. translators: 1: parameter name
+#: src/RI/TimeInterval.php:626
+#: src/RI/TimeInterval.php:659
+msgid "%1$s is not a numerically indexed array."
+msgstr ""
+
+#. translators: %s: parameter name
+#: src/RI/TimeInterval.php:638
+msgid "%s must contain 2 numbers."
+msgstr ""
+
+#. translators: %s: parameter name
+#: src/RI/TimeInterval.php:671
+msgid "%s must contain 2 valid dates."
+msgstr ""
+
+#: src/Templates/admin/settings/admin_page_content.php:5
+msgid "Cost of Goods"
+msgstr ""
+
+#: src/Templates/admin/settings/admin_page_content.php:7
+msgid "Margins"
+msgstr ""
+
+#: src/Templates/admin/settings/admin_page_content.php:13
+msgid "Version "
+msgstr ""
+
+#: src/Templates/admin/settings/qa_admin_base_page_content.php:3
+msgid "Merchandise Planning has never been easier!"
+msgstr ""
+
+#: src/Templates/admin/settings/qa_admin_base_page_content.php:5
+msgid "We develop merchandise planning solutions for WooCommerce and Magento that empower merchants to improve their stores in no time. With our unique experience, we can help you to optimise your inventory and sales, improve your margins and sell through within weeks."
+msgstr ""
+
+#: assets/dist/app/index.js:228
+#: assets/dist/embedded/index.js:228
+#: client/analytics/components/leaderboard/index.js:61
+msgid "No data recorded for the selected time period."
+msgstr ""
+
+#: assets/dist/app/index.js:501
+#: assets/dist/embedded/index.js:501
+#: client/analytics/components/report-chart/index.js:132
+msgid "No data for the current search"
+msgstr ""
+
+#: assets/dist/app/index.js:501
+#: assets/dist/embedded/index.js:501
+#: client/analytics/components/report-chart/index.js:133
+msgid "No data for the selected date range"
+msgstr ""
+
+#: assets/dist/app/index.js:876
+#: assets/dist/embedded/index.js:876
+#: client/analytics/components/report-error/index.js:25
+msgid "There was an error getting your stats. Please try again."
+msgstr ""
+
+#: assets/dist/app/index.js:877
+#: assets/dist/embedded/index.js:877
+#: client/analytics/components/report-error/index.js:26
+msgid "Reload"
+msgstr ""
+
+#: assets/dist/app/index.js:884
+#: assets/dist/embedded/index.js:884
+#: client/analytics/components/report-error/index.js:32
+msgid "No results could be found for this date range."
+msgstr ""
+
+#: assets/dist/app/index.js:885
+#: assets/dist/embedded/index.js:885
+#: client/analytics/components/report-error/index.js:33
+msgid "View Orders"
+msgstr ""
+
+#: assets/dist/app/index.js:1302
+#: assets/dist/components/index.js:121371
+#: assets/dist/embedded/index.js:1302
+#: client/analytics/components/report-summary/index.js:93
+#: packages/components/build-module/summary/number.js:171
+#: packages/components/src/summary/number.js:167
+#: packages/components/build-module/summary/number.js:167
+#: packages/components/build/summary/number.js:167
+msgid "Previous Period:"
+msgstr ""
+
+#: assets/dist/app/index.js:1302
+#: assets/dist/embedded/index.js:1302
+#: client/analytics/components/report-summary/index.js:94
+msgid "Previous Year:"
+msgstr ""
+
+#: assets/dist/app/index.js:1531
+#: assets/dist/embedded/index.js:1531
+#: client/analytics/report/index.js:33
+msgid "Categories"
+msgstr ""
+
+#: assets/dist/app/index.js:1732
+#: assets/dist/embedded/index.js:1732
+msgid "Choose which leaderboards to display and other settings"
+msgstr ""
+
+#: assets/dist/app/index.js:1737
+#: assets/dist/embedded/index.js:1737
+msgid "Rows Per Table"
+msgstr ""
+
+#: assets/dist/app/index.js:1777
+#: assets/dist/embedded/index.js:1777
+msgid "Leaderboards"
+msgstr ""
+
+#: assets/dist/app/index.js:1869
+#: assets/dist/embedded/index.js:1869
+#: client/analytics/report/retail-insights/config.js:28
+msgid "Net Revenue"
+msgstr ""
+
+#: assets/dist/app/index.js:1881
+#: assets/dist/embedded/index.js:1881
+#: client/analytics/report/retail-insights/config.js:44
+msgid "Show"
+msgstr ""
+
+#: assets/dist/app/index.js:1888
+#: assets/dist/embedded/index.js:1888
+#: client/analytics/report/retail-insights/config.js:49
+msgid "All Categories"
+msgstr ""
+
+#: assets/dist/app/index.js:1891
+#: assets/dist/app/index.js:1905
+#: assets/dist/embedded/index.js:1891
+#: assets/dist/embedded/index.js:1905
+#: client/analytics/report/retail-insights/config.js:51
+#: client/analytics/report/retail-insights/config.js:66
+msgid "Single Category"
+msgstr ""
+
+#: assets/dist/app/index.js:1904
+#: assets/dist/embedded/index.js:1904
+#: client/analytics/report/retail-insights/config.js:65
+msgid "Type to search for a category"
+msgstr ""
+
+#: assets/dist/app/index.js:1910
+#: assets/dist/embedded/index.js:1910
+#: client/analytics/report/retail-insights/config.js:73
+msgid "Comparison"
+msgstr ""
+
+#: assets/dist/app/index.js:1918
+#: assets/dist/embedded/index.js:1918
+#: client/analytics/report/retail-insights/config.js:81
+msgid "Check at least two categories below to compare"
+msgstr ""
+
+#: assets/dist/app/index.js:1919
+#: assets/dist/embedded/index.js:1919
+#: client/analytics/report/retail-insights/config.js:82
+msgid "Search for categories to compare"
+msgstr ""
+
+#: assets/dist/app/index.js:1920
+#: assets/dist/embedded/index.js:1920
+#: client/analytics/report/retail-insights/config.js:83
+msgid "Compare Categories"
+msgstr ""
+
+#: assets/dist/app/index.js:1921
+#: assets/dist/components/index.js:122103
+#: assets/dist/embedded/index.js:1921
+#: client/analytics/report/retail-insights/config.js:84
+#: packages/components/build-module/table/index.js:424
+#: packages/components/src/table/index.js:332
+#: packages/components/build-module/table/index.js:332
+#: packages/components/build/table/index.js:332
+msgid "Compare"
+msgstr ""
+
+#: assets/dist/app/index.js:2013
+#: assets/dist/embedded/index.js:2013
+#: client/analytics/report/retail-insights/index.js:30
+msgid "%d products"
+msgstr ""
+
+#: assets/dist/app/index.js:2013
+#: assets/dist/embedded/index.js:2013
+#: client/analytics/report/retail-insights/index.js:31
+msgid "%d categories"
+msgstr ""
+
+#: assets/dist/app/index.js:2238
+#: assets/dist/embedded/index.js:2284
+#: client/header/index.js:79
+msgid "%1$s &lsaquo; %2$s &#8212; WooCommerce"
+msgstr ""
+
+#: assets/dist/app/index.js:3370
+#: assets/dist/embedded/index.js:3380
+#: client/wc-api/items/mutations.js:35
+msgid "%s stock updated."
+msgstr ""
+
+#: assets/dist/app/index.js:3374
+#: assets/dist/embedded/index.js:3384
+#: client/wc-api/items/mutations.js:41
+msgid "%s stock could not be updated."
+msgstr ""
+
+#: assets/dist/components/index.js:105968
+#: assets/dist/date/index.js:1114
+#: packages/components/build-module/advanced-filters/date-filter.js:35
+#: packages/components/build-module/filters/advanced/date-filter.js:35
+#: packages/components/src/advanced-filters/date-filter.js:24
+#: packages/date/build-module/index.js:132
+#: packages/date/src/index.js:105
+#: packages/components/build-module/advanced-filters/date-filter.js:24
+#: packages/components/build-module/filters/advanced/date-filter.js:24
+#: packages/components/build/advanced-filters/date-filter.js:24
+#: packages/components/build/filters/advanced/date-filter.js:24
+#: packages/date/build-module/index.js:105
+#: packages/date/build/index.js:105
+msgid "MMM D, YYYY"
+msgstr ""
+
+#: assets/dist/components/index.js:105970
+#: assets/dist/components/index.js:113176
+#: assets/dist/date/index.js:1568
+#: packages/components/build-module/advanced-filters/date-filter.js:37
+#: packages/components/build-module/date-range-filter-picker/index.js:30
+#: packages/components/build-module/filters/advanced/date-filter.js:37
+#: packages/components/build-module/filters/date/index.js:30
+#: packages/components/src/advanced-filters/date-filter.js:25
+#: packages/components/src/date-range-filter-picker/index.js:21
+#: packages/date/build-module/index.js:586
+#: packages/date/src/index.js:527
+#: packages/components/build-module/advanced-filters/date-filter.js:25
+#: packages/components/build-module/date-range-filter-picker/index.js:21
+#: packages/components/build-module/filters/advanced/date-filter.js:25
+#: packages/components/build-module/filters/date/index.js:21
+#: packages/components/build/advanced-filters/date-filter.js:25
+#: packages/components/build/date-range-filter-picker/index.js:21
+#: packages/components/build/filters/advanced/date-filter.js:25
+#: packages/components/build/filters/date/index.js:21
+#: packages/date/build-module/index.js:527
+#: packages/date/build/index.js:527
+msgid "MM/DD/YYYY"
+msgstr ""
+
+#: assets/dist/components/index.js:106010
+#: packages/components/build-module/advanced-filters/date-filter.js:77
+#: packages/components/build-module/filters/advanced/date-filter.js:77
+#: packages/components/src/advanced-filters/date-filter.js:50
+#: packages/components/build-module/advanced-filters/date-filter.js:50
+#: packages/components/build-module/filters/advanced/date-filter.js:50
+#: packages/components/build/advanced-filters/date-filter.js:50
+#: packages/components/build/filters/advanced/date-filter.js:50
+msgctxt "Date range inputs arranged on a single line"
+msgid "{{after /}}{{span}} and {{/span}}{{before /}}"
+msgstr ""
+
+#: assets/dist/components/index.js:106345
+#: packages/components/build-module/advanced-filters/index.js:45
+#: packages/components/build-module/filters/advanced/index.js:45
+#: packages/components/src/advanced-filters/index.js:36
+#: packages/components/build-module/advanced-filters/index.js:36
+#: packages/components/build-module/filters/advanced/index.js:36
+#: packages/components/build/advanced-filters/index.js:36
+#: packages/components/build/filters/advanced/index.js:36
+msgid "All"
+msgstr ""
+
+#: assets/dist/components/index.js:106348
+#: packages/components/build-module/advanced-filters/index.js:48
+#: packages/components/build-module/filters/advanced/index.js:48
+#: packages/components/src/advanced-filters/index.js:37
+#: packages/components/build-module/advanced-filters/index.js:37
+#: packages/components/build-module/filters/advanced/index.js:37
+#: packages/components/build/advanced-filters/index.js:37
+#: packages/components/build/filters/advanced/index.js:37
+msgid "Any"
+msgstr ""
+
+#: assets/dist/components/index.js:106474
+#: packages/components/build-module/advanced-filters/index.js:174
+#: packages/components/build-module/filters/advanced/index.js:174
+#: packages/components/src/advanced-filters/index.js:132
+#: packages/components/build-module/advanced-filters/index.js:132
+#: packages/components/build-module/filters/advanced/index.js:132
+#: packages/components/build/advanced-filters/index.js:132
+#: packages/components/build/filters/advanced/index.js:132
+msgid "Choose to apply any or all filters"
+msgstr ""
+
+#: assets/dist/components/index.js:106664
+#: packages/components/build-module/advanced-filters/index.js:364
+#: packages/components/build-module/filters/advanced/index.js:364
+#: packages/components/src/advanced-filters/index.js:290
+#: packages/components/build-module/advanced-filters/index.js:290
+#: packages/components/build-module/filters/advanced/index.js:290
+#: packages/components/build/advanced-filters/index.js:290
+#: packages/components/build/filters/advanced/index.js:290
+msgid "Add a Filter"
+msgstr ""
+
+#: assets/dist/components/index.js:106683
+#: assets/dist/components/index.js:106688
+#: packages/components/build-module/advanced-filters/index.js:383
+#: packages/components/build-module/advanced-filters/index.js:388
+#: packages/components/build-module/filters/advanced/index.js:383
+#: packages/components/build-module/filters/advanced/index.js:388
+#: packages/components/src/advanced-filters/index.js:311
+#: packages/components/src/advanced-filters/index.js:321
+#: packages/components/build-module/advanced-filters/index.js:311
+#: packages/components/build-module/advanced-filters/index.js:321
+#: packages/components/build-module/filters/advanced/index.js:311
+#: packages/components/build-module/filters/advanced/index.js:321
+#: packages/components/build/advanced-filters/index.js:311
+#: packages/components/build/advanced-filters/index.js:321
+#: packages/components/build/filters/advanced/index.js:311
+#: packages/components/build/filters/advanced/index.js:321
+msgid "Filter"
+msgstr ""
+
+#: assets/dist/components/index.js:106692
+#: packages/components/build-module/advanced-filters/index.js:392
+#: packages/components/build-module/filters/advanced/index.js:392
+#: packages/components/src/advanced-filters/index.js:326
+#: packages/components/build-module/advanced-filters/index.js:326
+#: packages/components/build-module/filters/advanced/index.js:326
+#: packages/components/build/advanced-filters/index.js:326
+#: packages/components/build/filters/advanced/index.js:326
+msgid "Clear all filters"
+msgstr ""
+
+#: assets/dist/components/index.js:106816
+#: packages/components/build-module/advanced-filters/number-filter.js:46
+#: packages/components/build-module/filters/advanced/number-filter.js:46
+#: packages/components/src/advanced-filters/number-filter.js:25
+#: packages/components/build-module/advanced-filters/number-filter.js:25
+#: packages/components/build-module/filters/advanced/number-filter.js:25
+#: packages/components/build/advanced-filters/number-filter.js:25
+#: packages/components/build/filters/advanced/number-filter.js:25
+msgctxt "Numerical range inputs arranged on a single line"
+msgid "{{rangeStart /}}{{span}} and {{/span}}{{rangeEnd /}}"
+msgstr ""
+
+#. translators: Sentence fragment, "maximum amount" refers to a numeric value the field must be less than. Screenshot for context: https://cloudup.com/cmv5CLyMPNQ
+#: assets/dist/components/index.js:106936
+#: packages/components/build-module/advanced-filters/number-filter.js:166
+#: packages/components/build-module/filters/advanced/number-filter.js:166
+#: packages/components/src/advanced-filters/number-filter.js:129
+#: packages/components/build-module/advanced-filters/number-filter.js:129
+#: packages/components/build-module/filters/advanced/number-filter.js:129
+#: packages/components/build/advanced-filters/number-filter.js:129
+#: packages/components/build/filters/advanced/number-filter.js:129
+msgctxt "maximum value input"
+msgid "%(field)s maximum amount"
+msgstr ""
+
+#. translators: Sentence fragment, "minimum amount" refers to a numeric value the field must be more than. Screenshot for context: https://cloudup.com/cmv5CLyMPNQ
+#: assets/dist/components/index.js:106941
+#: packages/components/build-module/advanced-filters/number-filter.js:171
+#: packages/components/build-module/filters/advanced/number-filter.js:171
+#: packages/components/src/advanced-filters/number-filter.js:133
+#: packages/components/build-module/advanced-filters/number-filter.js:133
+#: packages/components/build-module/filters/advanced/number-filter.js:133
+#: packages/components/build/advanced-filters/number-filter.js:133
+#: packages/components/build/filters/advanced/number-filter.js:133
+msgctxt "minimum value input"
+msgid "%(field)s minimum amount"
+msgstr ""
+
+#. translators: Sentence fragment, "range start" refers to the first of two numeric values the field must be between. Screenshot for context: https://cloudup.com/cmv5CLyMPNQ
+#: assets/dist/components/index.js:106985
+#: packages/components/build-module/advanced-filters/number-filter.js:215
+#: packages/components/build-module/filters/advanced/number-filter.js:215
+#: packages/components/src/advanced-filters/number-filter.js:166
+#: packages/components/build-module/advanced-filters/number-filter.js:166
+#: packages/components/build-module/filters/advanced/number-filter.js:166
+#: packages/components/build/advanced-filters/number-filter.js:166
+#: packages/components/build/filters/advanced/number-filter.js:166
+msgid "%(field)s range start"
+msgstr ""
+
+#. translators: Sentence fragment, "range end" refers to the second of two numeric values the field must be between. Screenshot for context: https://cloudup.com/cmv5CLyMPNQ
+#: assets/dist/components/index.js:106997
+#: packages/components/build-module/advanced-filters/number-filter.js:227
+#: packages/components/build-module/filters/advanced/number-filter.js:227
+#: packages/components/src/advanced-filters/number-filter.js:177
+#: packages/components/build-module/advanced-filters/number-filter.js:177
+#: packages/components/build-module/filters/advanced/number-filter.js:177
+#: packages/components/build/advanced-filters/number-filter.js:177
+#: packages/components/build/filters/advanced/number-filter.js:177
+msgid "%(field)s range end"
+msgstr ""
+
+#: assets/dist/components/index.js:107908
+#: assets/dist/components/index.js:119807
+#: packages/components/build-module/autocomplete/control.js:165
+#: packages/components/build-module/search/index.js:301
+#: packages/components/src/autocomplete/control.js:140
+#: packages/components/src/search/index.js:246
+#: packages/components/build-module/autocomplete/control.js:140
+#: packages/components/build-module/search/index.js:246
+#: packages/components/build/autocomplete/control.js:140
+#: packages/components/build/search/index.js:246
+msgid "Move backward for selected items"
+msgstr ""
+
+#: assets/dist/components/index.js:108168
+#: assets/dist/components/index.js:118069
+#: packages/components/build-module/autocomplete/index.js:150
+#: packages/components/build-module/search/autocomplete.js:148
+#: packages/components/src/autocomplete/index.js:116
+#: packages/components/src/search/autocomplete.js:122
+#: packages/components/build-module/autocomplete/index.js:116
+#: packages/components/build-module/search/autocomplete.js:122
+#: packages/components/build/autocomplete/index.js:116
+#: packages/components/build/search/autocomplete.js:122
+msgid "No results."
+msgstr ""
+
+#: assets/dist/components/index.js:108798
+#: assets/dist/components/index.js:119682
+#: packages/components/build-module/autocomplete/tags.js:90
+#: packages/components/build-module/search/index.js:176
+#: packages/components/src/autocomplete/tags.js:57
+#: packages/components/src/search/index.js:131
+#: packages/components/build-module/autocomplete/tags.js:57
+#: packages/components/build-module/search/index.js:131
+#: packages/components/build/autocomplete/tags.js:57
+#: packages/components/build/search/index.js:131
+msgid "%1$s (%2$s of %3$s)"
+msgstr ""
+
+#: assets/dist/components/index.js:108814
+#: assets/dist/components/index.js:112708
+#: assets/dist/components/index.js:117585
+#: assets/dist/components/index.js:119827
+#: packages/components/build-module/autocomplete/tags.js:106
+#: packages/components/build-module/compare-filter/index.js:153
+#: packages/components/build-module/filters/compare/index.js:153
+#: packages/components/build-module/search-list-control/index.js:244
+#: packages/components/build-module/search/index.js:321
+#: packages/components/src/autocomplete/tags.js:78
+#: packages/components/src/compare-filter/index.js:103
+#: packages/components/src/search-list-control/index.js:192
+#: packages/components/src/search/index.js:276
+#: packages/components/build-module/autocomplete/tags.js:78
+#: packages/components/build-module/compare-filter/index.js:103
+#: packages/components/build-module/filters/compare/index.js:103
+#: packages/components/build-module/search-list-control/index.js:192
+#: packages/components/build-module/search/index.js:276
+#: packages/components/build/autocomplete/tags.js:78
+#: packages/components/build/compare-filter/index.js:103
+#: packages/components/build/filters/compare/index.js:103
+#: packages/components/build/search-list-control/index.js:192
+#: packages/components/build/search/index.js:276
+msgid "Clear all"
+msgstr ""
+
+#: assets/dist/components/index.js:109003
+#: packages/components/build-module/calendar/date-picker.js:117
+#: packages/components/src/calendar/date-picker.js:83
+#: packages/components/build-module/calendar/date-picker.js:83
+#: packages/components/build/calendar/date-picker.js:83
+msgid "Choose a date"
+msgstr ""
+
+#: assets/dist/components/index.js:109005
+#: packages/components/build-module/calendar/date-picker.js:119
+#: packages/components/src/calendar/date-picker.js:86
+#: packages/components/build-module/calendar/date-picker.js:86
+#: packages/components/build/calendar/date-picker.js:86
+msgid "Date input describing a selected date in format %s"
+msgstr ""
+
+#: assets/dist/components/index.js:109019
+#: packages/components/build-module/calendar/date-picker.js:133
+#: packages/components/src/calendar/date-picker.js:99
+#: packages/components/build-module/calendar/date-picker.js:99
+#: packages/components/build/calendar/date-picker.js:99
+msgid "select a date"
+msgstr ""
+
+#: assets/dist/components/index.js:109256
+#: packages/components/build-module/calendar/date-range.js:144
+#: packages/components/src/calendar/date-range.js:112
+#: packages/components/build-module/calendar/date-range.js:112
+#: packages/components/build/calendar/date-range.js:112
+msgid "Start Date"
+msgstr ""
+
+#: assets/dist/components/index.js:109258
+#: packages/components/build-module/calendar/date-range.js:146
+#: packages/components/src/calendar/date-range.js:115
+#: packages/components/build-module/calendar/date-range.js:115
+#: packages/components/build/calendar/date-range.js:115
+msgid "Date input describing a selected date range's start date in format %s"
+msgstr ""
+
+#: assets/dist/components/index.js:109264
+#: packages/components/build-module/calendar/date-range.js:152
+#: packages/components/src/calendar/date-range.js:123
+#: packages/components/build-module/calendar/date-range.js:123
+#: packages/components/build/calendar/date-range.js:123
+msgid "to"
+msgstr ""
+
+#: assets/dist/components/index.js:109268
+#: packages/components/build-module/calendar/date-range.js:156
+#: packages/components/src/calendar/date-range.js:128
+#: packages/components/build-module/calendar/date-range.js:128
+#: packages/components/build/calendar/date-range.js:128
+msgid "End Date"
+msgstr ""
+
+#: assets/dist/components/index.js:109270
+#: packages/components/build-module/calendar/date-range.js:158
+#: packages/components/src/calendar/date-range.js:131
+#: packages/components/build-module/calendar/date-range.js:131
+#: packages/components/build/calendar/date-range.js:131
+msgid "Date input describing a selected date range's end date in format %s"
+msgstr ""
+
+#: assets/dist/components/index.js:109470
+#: packages/components/build-module/calendar/phrases.js:8
+#: packages/components/src/calendar/phrases.js:8
+#: packages/components/build/calendar/phrases.js:8
+msgid "Calendar"
+msgstr ""
+
+#: assets/dist/components/index.js:109471
+#: packages/components/build-module/calendar/phrases.js:9
+#: packages/components/src/calendar/phrases.js:9
+#: packages/components/build/calendar/phrases.js:9
+msgid "Close"
+msgstr ""
+
+#: assets/dist/components/index.js:109472
+#: packages/components/build-module/calendar/phrases.js:10
+#: packages/components/src/calendar/phrases.js:10
+#: packages/components/build/calendar/phrases.js:10
+msgid "Interact with the calendar and select start and end dates."
+msgstr ""
+
+#: assets/dist/components/index.js:109473
+#: packages/components/build-module/calendar/phrases.js:11
+#: packages/components/src/calendar/phrases.js:11
+#: packages/components/build/calendar/phrases.js:11
+msgid "Clear Date"
+msgstr ""
+
+#: assets/dist/components/index.js:109474
+#: packages/components/build-module/calendar/phrases.js:12
+#: packages/components/src/calendar/phrases.js:12
+#: packages/components/build/calendar/phrases.js:12
+msgid "Clear Dates"
+msgstr ""
+
+#: assets/dist/components/index.js:109475
+#: packages/components/build-module/calendar/phrases.js:13
+#: packages/components/src/calendar/phrases.js:13
+#: packages/components/build/calendar/phrases.js:13
+msgid "Move backward to switch to the previous month."
+msgstr ""
+
+#: assets/dist/components/index.js:109476
+#: packages/components/build-module/calendar/phrases.js:14
+#: packages/components/src/calendar/phrases.js:14
+#: packages/components/build/calendar/phrases.js:14
+msgid "Move forward to switch to the next month."
+msgstr ""
+
+#: assets/dist/components/index.js:109477
+#: packages/components/build-module/calendar/phrases.js:15
+#: packages/components/src/calendar/phrases.js:15
+#: packages/components/build/calendar/phrases.js:15
+msgid "Enter key"
+msgstr ""
+
+#: assets/dist/components/index.js:109478
+#: packages/components/build-module/calendar/phrases.js:16
+#: packages/components/src/calendar/phrases.js:16
+#: packages/components/build/calendar/phrases.js:16
+msgid "Right and left arrow keys"
+msgstr ""
+
+#: assets/dist/components/index.js:109479
+#: packages/components/build-module/calendar/phrases.js:17
+#: packages/components/src/calendar/phrases.js:17
+#: packages/components/build/calendar/phrases.js:17
+msgid "up and down arrow keys"
+msgstr ""
+
+#: assets/dist/components/index.js:109480
+#: packages/components/build-module/calendar/phrases.js:18
+#: packages/components/src/calendar/phrases.js:18
+#: packages/components/build/calendar/phrases.js:18
+msgid "page up and page down keys"
+msgstr ""
+
+#: assets/dist/components/index.js:109481
+#: packages/components/build-module/calendar/phrases.js:19
+#: packages/components/src/calendar/phrases.js:19
+#: packages/components/build/calendar/phrases.js:19
+msgid "Home and end keys"
+msgstr ""
+
+#: assets/dist/components/index.js:109482
+#: packages/components/build-module/calendar/phrases.js:20
+#: packages/components/src/calendar/phrases.js:20
+#: packages/components/build/calendar/phrases.js:20
+msgid "Escape key"
+msgstr ""
+
+#: assets/dist/components/index.js:109483
+#: packages/components/build-module/calendar/phrases.js:21
+#: packages/components/src/calendar/phrases.js:21
+#: packages/components/build/calendar/phrases.js:21
+msgid "Question mark"
+msgstr ""
+
+#: assets/dist/components/index.js:109484
+#: packages/components/build-module/calendar/phrases.js:22
+#: packages/components/src/calendar/phrases.js:22
+#: packages/components/build/calendar/phrases.js:22
+msgid "Select the date in focus."
+msgstr ""
+
+#: assets/dist/components/index.js:109485
+#: packages/components/build-module/calendar/phrases.js:23
+#: packages/components/src/calendar/phrases.js:23
+#: packages/components/build/calendar/phrases.js:23
+msgid "Move backward (left) and forward (right) by one day."
+msgstr ""
+
+#: assets/dist/components/index.js:109486
+#: packages/components/build-module/calendar/phrases.js:24
+#: packages/components/src/calendar/phrases.js:24
+#: packages/components/build/calendar/phrases.js:24
+msgid "Move backward (up) and forward (down) by one week."
+msgstr ""
+
+#: assets/dist/components/index.js:109487
+#: packages/components/build-module/calendar/phrases.js:25
+#: packages/components/src/calendar/phrases.js:25
+#: packages/components/build/calendar/phrases.js:25
+msgid "Switch months."
+msgstr ""
+
+#: assets/dist/components/index.js:109488
+#: packages/components/build-module/calendar/phrases.js:26
+#: packages/components/src/calendar/phrases.js:26
+#: packages/components/build/calendar/phrases.js:26
+msgid "Go to the first or last day of a week."
+msgstr ""
+
+#: assets/dist/components/index.js:109489
+#: packages/components/build-module/calendar/phrases.js:27
+#: packages/components/src/calendar/phrases.js:27
+#: packages/components/build/calendar/phrases.js:27
+msgid "Return to the date input field."
+msgstr ""
+
+#: assets/dist/components/index.js:109490
+#: packages/components/build-module/calendar/phrases.js:28
+msgid ""
+"Press the down arrow key to interact with the calendar and\n"
+"  select a date."
+msgstr ""
+
+#: assets/dist/components/index.js:109493
+#: packages/components/build-module/calendar/phrases.js:31
+#: packages/components/src/calendar/phrases.js:34
+#: packages/components/build-module/calendar/phrases.js:34
+#: packages/components/build/calendar/phrases.js:34
+msgid "Select %s as a start date."
+msgstr ""
+
+#: assets/dist/components/index.js:109497
+#: packages/components/build-module/calendar/phrases.js:35
+#: packages/components/src/calendar/phrases.js:36
+#: packages/components/build-module/calendar/phrases.js:36
+#: packages/components/build/calendar/phrases.js:36
+msgid "Select %s as an end date."
+msgstr ""
+
+#: assets/dist/components/index.js:109505
+#: packages/components/build-module/calendar/phrases.js:43
+#: packages/components/src/calendar/phrases.js:38
+#: packages/components/build-module/calendar/phrases.js:38
+#: packages/components/build/calendar/phrases.js:38
+msgid "%s is not selectable."
+msgstr ""
+
+#: assets/dist/components/index.js:109509
+#: packages/components/build-module/calendar/phrases.js:47
+#: packages/components/src/calendar/phrases.js:39
+#: packages/components/build-module/calendar/phrases.js:39
+#: packages/components/build/calendar/phrases.js:39
+msgid "Selected. %s"
+msgstr ""
+
+#: assets/dist/components/index.js:110437
+#: packages/components/build-module/chart/d3chart/legend.js:115
+#: packages/components/src/chart/d3chart/legend.js:109
+#: packages/components/build-module/chart/d3chart/legend.js:109
+#: packages/components/build/chart/d3chart/legend.js:109
+msgid "You may select up to %d items."
+msgstr ""
+
+#: assets/dist/components/index.js:111981
+#: packages/components/build-module/chart/index.js:300
+#: packages/components/src/chart/index.js:217
+#: packages/components/build-module/chart/index.js:217
+#: packages/components/build/chart/index.js:217
+msgid "By hour"
+msgstr ""
+
+#: assets/dist/components/index.js:111982
+#: packages/components/build-module/chart/index.js:301
+#: packages/components/src/chart/index.js:218
+#: packages/components/build-module/chart/index.js:218
+#: packages/components/build/chart/index.js:218
+msgid "By day"
+msgstr ""
+
+#: assets/dist/components/index.js:111983
+#: packages/components/build-module/chart/index.js:302
+#: packages/components/src/chart/index.js:219
+#: packages/components/build-module/chart/index.js:219
+#: packages/components/build/chart/index.js:219
+msgid "By week"
+msgstr ""
+
+#: assets/dist/components/index.js:111984
+#: packages/components/build-module/chart/index.js:303
+#: packages/components/src/chart/index.js:220
+#: packages/components/build-module/chart/index.js:220
+#: packages/components/build/chart/index.js:220
+msgid "By month"
+msgstr ""
+
+#: assets/dist/components/index.js:111985
+#: packages/components/build-module/chart/index.js:304
+#: packages/components/src/chart/index.js:221
+#: packages/components/build-module/chart/index.js:221
+#: packages/components/build/chart/index.js:221
+msgid "By quarter"
+msgstr ""
+
+#: assets/dist/components/index.js:111986
+#: packages/components/build-module/chart/index.js:305
+#: packages/components/src/chart/index.js:222
+#: packages/components/build-module/chart/index.js:222
+#: packages/components/build/chart/index.js:222
+msgid "By year"
+msgstr ""
+
+#: assets/dist/components/index.js:112131
+#: packages/components/build-module/chart/index.js:450
+#: packages/components/src/chart/index.js:355
+#: packages/components/build-module/chart/index.js:355
+#: packages/components/build/chart/index.js:355
+msgid "Line chart"
+msgstr ""
+
+#: assets/dist/components/index.js:112143
+#: packages/components/build-module/chart/index.js:462
+#: packages/components/src/chart/index.js:366
+#: packages/components/build-module/chart/index.js:366
+#: packages/components/build/chart/index.js:366
+msgid "Bar chart"
+msgstr ""
+
+#: assets/dist/components/index.js:112155
+#: assets/dist/components/index.js:122146
+#: packages/components/build-module/chart/index.js:474
+#: packages/components/build-module/table/index.js:467
+#: packages/components/src/chart/index.js:387
+#: packages/components/src/table/index.js:392
+#: packages/components/build-module/chart/index.js:387
+#: packages/components/build-module/table/index.js:392
+#: packages/components/build/chart/index.js:387
+#: packages/components/build/table/index.js:392
+msgid "Your requested data is loading"
+msgstr ""
+
+#: assets/dist/components/index.js:112804
+#: packages/components/build-module/count/index.js:21
+#: packages/components/src/count/index.js:15
+#: packages/components/build-module/count/index.js:15
+#: packages/components/build/count/index.js:15
+msgid "Total %d"
+msgstr ""
+
+#: assets/dist/components/index.js:112902
+#: assets/dist/components/index.js:113077
+#: packages/components/build-module/date-range-filter-picker/compare-periods.js:49
+#: packages/components/build-module/date-range-filter-picker/content.js:130
+#: packages/components/build-module/filters/date/compare-periods.js:49
+#: packages/components/build-module/filters/date/content.js:130
+#: packages/components/src/date-range-filter-picker/compare-periods.js:28
+#: packages/components/src/date-range-filter-picker/content.js:112
+#: packages/components/build-module/date-range-filter-picker/compare-periods.js:28
+#: packages/components/build-module/date-range-filter-picker/content.js:112
+#: packages/components/build-module/filters/date/compare-periods.js:28
+#: packages/components/build-module/filters/date/content.js:112
+#: packages/components/build/date-range-filter-picker/compare-periods.js:28
+#: packages/components/build/date-range-filter-picker/content.js:112
+#: packages/components/build/filters/date/compare-periods.js:28
+#: packages/components/build/filters/date/content.js:112
+msgid "compare to"
+msgstr ""
+
+#: assets/dist/components/index.js:113038
+#: packages/components/build-module/date-range-filter-picker/content.js:91
+#: packages/components/build-module/filters/date/content.js:91
+#: packages/components/src/date-range-filter-picker/content.js:63
+#: packages/components/build-module/date-range-filter-picker/content.js:63
+#: packages/components/build-module/filters/date/content.js:63
+#: packages/components/build/date-range-filter-picker/content.js:63
+#: packages/components/build/filters/date/content.js:63
+msgid "Select date range and comparison"
+msgstr ""
+
+#: assets/dist/components/index.js:113042
+#: packages/components/build-module/date-range-filter-picker/content.js:95
+#: packages/components/build-module/filters/date/content.js:95
+#: packages/components/src/date-range-filter-picker/content.js:67
+#: packages/components/build-module/date-range-filter-picker/content.js:67
+#: packages/components/build-module/filters/date/content.js:67
+#: packages/components/build/date-range-filter-picker/content.js:67
+#: packages/components/build/filters/date/content.js:67
+msgid "select a date range"
+msgstr ""
+
+#: assets/dist/components/index.js:113045
+#: packages/components/build-module/date-range-filter-picker/content.js:98
+#: packages/components/build-module/filters/date/content.js:98
+#: packages/components/src/date-range-filter-picker/content.js:73
+#: packages/components/build-module/date-range-filter-picker/content.js:73
+#: packages/components/build-module/filters/date/content.js:73
+#: packages/components/build/date-range-filter-picker/content.js:73
+#: packages/components/build/filters/date/content.js:73
+msgid "Presets"
+msgstr ""
+
+#: assets/dist/components/index.js:113049
+#: assets/dist/date/index.js:1045
+#: packages/components/build-module/date-range-filter-picker/content.js:102
+#: packages/components/build-module/filters/date/content.js:102
+#: packages/components/src/date-range-filter-picker/content.js:78
+#: packages/date/build-module/index.js:63
+#: packages/date/src/index.js:43
+#: packages/components/build-module/date-range-filter-picker/content.js:78
+#: packages/components/build-module/filters/date/content.js:78
+#: packages/components/build/date-range-filter-picker/content.js:78
+#: packages/components/build/filters/date/content.js:78
+#: packages/date/build-module/index.js:43
+#: packages/date/build/index.js:43
+msgid "Custom"
+msgstr ""
+
+#: assets/dist/components/index.js:113087
+#: packages/components/build-module/date-range-filter-picker/content.js:140
+#: packages/components/build-module/filters/date/content.js:140
+#: packages/components/src/date-range-filter-picker/content.js:123
+#: packages/components/build-module/date-range-filter-picker/content.js:123
+#: packages/components/build-module/filters/date/content.js:123
+#: packages/components/build/date-range-filter-picker/content.js:123
+#: packages/components/build/filters/date/content.js:123
+msgid "Reset"
+msgstr ""
+
+#: assets/dist/components/index.js:113091
+#: assets/dist/components/index.js:113095
+#: packages/components/build-module/date-range-filter-picker/content.js:144
+#: packages/components/build-module/date-range-filter-picker/content.js:148
+#: packages/components/build-module/filters/date/content.js:144
+#: packages/components/build-module/filters/date/content.js:148
+#: packages/components/src/date-range-filter-picker/content.js:132
+#: packages/components/src/date-range-filter-picker/content.js:136
+#: packages/components/build-module/date-range-filter-picker/content.js:132
+#: packages/components/build-module/date-range-filter-picker/content.js:136
+#: packages/components/build-module/filters/date/content.js:132
+#: packages/components/build-module/filters/date/content.js:136
+#: packages/components/build/date-range-filter-picker/content.js:132
+#: packages/components/build/date-range-filter-picker/content.js:136
+#: packages/components/build/filters/date/content.js:132
+#: packages/components/build/filters/date/content.js:136
+msgid "Update"
+msgstr ""
+
+#: assets/dist/components/index.js:113264
+#: packages/components/build-module/date-range-filter-picker/index.js:118
+#: packages/components/build-module/filters/date/index.js:118
+#: packages/components/src/date-range-filter-picker/index.js:82
+#: packages/components/build-module/date-range-filter-picker/index.js:82
+#: packages/components/build-module/filters/date/index.js:82
+#: packages/components/build/date-range-filter-picker/index.js:82
+#: packages/components/build/filters/date/index.js:82
+msgid "vs."
+msgstr ""
+
+#: assets/dist/components/index.js:113312
+#: packages/components/build-module/date-range-filter-picker/index.js:166
+#: packages/components/build-module/filters/date/index.js:166
+#: packages/components/src/date-range-filter-picker/index.js:120
+#: packages/components/build-module/date-range-filter-picker/index.js:120
+#: packages/components/build-module/filters/date/index.js:120
+#: packages/components/build/date-range-filter-picker/index.js:120
+#: packages/components/build/filters/date/index.js:120
+msgid "Date Range"
+msgstr ""
+
+#: assets/dist/components/index.js:113447
+#: packages/components/build-module/date-range-filter-picker/preset-periods.js:52
+#: packages/components/build-module/filters/date/preset-periods.js:52
+#: packages/components/src/date-range-filter-picker/preset-periods.js:29
+#: packages/components/build-module/date-range-filter-picker/preset-periods.js:29
+#: packages/components/build-module/filters/date/preset-periods.js:29
+#: packages/components/build/date-range-filter-picker/preset-periods.js:29
+#: packages/components/build/filters/date/preset-periods.js:29
+msgid "select a preset period"
+msgstr ""
+
+#: assets/dist/components/index.js:114498
+#: packages/components/build-module/filter-picker/index.js:278
+#: packages/components/build-module/filters/filter/index.js:278
+#: packages/components/src/filter-picker/index.js:197
+#: packages/components/build-module/filter-picker/index.js:197
+#: packages/components/build-module/filters/filter/index.js:197
+#: packages/components/build/filter-picker/index.js:197
+#: packages/components/build/filters/filter/index.js:197
+msgid "filter report to show:"
+msgstr ""
+
+#: assets/dist/components/index.js:114784
+#: packages/components/build-module/filters/index.js:124
+#: packages/components/src/filters/index.js:80
+#: packages/components/build-module/filters/index.js:80
+#: packages/components/build/filters/index.js:80
+msgid "Filters"
+msgstr ""
+
+#: assets/dist/components/index.js:116430
+#: packages/components/build-module/pagination/index.js:137
+#: packages/components/src/pagination/index.js:104
+#: packages/components/build-module/pagination/index.js:104
+#: packages/components/build/pagination/index.js:104
+msgid "PageSP %d of %d"
+msgstr ""
+
+#: assets/dist/components/index.js:116437
+#: packages/components/build-module/pagination/index.js:144
+#: packages/components/src/pagination/index.js:112
+#: packages/components/build-module/pagination/index.js:112
+#: packages/components/build/pagination/index.js:112
+msgid "Previous PageSP"
+msgstr ""
+
+#: assets/dist/components/index.js:116444
+#: packages/components/build-module/pagination/index.js:151
+#: packages/components/src/pagination/index.js:120
+#: packages/components/build-module/pagination/index.js:120
+#: packages/components/build/pagination/index.js:120
+msgid "Next PageSP"
+msgstr ""
+
+#: assets/dist/components/index.js:116463
+#: packages/components/build-module/pagination/index.js:170
+#: packages/components/src/pagination/index.js:140
+#: packages/components/build-module/pagination/index.js:140
+#: packages/components/build/pagination/index.js:140
+msgid "Go to page"
+msgstr ""
+
+#: assets/dist/components/index.js:116489
+#: packages/components/build-module/pagination/index.js:196
+#: packages/components/src/pagination/index.js:167
+#: packages/components/build-module/pagination/index.js:167
+#: packages/components/build/pagination/index.js:167
+msgid "Rows per page"
+msgstr ""
+
+#: assets/dist/components/index.js:116751
+#: packages/components/build-module/rating/index.js:68
+#: packages/components/src/rating/index.js:41
+#: packages/components/build-module/rating/index.js:41
+#: packages/components/build/rating/index.js:41
+msgid "%1$s out of %2$s stars."
+msgstr ""
+
+#: assets/dist/components/index.js:117374
+#: packages/components/build-module/search-list-control/index.js:33
+#: packages/components/src/search-list-control/index.js:26
+#: packages/components/build-module/search-list-control/index.js:26
+#: packages/components/build/search-list-control/index.js:26
+msgid "Clear all selected items"
+msgstr ""
+
+#: assets/dist/components/index.js:117375
+#: packages/components/build-module/search-list-control/index.js:34
+#: packages/components/src/search-list-control/index.js:27
+#: packages/components/build-module/search-list-control/index.js:27
+#: packages/components/build/search-list-control/index.js:27
+msgid "Results"
+msgstr ""
+
+#: assets/dist/components/index.js:117376
+#: packages/components/build-module/search-list-control/index.js:35
+#: packages/components/src/search-list-control/index.js:28
+#: packages/components/build-module/search-list-control/index.js:28
+#: packages/components/build/search-list-control/index.js:28
+msgid "No items found."
+msgstr ""
+
+#: assets/dist/components/index.js:117377
+#: packages/components/build-module/search-list-control/index.js:36
+#: packages/components/src/search-list-control/index.js:29
+#: packages/components/build-module/search-list-control/index.js:29
+#: packages/components/build/search-list-control/index.js:29
+msgid "No results for %s"
+msgstr ""
+
+#: assets/dist/components/index.js:117378
+#: packages/components/build-module/search-list-control/index.js:37
+#: packages/components/src/search-list-control/index.js:30
+#: packages/components/build-module/search-list-control/index.js:30
+#: packages/components/build/search-list-control/index.js:30
+msgid "Search for items"
+msgstr ""
+
+#: assets/dist/components/index.js:117380
+#: packages/components/build-module/search-list-control/index.js:39
+#: packages/components/src/search-list-control/index.js:32
+#: packages/components/build-module/search-list-control/index.js:32
+#: packages/components/build/search-list-control/index.js:32
+msgid "%d item selected"
+msgid_plural "%d items selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/dist/components/index.js:117382
+#: packages/components/build-module/search-list-control/index.js:41
+#: packages/components/src/search-list-control/index.js:33
+#: packages/components/build-module/search-list-control/index.js:33
+#: packages/components/build/search-list-control/index.js:33
+msgid "Search results updated."
+msgstr ""
+
+#: assets/dist/components/index.js:118410
+#: packages/components/build-module/search/autocompleters/categories.js:46
+#: packages/components/src/search/autocompleters/categories.js:40
+#: packages/components/build-module/search/autocompleters/categories.js:40
+#: packages/components/build/search/autocompleters/categories.js:40
+msgid "All categories with titles that include {{query /}}"
+msgstr ""
+
+#: assets/dist/components/index.js:118594
+#: packages/components/build-module/search/autocompleters/coupons.js:45
+#: packages/components/src/search/autocompleters/coupons.js:39
+#: packages/components/build-module/search/autocompleters/coupons.js:39
+#: packages/components/build/search/autocompleters/coupons.js:39
+msgid "All coupons with codes that include {{query /}}"
+msgstr ""
+
+#: assets/dist/components/index.js:118699
+#: packages/components/build-module/search/autocompleters/customers.js:46
+#: packages/components/src/search/autocompleters/customers.js:40
+#: packages/components/build-module/search/autocompleters/customers.js:40
+#: packages/components/build/search/autocompleters/customers.js:40
+msgid "All customers with names that include {{query /}}"
+msgstr ""
+
+#: assets/dist/components/index.js:119087
+#: packages/components/build-module/search/autocompleters/product.js:47
+#: packages/components/src/search/autocompleters/product.js:41
+#: packages/components/build-module/search/autocompleters/product.js:41
+#: packages/components/build/search/autocompleters/product.js:41
+msgid "All products with titles that include {{query /}}"
+msgstr ""
+
+#: assets/dist/components/index.js:119198
+#: packages/components/build-module/search/autocompleters/taxes.js:45
+#: packages/components/src/search/autocompleters/taxes.js:39
+#: packages/components/build-module/search/autocompleters/taxes.js:39
+#: packages/components/build/search/autocompleters/taxes.js:39
+msgid "All taxes with codes that include {{query /}}"
+msgstr ""
+
+#: assets/dist/components/index.js:119355
+#: packages/components/build-module/search/autocompleters/utils.js:29
+#: packages/components/src/search/autocompleters/utils.js:29
+#: packages/components/build/search/autocompleters/utils.js:29
+msgid "TAX"
+msgstr ""
+
+#: assets/dist/components/index.js:121083
+#: packages/components/build-module/summary/index.js:87
+#: packages/components/src/summary/index.js:76
+#: packages/components/build-module/summary/index.js:76
+#: packages/components/build/summary/index.js:76
+msgid "Performance Indicators"
+msgstr ""
+
+#: assets/dist/components/index.js:121247
+#: packages/components/build-module/summary/number.js:47
+#: packages/components/src/summary/number.js:48
+#: packages/components/build-module/summary/number.js:48
+#: packages/components/build/summary/number.js:48
+msgid "Up %d%% from %s"
+msgstr ""
+
+#: assets/dist/components/index.js:121247
+#: packages/components/build-module/summary/number.js:47
+#: packages/components/src/summary/number.js:49
+#: packages/components/build-module/summary/number.js:49
+#: packages/components/build/summary/number.js:49
+msgid "Down %d%% from %s"
+msgstr ""
+
+#: assets/dist/components/index.js:121252
+#: packages/components/build-module/summary/number.js:52
+#: packages/components/src/summary/number.js:53
+#: packages/components/build-module/summary/number.js:53
+#: packages/components/build/summary/number.js:53
+msgid "No change from %s"
+msgstr ""
+
+#: assets/dist/components/index.js:121285
+#: assets/dist/components/index.js:121295
+#: assets/dist/components/index.js:121301
+#: packages/components/build-module/summary/number.js:85
+#: packages/components/build-module/summary/number.js:95
+#: packages/components/build-module/summary/number.js:101
+#: packages/components/src/summary/number.js:84
+#: packages/components/src/summary/number.js:95
+#: packages/components/src/summary/number.js:102
+#: packages/components/build-module/summary/number.js:84
+#: packages/components/build-module/summary/number.js:102
+#: packages/components/build/summary/number.js:84
+#: packages/components/build/summary/number.js:95
+#: packages/components/build/summary/number.js:102
+msgid "N/A"
+msgstr ""
+
+#: assets/dist/components/index.js:121295
+#: packages/components/build-module/summary/number.js:95
+#: packages/components/src/summary/number.js:94
+#: packages/components/build-module/summary/number.js:94
+#: packages/components/build/summary/number.js:94
+msgid "%d%%"
+msgstr ""
+
+#: assets/dist/components/index.js:122100
+#: packages/components/build-module/table/index.js:421
+#: packages/components/src/table/index.js:327
+#: packages/components/build-module/table/index.js:327
+#: packages/components/build/table/index.js:327
+msgid "Check at least two items below to compare"
+msgstr ""
+
+#: assets/dist/components/index.js:122108
+#: packages/components/build-module/table/index.js:429
+#: packages/components/src/table/index.js:341
+#: packages/components/build-module/table/index.js:341
+#: packages/components/build/table/index.js:341
+msgid "Search by item name"
+msgstr ""
+
+#: assets/dist/components/index.js:122121
+#: packages/components/build-module/table/index.js:442
+#: packages/components/src/table/index.js:358
+#: packages/components/build-module/table/index.js:358
+#: packages/components/build/table/index.js:358
+msgid "Download"
+msgstr ""
+
+#: assets/dist/components/index.js:122123
+#: packages/components/build-module/table/index.js:444
+#: packages/components/src/table/index.js:364
+#: packages/components/build-module/table/index.js:364
+#: packages/components/build/table/index.js:364
+msgid "Choose which values to display"
+msgstr ""
+
+#: assets/dist/components/index.js:122125
+#: packages/components/build-module/table/index.js:446
+#: packages/components/src/table/index.js:367
+#: packages/components/build-module/table/index.js:367
+#: packages/components/build/table/index.js:367
+msgid "ColumnsSP:"
+msgstr ""
+
+#: assets/dist/components/index.js:122711
+#: packages/components/build-module/table/table.js:179
+#: packages/components/src/table/table.js:138
+#: packages/components/build-module/table/table.js:138
+#: packages/components/build/table/table.js:138
+msgid "(scroll to see more)"
+msgstr ""
+
+#: assets/dist/components/index.js:122738
+#: packages/components/build-module/table/table.js:206
+#: packages/components/src/table/table.js:162
+#: packages/components/build-module/table/table.js:162
+#: packages/components/build/table/table.js:162
+msgid "Sort by %s in ascending order"
+msgstr ""
+
+#: assets/dist/components/index.js:122738
+#: packages/components/build-module/table/table.js:206
+#: packages/components/src/table/table.js:163
+#: packages/components/build-module/table/table.js:163
+#: packages/components/build/table/table.js:163
+msgid "Sort by %s in descending order"
+msgstr ""
+
+#: assets/dist/components/index.js:122787
+#: packages/components/build-module/table/table.js:255
+#: packages/components/src/table/table.js:228
+#: packages/components/build-module/table/table.js:228
+#: packages/components/build/table/table.js:228
+msgid "No data to display"
+msgstr ""
+
+#: assets/dist/components/index.js:123000
+#: packages/components/build-module/tag/index.js:79
+#: packages/components/src/tag/index.js:73
+#: packages/components/build-module/tag/index.js:73
+#: packages/components/build/tag/index.js:73
+msgid "Remove %s"
+msgstr ""
+
+#: assets/dist/components/index.js:123245
+#: packages/components/build-module/view-more-list/index.js:25
+#: packages/components/src/view-more-list/index.js:22
+#: packages/components/build-module/view-more-list/index.js:22
+#: packages/components/build/view-more-list/index.js:22
+msgid "+%d more"
+msgstr ""
+
+#: assets/dist/date/index.js:1015
+#: packages/date/build-module/index.js:33
+#: packages/date/src/index.js:33
+#: packages/date/build/index.js:33
+msgid "Today"
+msgstr ""
+
+#: assets/dist/date/index.js:1018
+#: packages/date/build-module/index.js:36
+#: packages/date/src/index.js:34
+#: packages/date/build-module/index.js:34
+#: packages/date/build/index.js:34
+msgid "Yesterday"
+msgstr ""
+
+#: assets/dist/date/index.js:1021
+#: packages/date/build-module/index.js:39
+#: packages/date/src/index.js:35
+#: packages/date/build-module/index.js:35
+#: packages/date/build/index.js:35
+msgid "Week to Date"
+msgstr ""
+
+#: assets/dist/date/index.js:1024
+#: packages/date/build-module/index.js:42
+#: packages/date/src/index.js:36
+#: packages/date/build-module/index.js:36
+#: packages/date/build/index.js:36
+msgid "Last Week"
+msgstr ""
+
+#: assets/dist/date/index.js:1027
+#: packages/date/build-module/index.js:45
+#: packages/date/src/index.js:37
+#: packages/date/build-module/index.js:37
+#: packages/date/build/index.js:37
+msgid "Month to Date"
+msgstr ""
+
+#: assets/dist/date/index.js:1030
+#: packages/date/build-module/index.js:48
+#: packages/date/src/index.js:38
+#: packages/date/build-module/index.js:38
+#: packages/date/build/index.js:38
+msgid "Last Month"
+msgstr ""
+
+#: assets/dist/date/index.js:1033
+#: packages/date/build-module/index.js:51
+#: packages/date/src/index.js:39
+#: packages/date/build-module/index.js:39
+#: packages/date/build/index.js:39
+msgid "Quarter to Date"
+msgstr ""
+
+#: assets/dist/date/index.js:1036
+#: packages/date/build-module/index.js:54
+#: packages/date/src/index.js:40
+#: packages/date/build-module/index.js:40
+#: packages/date/build/index.js:40
+msgid "Last Quarter"
+msgstr ""
+
+#: assets/dist/date/index.js:1039
+#: packages/date/build-module/index.js:57
+#: packages/date/src/index.js:41
+#: packages/date/build-module/index.js:41
+#: packages/date/build/index.js:41
+msgid "Year to Date"
+msgstr ""
+
+#: assets/dist/date/index.js:1042
+#: packages/date/build-module/index.js:60
+#: packages/date/src/index.js:42
+#: packages/date/build-module/index.js:42
+#: packages/date/build/index.js:42
+msgid "Last Year"
+msgstr ""
+
+#: assets/dist/date/index.js:1049
+#: packages/date/build-module/index.js:67
+#: packages/date/src/index.js:47
+#: packages/date/build-module/index.js:47
+#: packages/date/build/index.js:47
+msgid "Previous Period"
+msgstr ""
+
+#: assets/dist/date/index.js:1052
+#: packages/date/build-module/index.js:70
+#: packages/date/src/index.js:48
+#: packages/date/build-module/index.js:48
+#: packages/date/build/index.js:48
+msgid "Previous Year"
+msgstr ""
+
+#: assets/dist/date/index.js:1116
+#: packages/date/build-module/index.js:134
+#: packages/date/src/index.js:106
+#: packages/date/build-module/index.js:106
+#: packages/date/build/index.js:106
+msgid "MMM D"
+msgstr ""
+
+#: assets/dist/date/index.js:1527
+#: assets/dist/date/index.js:1528
+#: packages/date/build-module/index.js:545
+#: packages/date/build-module/index.js:546
+#: packages/date/src/index.js:490
+#: packages/date/src/index.js:491
+#: packages/date/build-module/index.js:490
+#: packages/date/build-module/index.js:491
+#: packages/date/build/index.js:490
+#: packages/date/build/index.js:491
+msgid "Week of %B %-d, %Y"
+msgstr ""
+
+#: assets/dist/date/index.js:1569
+#: packages/date/build-module/index.js:587
+#: packages/date/src/index.js:528
+#: packages/date/build-module/index.js:528
+#: packages/date/build/index.js:528
+msgid "MMMM D, YYYY"
+msgstr ""
+
+#: assets/dist/date/index.js:1570
+#: packages/date/build-module/index.js:588
+#: packages/date/src/index.js:529
+#: packages/date/build-module/index.js:529
+#: packages/date/build/index.js:529
+msgid "D MMMM YYYY LT"
+msgstr ""
+
+#: assets/dist/date/index.js:1571
+#: packages/date/build-module/index.js:589
+#: packages/date/src/index.js:530
+#: packages/date/build-module/index.js:530
+#: packages/date/build/index.js:530
+msgid "dddd, D MMMM YYYY LT"
+msgstr ""
+
+#: assets/dist/date/index.js:1572
+#: packages/date/build-module/index.js:590
+#: packages/date/src/index.js:531
+#: packages/date/build-module/index.js:531
+#: packages/date/build/index.js:531
+msgid "HH:mm"
+msgstr ""
+
+#: assets/dist/date/index.js:1580
+#: packages/date/build-module/index.js:598
+#: packages/date/src/index.js:541
+#: packages/date/build-module/index.js:541
+#: packages/date/build/index.js:541
+msgid "Invalid date"
+msgstr ""
+
+#: assets/dist/date/index.js:1581
+#: packages/date/build-module/index.js:599
+#: packages/date/src/index.js:542
+#: packages/date/build-module/index.js:542
+#: packages/date/build/index.js:542
+msgid "Select a date in the past"
+msgstr ""
+
+#: assets/dist/date/index.js:1582
+#: assets/dist/date/index.js:1583
+#: packages/date/build-module/index.js:600
+#: packages/date/build-module/index.js:601
+#: packages/date/src/index.js:543
+#: packages/date/src/index.js:544
+#: packages/date/build-module/index.js:543
+#: packages/date/build-module/index.js:544
+#: packages/date/build/index.js:543
+#: packages/date/build/index.js:544
+msgid "Start date must be before end date"
+msgstr ""
