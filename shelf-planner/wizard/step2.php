@@ -1,3 +1,18 @@
+<style>
+  .sphd-answers-1 td {
+    padding-top: 15px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #000;
+    opacity: 0.8;
+  }
+
+  table {
+    margin-bottom: 60px;
+  }
+</style>
+
 <?php
 $filters = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 if ( ! in_array( 'woocommerce/woocommerce.php', $filters ) && ! function_exists( 'wc_version' ) ) {
@@ -6,7 +21,7 @@ if ( ! in_array( 'woocommerce/woocommerce.php', $filters ) && ! function_exists(
 } else {
 	$step = 2;
 	?>
-    <h2 class="sphd-category"><?php echo esc_html( __( 'Industry', QA_MAIN_DOMAIN ) ); ?></h2><h4><?php echo esc_html( __( 'Please specify which industry your company belongs to', QA_MAIN_DOMAIN ) ); ?></h4>
+    <h2 class="sphd-category"><?php echo esc_html( __( 'Industry', QA_MAIN_DOMAIN ) ); ?></h2><h4 class="steps-span"><?php echo esc_html( __( 'Please specify which industry your company belongs to', QA_MAIN_DOMAIN ) ); ?></h4>
     <table class="sphd-answers-1">
         <tr>
             <td>

@@ -29,8 +29,8 @@ class SPHD_Wizard {
 		}
 
 		self::$a_tmpl = '
-            <div style="padding-bottom: 10px; border-bottom: 2px solid #486A82; width: 100px; float: %s; text-align: center">
-            <a href="#" style="text-decoration: none; color: #486A82" onclick="save_wizard_data(%d, %d); return false">%s</a>
+            <div class="next-and-prev-btn" style="padding-bottom: 10px; border-bottom: 3px solid #874C5F; width: 140px; float: %s; text-align: center">
+            <a href="#" style="text-decoration: none; color: #874C5F" onclick="save_wizard_data(%d, %d); return false">%s</a>
             </div>
         ';
 
@@ -114,17 +114,17 @@ class SPHD_Wizard {
 
 	public static function get_prev( $step ) {
 		if ( - 1 === $step ) {
-			return '<div style="padding-bottom: 10px; border-bottom: 2px solid #486A82;
-	width: 100px; float: left; text-align: center"
-	><a href="' . admin_url( '' ) . '" style="text-decoration: none; color: #486A82"
-	><span style="font-size: 24px;">&laquo;</span>' . __( 'Back to Admin', QA_MAIN_DOMAIN ) . '</a></div>';
+			return '<div class="next-and-prev-btn" style="padding-bottom: 10px; border-bottom: 3px solid #874C5F;
+	width: 140px; float: left; text-align: center"
+	><a href="' . admin_url( '' ) . '" style="text-decoration: none; color: #874C5F"
+	><span style="margin-right: 5px"><svg xmlns="http://www.w3.org/2000/svg" width="20.326" height="18.946" viewBox="0 0 20.326 18.946"><g transform="translate(-1368.76 -718.416)"><path d="M11.192,47.866,2.76,56.3a1.041,1.041,0,0,1-1.473,0L.3,55.314a1.041,1.041,0,0,1,0-1.471L6.985,47.13.3,40.416a1.041,1.041,0,0,1,0-1.471l.983-.983a1.041,1.041,0,0,1,1.473,0l8.432,8.432A1.041,1.041,0,0,1,11.192,47.866Z" transform="translate(1368.76 680.758)" fill="#874c5f"/><path d="M11.192,47.866,2.76,56.3a1.041,1.041,0,0,1-1.473,0L.3,55.314a1.041,1.041,0,0,1,0-1.471L6.985,47.13.3,40.416a1.041,1.041,0,0,1,0-1.471l.983-.983a1.041,1.041,0,0,1,1.473,0l8.432,8.432A1.041,1.041,0,0,1,11.192,47.866Z" transform="translate(1377.589 680.758)" fill="#874c5f"/></g></svg></span>' . __( 'Back to Admin', QA_MAIN_DOMAIN ) . '</a></div>';
 		}
 
 		if ( 1 === $step ) {
 			return '';
 		}
 
-		return sprintf( self::$a_tmpl, 'left', esc_attr( $step ), esc_attr( $step - 1 ), '<span style="font-size: 24px;">&laquo;</span> Previous' );
+		return sprintf( self::$a_tmpl, 'left', esc_attr( $step ), esc_attr( $step - 1 ), '<span style="margin-right: 5px"><svg xmlns="http://www.w3.org/2000/svg" width="20.326" height="18.946" viewBox="0 0 20.326 18.946"><g transform="translate(1389.086 737.361) rotate(180)"><path d="M11.192,47.866,2.76,56.3a1.041,1.041,0,0,1-1.473,0L.3,55.314a1.041,1.041,0,0,1,0-1.471L6.985,47.13.3,40.416a1.041,1.041,0,0,1,0-1.471l.983-.983a1.041,1.041,0,0,1,1.473,0l8.432,8.432A1.041,1.041,0,0,1,11.192,47.866Z" transform="translate(1368.76 680.758)" fill="#874c5f"/><path d="M11.192,47.866,2.76,56.3a1.041,1.041,0,0,1-1.473,0L.3,55.314a1.041,1.041,0,0,1,0-1.471L6.985,47.13.3,40.416a1.041,1.041,0,0,1,0-1.471l.983-.983a1.041,1.041,0,0,1,1.473,0l8.432,8.432A1.041,1.041,0,0,1,11.192,47.866Z" transform="translate(1377.589 680.758)" fill="#874c5f"/></g></svg></span> Previous' );
 	}
 
 	/**
@@ -137,7 +137,7 @@ class SPHD_Wizard {
 			return '';
 		}
 
-		return sprintf( self::$a_tmpl, 'right', esc_attr( $step ), esc_attr( $step + 1 ), 'Next <span style="font-size: 24px;">&raquo;</span>' );
+		return sprintf( self::$a_tmpl, 'right', esc_attr( $step ), esc_attr( $step + 1 ), 'Next <span style="margin-left: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="20.326" height="18.946" viewBox="0 0 20.326 18.946"><g transform="translate(-1368.76 -718.416)"><path d="M11.192,47.866,2.76,56.3a1.041,1.041,0,0,1-1.473,0L.3,55.314a1.041,1.041,0,0,1,0-1.471L6.985,47.13.3,40.416a1.041,1.041,0,0,1,0-1.471l.983-.983a1.041,1.041,0,0,1,1.473,0l8.432,8.432A1.041,1.041,0,0,1,11.192,47.866Z" transform="translate(1368.76 680.758)" fill="#874c5f"/><path d="M11.192,47.866,2.76,56.3a1.041,1.041,0,0,1-1.473,0L.3,55.314a1.041,1.041,0,0,1,0-1.471L6.985,47.13.3,40.416a1.041,1.041,0,0,1,0-1.471l.983-.983a1.041,1.041,0,0,1,1.473,0l8.432,8.432A1.041,1.041,0,0,1,11.192,47.866Z" transform="translate(1377.589 680.758)" fill="#874c5f"/></g></svg></span>' );
 	}
 
 	/**
@@ -165,7 +165,7 @@ class SPHD_Wizard {
 	 * @return string
 	 */
 	public static function get_radio( $step, $name, $option, $text ) {
-		static $tmpl = '<input type="radio" name="%s" %s value="%s" /> <span class="sphd-p">Option %3$s: %s.</span>';
+		static $tmpl = '<label class="switch"><input type="radio" name="%s" %s value="%s" /><span class="slider round"></span></label><span class="sphd-p">Option %3$s: %s.</span>';
 
 		$checked = isset( $_SESSION['wizard_answers'][ $step ][ $name ] ) && $_SESSION['wizard_answers'][ $step ][ $name ] == $option ? 'checked="checked"' : '';
 
@@ -219,6 +219,10 @@ class SPHD_Wizard {
 		} else {
 			$error = "Setup process not completed.";
 		}
+
+		$response = [];
+		$response['start_date'] = date('Y-m-d');
+		update_option('shelf_planner_activation', serialize($response));
 
 		if ( $is_ok ) {
 			update_option( 'sp.settings.country', sanitize_title( $_SESSION['wizard_answers'][0]['sp_countries_list'] ) );

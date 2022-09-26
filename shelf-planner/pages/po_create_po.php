@@ -176,14 +176,19 @@ if ( $show_form ) {
 }
 
 require_once __DIR__ . '/../' . 'header.php'; ?>
+<style>
+
+
+  </style>
     <div class="sp-admin-overlay">
         <div class="sp-admin-container">
 			<?php include __DIR__ . '/../' . "left_sidebar.php"; ?>
             <!-- main-content opened -->
             <div class="main-content horizontal-content">
                 <div class="page">
+                <?php include __DIR__ . '/../' . "page_header.php"; ?>
                     <!-- container opened -->
-                    <div class="container">
+                    <div class="ml-40 mr-40">
 	                    <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
 						<?php
 						if ( $pre_pdf ) {
@@ -217,6 +222,15 @@ require_once __DIR__ . '/../' . 'header.php'; ?>
                                 .po-template div {
                                     font-family: 'Courier New' !important;
                                 }
+
+                                .wp-core-ui select {
+                                  font-weight: 500;
+                                }
+
+                                .btn-for-po {
+                                  width: 112px;
+                                }
+
                             </style>
                         <?php
 							echo wp_kses_post($html);
@@ -235,99 +249,100 @@ require_once __DIR__ . '/../' . 'header.php'; ?>
                         <?php
 						} else {
 						?>
-                        <h2><?php echo esc_html(__( 'Purchase Orders', QA_MAIN_DOMAIN )); ?></h2>
+                        <h2 class='purchase-or-title'><?php echo esc_html(__( 'Purchase Orders', QA_MAIN_DOMAIN )); ?></h2>
+                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'Here you can create, manage and review all your purchase orders.', QA_MAIN_DOMAIN )); ?></span>
+                        <div class="d-flex nav-link-line" style="margin-top: 40px;">
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_order_proposals' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_order_proposals')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Order Proposals', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_po_create_po' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_po_create_po')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Create PO', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_po_orders' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_po_orders')); ?>"><span  class="side-menu__label"><?php echo esc_html(__('Orders History', QA_MAIN_DOMAIN)); ?></span></a>
+                        </div>
                         <?php do_action( 'after_page_header' ); ?>
                         <?php if ( display_admin_part() == true ) include SP_PLUGIN_DIR_PATH . "pages/po/tabs.php" ?>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="main-content-label mg-b-5" style="margin-left: -15px;">
-									<?php echo esc_html(__( 'Create Purchase Order', QA_MAIN_DOMAIN )); ?>
-                                </div>
-                                <p class="mg-b-20"></p>
-                                <div class="row">
-                                    <div>
-                                        <p><?php echo esc_html(__( 'Please select supplier to create Purchase Order with multiple items.', QA_MAIN_DOMAIN )); ?></p>
-                                        <select id="id-po-search-input" style="max-height: 31px;">
-											<?php foreach ( QAMain_Core::get_suppliers() as $tmp_supplier ) { ?>
-                                                <option value="<?php echo  esc_attr( $tmp_supplier['supplier_name'] ); ?>" <?php echo esc_attr( ( isset( $_GET['supplier'] ) && sanitize_text_field($_GET['supplier']) == $tmp_supplier['supplier_name'] ) ? 'selected' : '' ); ?>><?php echo  esc_html( $tmp_supplier['supplier_name'] ); ?></option>
-											<?php } ?>
-                                        </select>
-                                        <button class="btn btn-sm btn-info" style="margin-top: 1px;max-height: 30px;" onclick="search_supplier(); return false"><?php echo esc_html(__( 'Search', QA_MAIN_DOMAIN )); ?></button>
-                                    </div>
-                                    <p class="mg-b-20"></p>
-                                    <div class="row">
-                                        <div class="col-md-12 col">
-                                            <p class="mg-b-20"></p><br/>
-                                            <div id="table_2" style="width: 1050px"></div>
-                                            <div style="margin-top: 24px">
-												<?php if ( ! $show_form ): ?>
-                                                    <form id="id-create-po-form" method="post">
-                                                        <input type="hidden" name="po-data" id="id-po-data" value=""> <input type="button" onclick="create_po(); return false;" class="btn btn-success" value="<?php echo esc_html(__( 'Create PO', QA_MAIN_DOMAIN )); ?>"/>
-                                                    </form>
-												<?php endif; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-								<?php if ( $show_form ): ?>
-                                    <form style="max-width: 900px" method="post">
-										<?php
-										foreach ( $po_data as $product_id => $each_item ): ?>
-                                            <input type="hidden" name="product-qtys[<?php echo esc_attr((int) $product_id); ?>]" value="<?php echo esc_attr((int) $each_item['qty']); ?>"><input type="hidden" name="product-prices[<?php echo esc_attr((int) $product_id); ?>]" value="<?php echo  esc_attr( $each_item['cost_price'] ) ?>"><input type="hidden" name="product-names[<?php echo esc_attr((int) $product_id); ?>]" value="<?php echo  esc_attr( $each_item['name'] ) ?>">
-										<?php endforeach ?>
-                                        <input type="hidden" name="supplier_id" value="<?php echo esc_attr((int) $each_item['supplier_id']); ?>"> <input type="hidden" name="supplier_name" value="<?php echo  esc_attr( $each_item['supplier_name'] ) ?>"> <input type="hidden" name="supplier_address" value="<?php echo  esc_attr( $each_item['supplier_address'] ) ?>"> <input type="hidden" name="payment_terms" value="<?php echo  esc_attr( $each_item['payment_terms'] ) ?>"> <input type="hidden" name="delivery_terms" value="<?php echo  esc_attr( $each_item['delivery_terms'] ) ?>"> <input type="hidden" name="vendor_no" value="<?php echo  esc_attr( $each_item['vendor_no'] ) ?>"> <input type="hidden" name="vendor_vat" value="<?php echo  esc_attr( $each_item['vendor_vat'] ) ?>"> <input type="hidden" name="account_no" value="<?php echo  esc_attr( $each_item['account_no'] ) ?>"> <input type="hidden" name="account_id" value="<?php echo  esc_attr( $each_item['account_id'] ) ?>"> <input type="hidden" name="assigned_to" value="<?php echo  esc_attr( $each_item['assigned_to'] ) ?>">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label><?php echo esc_html(__( 'Deliver To:', QA_MAIN_DOMAIN )); ?></label>&nbsp;&nbsp;&nbsp;
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="r1"><?php echo esc_html(__( 'Warehouse', QA_MAIN_DOMAIN )); ?></label> <input type="radio" name="deliver_to" id="r1" value="warehouse" class="form-control" checked/>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label disabled="disabled" for="r2"><?php echo esc_html(__( 'Customer', QA_MAIN_DOMAIN )); ?></label> <input disabled="disabled" type="radio" name="deliver_to" id="r2" value="customer" class="form-control"/>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <select name="warehouse_id" class="form-control">
-													<?php foreach ( $warehouses as $warehouse ) { ?>
-                                                        <option value="<?php echo esc_attr((int) $warehouse['id']); ?>"><?php echo  esc_html( $warehouse['warehouse_name'] ) ?></option>
-													<?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label><?php echo esc_html(__( 'Purchase Order #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control" placeholder="Purchase Order #" name="purchase_order_num" value="<?php echo  esc_attr( get_option( 'sp.settings.po_prefix', 'PO-' ) ) ?><?php echo esc_html(sp_get_next_po()); ?>"/>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label><?php echo esc_html(__( 'Reference Number #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control" name="reference_number" readonly="readonly" placeholder="Reference Number #" value="RN-<?php echo  esc_attr( sp_get_next_rn() ) ?>"/>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label><?php echo esc_html(__( 'Order Date', QA_MAIN_DOMAIN )); ?>
-                                                </label> <input required="required" type="date" class="form-control" name="order_date" value="<?php echo esc_attr(date( 'Y-m-d' )); ?>"/>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label><?php echo esc_html(__( 'Expected Delivery Date', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="date" class="form-control" name="expected_delivery_date" value="<?php echo esc_attr(date( 'Y-m-d', $form_lead_time )); ?>"/>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label><?php echo  __( 'Description', QA_MAIN_DOMAIN ); ?>
-                                                </label> <textarea name="description" rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="margin-top: 24px">
-                                            <div class="col-md-3">
-                                                <input type="submit" class="btn btn-success" name="do-create-purchase-order" value="<?php echo esc_attr(__( 'Create Purchase Order', QA_MAIN_DOMAIN )); ?>"/>
-                                            </div>
-                                        </div>
-                                    </form>
-								<?php endif; ?>
+                        <div style="margin-top: 60px;">
+                            <p class="mg-b-20"></p>
+                            <div>
+                                <p class="select-supplier-po mb-3"><?php echo esc_html(__( 'Please select supplier to create Purchase Order with multiple items.', QA_MAIN_DOMAIN )); ?></p>
+                                <select class="select-for-search-po mb-1" id="id-po-search-input" style="max-height: 38px; max-width: 11%;">
+                                    <?php foreach ( QAMain_Core::get_suppliers() as $tmp_supplier ) { ?>
+                                        <option value="<?php echo  esc_attr( $tmp_supplier['supplier_name'] ); ?>" <?php echo esc_attr( ( isset( $_GET['supplier'] ) && sanitize_text_field($_GET['supplier']) == $tmp_supplier['supplier_name'] ) ? 'selected' : '' ); ?>><?php echo  esc_html( $tmp_supplier['supplier_name'] ); ?></option>
+                                    <?php } ?>
+                                </select>
+                                <!-- <button class="btn btn-sm btn-info" style="margin-top: 1px;max-height: 30px; font-family: 'Lato'; font-weight: 700; background: #F98AB1 !important;" onclick="search_supplier(); return false"><?php echo esc_html(__( 'Search', QA_MAIN_DOMAIN )); ?></button> -->
                             </div>
+        
+                            <div class="row">
+                                <div class="col-md-12 col">
+                                    <p class="mg-b-20"></p><br/>
+                                    <div id="table_2" style="width: 100%"></div>
+                                    <div style="margin-top: 24px">
+                                        <?php if ( ! $show_form ): ?>
+                                            <form id="id-create-po-form" method="post">
+                                                <input type="hidden" name="po-data" id="id-po-data" value=""> <input type="button" onclick="create_po(); return false;" style="width: 112px;" class="btn-for-po ml-3" value="<?php echo esc_html(__( 'Create PO', QA_MAIN_DOMAIN )); ?>"/>
+                                            </form>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if ( $show_form ): ?>
+                                <form style="max-width: 900px" method="post">
+                                    <?php
+                                    foreach ( $po_data as $product_id => $each_item ): ?>
+                                        <input type="hidden" name="product-qtys[<?php echo esc_attr((int) $product_id); ?>]" value="<?php echo esc_attr((int) $each_item['qty']); ?>"><input type="hidden" name="product-prices[<?php echo esc_attr((int) $product_id); ?>]" value="<?php echo  esc_attr( $each_item['cost_price'] ) ?>"><input type="hidden" name="product-names[<?php echo esc_attr((int) $product_id); ?>]" value="<?php echo  esc_attr( $each_item['name'] ) ?>">
+                                    <?php endforeach ?>
+                                    <input type="hidden" name="supplier_id" value="<?php echo esc_attr((int) $each_item['supplier_id']); ?>"> <input type="hidden" name="supplier_name" value="<?php echo  esc_attr( $each_item['supplier_name'] ) ?>"> <input type="hidden" name="supplier_address" value="<?php echo  esc_attr( $each_item['supplier_address'] ) ?>"> <input type="hidden" name="payment_terms" value="<?php echo  esc_attr( $each_item['payment_terms'] ) ?>"> <input type="hidden" name="delivery_terms" value="<?php echo  esc_attr( $each_item['delivery_terms'] ) ?>"> <input type="hidden" name="vendor_no" value="<?php echo  esc_attr( $each_item['vendor_no'] ) ?>"> <input type="hidden" name="vendor_vat" value="<?php echo  esc_attr( $each_item['vendor_vat'] ) ?>"> <input type="hidden" name="account_no" value="<?php echo  esc_attr( $each_item['account_no'] ) ?>"> <input type="hidden" name="account_id" value="<?php echo  esc_attr( $each_item['account_id'] ) ?>"> <input type="hidden" name="assigned_to" value="<?php echo  esc_attr( $each_item['assigned_to'] ) ?>">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label><?php echo esc_html(__( 'Deliver To:', QA_MAIN_DOMAIN )); ?></label>&nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="r1"><?php echo esc_html(__( 'Warehouse', QA_MAIN_DOMAIN )); ?></label> <input type="radio" name="deliver_to" id="r1" value="warehouse" class="form-control" checked/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label disabled="disabled" for="r2"><?php echo esc_html(__( 'Customer', QA_MAIN_DOMAIN )); ?></label> <input disabled="disabled" type="radio" name="deliver_to" id="r2" value="customer" class="form-control"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select name="warehouse_id" class="form-control">
+                                                <?php foreach ( $warehouses as $warehouse ) { ?>
+                                                    <option value="<?php echo esc_attr((int) $warehouse['id']); ?>"><?php echo  esc_html( $warehouse['warehouse_name'] ) ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label><?php echo esc_html(__( 'Purchase Order #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control" placeholder="Purchase Order #" name="purchase_order_num" value="<?php echo  esc_attr( get_option( 'sp.settings.po_prefix', 'PO-' ) ) ?><?php echo esc_html(sp_get_next_po()); ?>"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label><?php echo esc_html(__( 'Reference Number #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control" name="reference_number" readonly="readonly" placeholder="Reference Number #" value="RN-<?php echo  esc_attr( sp_get_next_rn() ) ?>"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label><?php echo esc_html(__( 'Order Date', QA_MAIN_DOMAIN )); ?>
+                                            </label> <input required="required" type="date" class="form-control" name="order_date" value="<?php echo esc_attr(date( 'Y-m-d' )); ?>"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label><?php echo esc_html(__( 'Expected Delivery Date', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="date" class="form-control" name="expected_delivery_date" value="<?php echo esc_attr(date( 'Y-m-d', $form_lead_time )); ?>"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label><?php echo  __( 'Description', QA_MAIN_DOMAIN ); ?>
+                                            </label> <textarea name="description" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 24px">
+                                        <div class="col-md-3">
+                                            <input type="submit" class="btn btn-success" name="do-create-purchase-order" value="<?php echo esc_attr(__( 'Create Purchase Order', QA_MAIN_DOMAIN )); ?>"/>
+                                        </div>
+                                    </div>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
+                <?php include __DIR__ . '/../' . "popups.php"; ?>
+
             </div>
         </div>
     </div>
@@ -665,4 +680,5 @@ require_once __DIR__ . '/../' . 'header.php'; ?>
                 : parseFloat(num).toFixed(2));
         }
     </script>
+
 <?php } ?>

@@ -730,8 +730,9 @@ slide is-expanded side-menu__item {
     align-items: center;
     color: #5b6e88;
     position: relative;
-    font-size: 13.5px;
-    line-height: 1;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "Lato";
     vertical-align: middle;
     font-weight: 400;
 }

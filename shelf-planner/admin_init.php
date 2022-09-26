@@ -29,6 +29,7 @@ class SPHD_Admin {
         }
         
         add_action('wp_ajax_get_page_bulk_products_sp', [__CLASS__, 'get_page_bulk_products_sp']);
+	    add_action('wp_ajax_get_leaderboards_rows', [__CLASS__, 'get_leaderboards_rows']);
         add_action('wp_ajax_save_bulk_products_settings_sp', [__CLASS__, 'save_bulk_products_settings_sp']);
         add_action( 'after_page_header', array(__CLASS__, 'add_header_menu') );
     }
@@ -79,8 +80,7 @@ class SPHD_Admin {
      */
     public static function include_scripts_styles() {
 
-	    $remove_pages = ['shelf_planner', 'sp_integrations', 'shelf_planner_retail_insights', 'shelf_planner_api_logs', 'shelf_planner_product_management', 'shelf_planner_purchase_orders', 'shelf_planner_po_create_po', 'shelf_planner_po_orders', 'shelf_planner_suppliers', 'shelf_planner_warehouses', 'quick_assortments_suppliers_page', 'shelf_planner_settings_forecast', 'shelf_planner_settings_po', 'shelf_planner_settings_product', 'shelf_planner_settings_store', 'shelf_planner_settings_category_mapping', 'shelf_planner_backorder'];
-
+	    $remove_pages = ['shelf_planner', 'sp_integrations', 'shelf_planner_retail_insights', 'shelf_planner_api_logs', 'shelf_planner_product_management', 'shelf_planner_purchase_orders', 'shelf_planner_po_create_po', 'shelf_planner_po_orders', 'shelf_planner_suppliers', 'shelf_planner_warehouses', 'quick_assortments_suppliers_page', 'shelf_planner_settings_forecast', 'shelf_planner_settings_po', 'shelf_planner_settings_product', 'shelf_planner_settings_store', 'shelf_planner_settings_category_mapping', 'shelf_planner_backorder', 'shelf_planner_home', 'shelf_planner_manage_store', 'shelf_planner_stock_detail', 'shelf_planner_suppliers_add_new', 'shelf_planner_warehouses_add_new', 'shelf_planner_overview_integrations', 'shelf_planner_my_account', 'shelf_planner_plans_payments', 'shelf_planner_order_proposals' ];
         if(isset($_GET['page']) && in_array($_GET['page'], $remove_pages)) {
 	        wp_enqueue_script( 'sp-wp-deactivation-message', plugin_dir_url( __FILE__ ) . 'assets/js/sp_deactivate.js', array(), time(), true );
 	        wp_enqueue_script( 'sp-moment', plugin_dir_url( __FILE__ ) . 'assets/js/moment.min.js', array( 'jquery' ), time(), false );
@@ -90,7 +90,10 @@ class SPHD_Admin {
 	        wp_enqueue_script( 'sp-custom', plugin_dir_url( __FILE__ ) . 'assets/js/custom.js', array( 'jquery' ), time(), false );
 	        wp_enqueue_script( 'sp-drag-n-drop-new', plugin_dir_url( __FILE__ ) . 'assets/js/drag-n-drop-new.js', array( 'jquery' ), time(), false );
 	        wp_enqueue_script( 'sp-tips', plugin_dir_url( __FILE__ ) . 'assets/protip/protip.min.js', array( 'jquery' ), time(), false );
-	        wp_enqueue_style( 'sp-tabulator-css', plugin_dir_url( __FILE__ ) . 'assets/tabulator.min.css' );
+          wp_enqueue_script( 'sp-popups', plugin_dir_url( __FILE__ ) . 'assets/js/new-design-popup.js', array( 'jquery' ), time(), true );
+          
+
+            wp_enqueue_style( 'sp-tabulator-css', plugin_dir_url( __FILE__ ) . 'assets/tabulator.min.css' );
 	        wp_enqueue_style( 'sp-icons-css', plugin_dir_url( __FILE__ ) . 'assets/css/icons.css' );
 	        //wp_enqueue_style( 'sp-sidebar-css', plugin_dir_url( __FILE__ ) . 'assets/plugins/sidebar/sidebar.css' );
 	        wp_enqueue_style( 'sp-style-css', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?48' );
@@ -99,8 +102,10 @@ class SPHD_Admin {
 	        wp_enqueue_style( 'sp-animate-css', plugin_dir_url( __FILE__ ) . 'assets/css/animate.css' );
 	        wp_enqueue_style( 'sp-closed-sidemenu-css', plugin_dir_url( __FILE__ ) . 'assets/css/closed-sidemenu.css' );
 	        wp_enqueue_style( 'sp-tips', plugin_dir_url( __FILE__ ) . 'assets/protip/protip.min.css' );
-
-	        wp_localize_script( 'sp-custom', 'admin', array(
+	        wp_enqueue_style( 'sp-styles-for-new-design', plugin_dir_url( __FILE__ ) . 'assets/sp-styles-for-new-design.css' );
+	        wp_enqueue_style( 'sp-quickassortments-css', plugin_dir_url( __FILE__ ) . 'assets/css/quickassortments.css' );
+          wp_enqueue_style( 'sp-new-des-ref', plugin_dir_url( __FILE__ ) . 'assets/css/style-for-new-design-sp.css' );
+          wp_localize_script( 'sp-custom', 'admin', array(
 		        'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		        'nonce' => wp_create_nonce( 'sp-nonce' )
 	        ) );
@@ -126,7 +131,17 @@ class SPHD_Admin {
         $tmp_hooks[] = add_submenu_page( null, __( 'Shelf Planner Settings', QA_MAIN_DOMAIN ), __( 'Product Settings', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_settings_product', array( __CLASS__, 'shelf_planner_settings_product_page' ), null );
         $tmp_hooks[] = add_submenu_page( null, __( 'Shelf Planner Settings', QA_MAIN_DOMAIN ), __( 'Store Settings', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_settings_store', array( __CLASS__, 'shelf_planner_settings_store_page' ), null );
         $tmp_hooks[] = add_submenu_page( null, __( 'Shelf Planner Settings', QA_MAIN_DOMAIN ), __( 'Category Settings', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_settings_category_mapping', array( __CLASS__, 'shelf_planner_settings_category_mapping_page' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Home', QA_MAIN_DOMAIN ), __( 'Home', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_home', array( __CLASS__, 'shelf_planner_home' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Manage Store', QA_MAIN_DOMAIN ), __( 'Manage Store', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_manage_store', array( __CLASS__, 'shelf_planner_manage_store' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Stock Detail', QA_MAIN_DOMAIN ), __( 'Stock Detail', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_stock_detail', array( __CLASS__, 'shelf_planner_stock_detail' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Add Supplier', QA_MAIN_DOMAIN ), __( 'Add Supplier', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_suppliers_add_new', array( __CLASS__, 'shelf_planner_suppliers_add_new' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Create New Warehouse', QA_MAIN_DOMAIN ), __( 'Create New Warehouse', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_warehouses_add_new', array( __CLASS__, 'shelf_planner_warehouses_add_new' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Overview Integrations', QA_MAIN_DOMAIN ), __( 'Overview Integrations', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_overview_integrations', array( __CLASS__, 'shelf_planner_overview_integrations' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'My Account', QA_MAIN_DOMAIN ), __( 'My Account', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_my_account', array( __CLASS__, 'shelf_planner_my_account' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Plans & Payments', QA_MAIN_DOMAIN ), __( 'Plans & Payments', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_plans_payments', array( __CLASS__, 'shelf_planner_plans_payments' ), null );
         $tmp_hooks[] = add_submenu_page( null, __( 'Backorder', QA_MAIN_DOMAIN ), __( 'Backorder', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_backorder', array( __CLASS__, 'shelf_planner_backorder' ), null );
+        $tmp_hooks[] = add_submenu_page( null, __( 'Order Proposals', QA_MAIN_DOMAIN ), __( 'Order Proposals', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner_order_proposals', array( __CLASS__, 'shelf_planner_order_proposals' ), null );
+	    $tmp_hooks[] = add_submenu_page( 'woocommerce', __( 'Inventory', QA_MAIN_DOMAIN ), __( 'Inventory', QA_MAIN_DOMAIN ), 'edit_others_posts', 'shelf_planner', array( __CLASS__, 'stock_analyses_page' ), null );
 
         foreach ($tmp_hooks as $hook){
             add_action( 'load-' . $hook, array(
@@ -136,13 +151,74 @@ class SPHD_Admin {
         }
 
     }
-
+    
     /**
-     * Retail Insights Page
+     * Backorder Page
      */
     public static function shelf_planner_backorder() {
         require_once __DIR__ . '/pages/backorder.php';
     }
+
+    /**
+     * Proposals Page
+     */
+    public static function shelf_planner_order_proposals() {
+      require_once __DIR__ . '/pages/po_proposals.php';
+  }
+
+        /**
+     * Plans & Payments
+     */
+    public static function shelf_planner_plans_payments() {
+      require_once __DIR__ . '/pages/plans_payments.php';
+  }
+
+        /**
+     * Overview Page
+     */
+    public static function shelf_planner_overview_integrations() {
+      require_once __DIR__ . '/pages/integrations_overview.php';
+  }
+
+    /**
+     * MyAcc Page
+     */
+    public static function shelf_planner_my_account() {
+      require_once __DIR__ . '/pages/my_account.php';
+  }
+
+        /**
+     * Add Supplier
+     */
+    public static function shelf_planner_suppliers_add_new() {
+      require_once __DIR__ . '/pages/new_supplier.php';
+  }
+
+  public static function shelf_planner_warehouses_add_new() {
+    require_once __DIR__ . '/pages/new_warehouses.php';
+}
+
+    /**
+     * Retail Insights Page
+     */
+    public static function shelf_planner_stock_detail() {
+      require_once __DIR__ . '/pages/stock_detail.php';
+  }
+
+
+        /**
+     * Home Page
+     */
+    public static function shelf_planner_home() {
+      require_once __DIR__ . '/pages/home.php';
+  }
+
+          /**
+     * Manage Store
+     */
+    public static function shelf_planner_manage_store() {
+      require_once __DIR__ . '/pages/manage_store.php';
+  }
 
 
     /**
@@ -219,6 +295,22 @@ class SPHD_Admin {
             'status' => 'true',
             'html' => $content
         ]);
+    }
+
+	/**
+	 * Get rows by selected count
+	 */
+    public static function get_leaderboards_rows()
+    {
+	    ob_start();
+	    $max_count = sanitize_text_field($_POST['max_count']);
+	    require_once __DIR__ . '/pages/ajax/home-leaderboards.php';
+	    $content = ob_get_clean();
+
+	    wp_send_json( [
+		    'status' => 'true',
+		    'html' => $content
+	    ]);
     }
 
     /**

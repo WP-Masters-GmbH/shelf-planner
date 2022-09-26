@@ -14,30 +14,39 @@ require_once __DIR__ . '/../' . 'header.php';
         <!-- main-content opened -->
         <div class="main-content horizontal-content">
             <div class="page">
+            <?php include __DIR__ . '/../' . "page_header.php"; ?>
                 <!-- container opened -->
-                <div class="container">
-	                <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
+                <div class="ml-40 mr-40">
+                  <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
                     <style>
                         .sp-settings-form p {
                             margin-top: 3%;
                             font-size: inherit;
                         }
                     </style>
-                    <h2><?php echo esc_html(__( 'Settings', QA_MAIN_DOMAIN )); ?></h2>
+                    <h2 class="purchase-or-title" style="margin-top: 64px;"><?php echo esc_html(__( 'Settings', QA_MAIN_DOMAIN )); ?></h2>
+                    <span class="purchase-or-subtitle"><?php echo esc_html(__( 'Here you can manage general settings for your store, forecast, orders, etc.', QA_MAIN_DOMAIN )); ?></span>
+                    <div class="d-flex nav-link-line" style="margin-top: 40px;">
+                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_store' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_store')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Store Settings', QA_MAIN_DOMAIN)); ?></span></a>
+                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_forecast' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_forecast')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Forecast Settings', QA_MAIN_DOMAIN)); ?></span></a>
+                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_product' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_product')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Product Settings', QA_MAIN_DOMAIN)); ?></span></a>
+                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_po' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_po')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('PO Settings', QA_MAIN_DOMAIN)); ?></span></a>
+                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_backorder' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_backorder')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Backorder', QA_MAIN_DOMAIN)); ?></span></a>
+                    </div>
                     <?php do_action( 'after_page_header' ); ?>
                     <?php if ( display_admin_part() == true ) include SP_PLUGIN_DIR_PATH . "pages/settings/tabs.php" ?>
-                    <div class="card">
-                        <div class="card-body">
-                            <h4><?php echo esc_html( __( 'Product Settings', QA_MAIN_DOMAIN ) ); ?></h4>
+                    <div>
+                        <div class="card-body" style="padding-left: 0;">
+                            <h4 class="purchase-or-title"><?php echo esc_html( __( 'Product Settings', QA_MAIN_DOMAIN ) ); ?></h4>
+                            <span class="purchase-or-subtitle"><?php echo esc_html(__( 'Product Settings are the parameters that help to calculate the right order proposals.', QA_MAIN_DOMAIN )); ?></span>
                             <p class="mg-b-20"></p>
-                            <p style="font-weight: bold; font-size: inherit; margin-bottom: 2em"><?php echo esc_html( __( 'Shelf Planner calculates an Ideal Stock per product based on your stores\' sales forecast.', QA_MAIN_DOMAIN ) ); ?></p>
+                            <p style="font-weight: bold; font-size: inherit; margin-bottom: 1em"><?php echo esc_html( __( 'Shelf Planner calculates an Ideal Stock per product based on your stores\' sales forecast.', QA_MAIN_DOMAIN ) ); ?></p>
                             <form method="post" id="id-settings-product-form">
-                                <p style="margin-bottom: 2em; font-size: inherit">
+                                <p style="margin-bottom: 1em; font-size: inherit">
                                     <input type="radio" name="po-stock-type" value="min_stock"
 										<?php echo esc_attr( $po_stock_type == 'min_stock' ? 'checked="checked"' : '' ); ?>
                                     /><?php echo esc_html( __( 'Use Min Stock threshold for my products instead of Ideal Stock when present', QA_MAIN_DOMAIN ) ); ?>
                                 </p>
-                                <p class="mg-b-20"></p>
                                 <p style="margin-bottom: 2em; font-size: inherit">
                                     <input type="radio" name="po-stock-type" value="ideal_stock"
 										<?php echo esc_attr( $po_stock_type == 'ideal_stock' ? 'checked="checked"' : '' ); ?>
@@ -45,12 +54,42 @@ require_once __DIR__ . '/../' . 'header.php';
                                     Proposals', QA_MAIN_DOMAIN ) ); ?>
                                 </p>
                                 <p class="mg-b-20"></p>
-                                <input style="margin-top: 2em" type="submit" class="btn btn-sm btn-success" value="<?php echo esc_attr( __( 'Save Settings', QA_MAIN_DOMAIN ) ); ?>" name="save-product-settings"/>
+                                <input style="margin-top: 2em" type="submit" class="button-settings-po mb-40" value="<?php echo esc_attr( __( 'Save Settings', QA_MAIN_DOMAIN ) ); ?>" name="save-product-settings"/>
                             </form>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="description-set">DESCRIPTION</span>
+                        <span class="description-set status-set">STATUS</span>
+                    </div>
+                    <div class="line first-line"></div>
+                    <div class="d-flex align-items-center justify-content-between" style="margin-right: 50px;">
+                      <div class="vert-pad-15">
+                        <h2 class="purchase-or-title fs-20 mt-0"><?php echo esc_html(__( 'Default Weeks of Stock', QA_MAIN_DOMAIN )); ?></h2>
+                        <span class="purchase-or-subtitle fs-14"><?php echo esc_html(__( 'Get the latest news, tools, and workflows powered by Shelf Planner delivered to your inbox monthly.', QA_MAIN_DOMAIN )); ?></span>
+                      </div>
+                      <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
+                      </div>
+                      <div class="line"></div>
+                      <div class="d-flex align-items-center justify-content-between" style="margin-right: 50px;">
+                      <div class="vert-pad-15">
+                        <h2 class="purchase-or-title fs-20 mt-0"><?php echo esc_html(__( 'Default Lead Time', QA_MAIN_DOMAIN )); ?></h2>
+                        <span class="purchase-or-subtitle fs-14"><?php echo esc_html(__( 'Here you can subscribe to news about our product releases, product updates and our development pipeline.', QA_MAIN_DOMAIN )); ?></span>
+                      </div>
+                      <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
+                      </div>
+                      <div class="line"></div>
+                      <div class="d-flex align-items-center justify-content-between" style="margin-right: 50px;">
+                      <div class="vert-pad-15">
+                        <h2 class="purchase-or-title fs-20 mt-0"><?php echo esc_html(__( 'Shelf Planner Offers', QA_MAIN_DOMAIN )); ?></h2>
+                        <span class="purchase-or-subtitle fs-14"><?php echo esc_html(__( 'Check this box if you would like to receive special offers from Shelf Planner.', QA_MAIN_DOMAIN )); ?></span>
+                      </div>
+                      <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
+                      </div>
+                      <div class="line"></div>
                 </div>
             </div>
+            <?php include __DIR__ . '/../' . "popups.php"; ?>
         </div>
     </div>
 </div>

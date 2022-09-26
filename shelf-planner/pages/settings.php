@@ -1,5 +1,8 @@
 <?php
 if ( ! empty( $_POST ) ) {
+	if ( isset( $_POST['save-backorder'] ) ) {
+		update_option( 'sp.backorder', isset( $_POST['backorder'] ) ? 'enable' : '' );
+	}
 	if ( isset( $_POST['save-store-settings'] ) ) {
 		update_option( 'sp.settings.business_model', sanitize_text_field( $_POST['business-model'] ) );
 		update_option( 'sp.settings.assortment_size', sanitize_text_field( $_POST['assortment-size'] ) );
@@ -150,7 +153,7 @@ require_once __DIR__ . '/../' . 'header.php';
                                 <p><?php echo  sp_settings_get_radio_2( 'A', 'my store has less than 250 products' ); ?></p>
                                 <p><?php echo  sp_settings_get_radio_2( 'B', 'my store has between 250 and 1000 products' ); ?></p>
                                 <p><?php echo  sp_settings_get_radio_2( 'C', 'my store has more than 1000 products' ); ?></p>
-                                <input style="margin-top: 2em" type="submit" class="btn btn-sm btn-success" value="<?php echo esc_attr( __( 'Save Settings', QA_MAIN_DOMAIN ) ); ?>" name="save-store-settings"/>
+                                <input style="margin-top: 2em" type="submit" class="new-des-btn save-set-btn" value="<?php echo esc_attr( __( 'Save Settings', QA_MAIN_DOMAIN ) ); ?>" name="save-store-settings"/>
                             </form>
                         </div>
                     </div>

@@ -9,6 +9,10 @@ jQuery(document).ready(function($) {
         get_products_sp();
     });
 
+    $("body").on("click","#toggle-select-rows-home",function() {
+        $('.select-rows-leaderboards').toggleClass('shows');
+    });
+
     $("body").on("input","#bulk-search-sp",function() {
         bulk_search = $(this).val();
         get_products_sp();
@@ -16,6 +20,24 @@ jQuery(document).ready(function($) {
 
     $("body").on("change",".filters-enabled input",function() {
         get_products_sp();
+    });
+
+    $("body").on("change","#inspector-select-control-2",function() {
+        $.ajax({
+            url: admin.ajaxurl,
+            data: {
+                'action': 'get_leaderboards_rows',
+                'max_count': $(this).val(),
+                'nonce': admin.nonce
+            },
+            type:'POST',
+            dataType: 'json',
+            success:function(response) {
+                if(response.status === 'true') {
+                    $('#leaderboards-rows-home').html(response.html);
+                }
+            }
+        });
     });
 
     function get_products_sp()

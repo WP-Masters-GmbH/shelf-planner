@@ -79,13 +79,19 @@ if ( $tmp ) {
             <!-- main-content opened -->
             <div class="main-content horizontal-content">
                 <div class="page">
+                <?php include __DIR__ . '/../' . "page_header.php"; ?>
                     <!-- container opened -->
-                    <div class="container">
-	                    <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
-                        <h2><?php echo esc_html(__( 'Suppliers', QA_MAIN_DOMAIN )); ?></h2>
+                    <div class="ml-40 mr-40">
+                    <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
+                        <h2 class="purchase-or-title"><?php echo esc_html(__( 'A breadcrumb is used to show hierarchy between content', QA_MAIN_DOMAIN )); ?></h2>
+                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'A breadcrumb is used to show hierarchy between content', QA_MAIN_DOMAIN )); ?></span>
+                        <div class="d-flex nav-link-line" style="margin-top: 40px;">
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Suppliers', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers_add_new' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers_add_new')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Create New Supplier', QA_MAIN_DOMAIN)); ?></span></a>
+                        </div>
                         <?php do_action( 'after_page_header' ); ?>
-                        <div class="card">
-                            <div class="card-body">
+                        <div>
+                            <div class="mt-30" style="margin-top: 60px !important;">
                                 <div class="main-content-label mg-b-5">
 									<?php echo esc_html( __( 'Add New', QA_MAIN_DOMAIN ) ); ?>
                                 </div>
@@ -93,10 +99,10 @@ if ( $tmp ) {
                                 <div class="row">
                                     <div class="col-md-12 col">
                                         <div style="float:left;text-align: left;margin-bottom: 5px; width:30%">
-                                            <button id="js-add-new" onclick="window.location = '<?php echo esc_url( get_admin_url() ); ?>admin.php?page=shelf_planner_suppliers&new';" class="btn btn-sm btn-success">Add New
+                                            <button id="js-add-new" onclick="window.location = '<?php echo esc_url( get_admin_url() ); ?>admin.php?page=shelf_planner_suppliers_add_new';" class="btn btn-sm btn-success">Add New
                                             </button>
                                         </div>
-                                        <div style="float:right;text-align: right;margin-bottom: 5px;width:70%">
+                                        <div style="float:right;margin-bottom: 5px;width:29%;text-align: right;">
                                             <button id="download-csv" class="btn btn-sm btn-info"><?php echo esc_html( __( 'Download CSV', QA_MAIN_DOMAIN ) ); ?>
                                             </button>
                                             <button id="download-json" class="btn btn-sm btn-info"><?php echo esc_html( __( 'Download JSON', QA_MAIN_DOMAIN ) ); ?>
@@ -106,7 +112,7 @@ if ( $tmp ) {
                                             <button id="download-html" class="btn btn-sm btn-info"><?php echo esc_html( __( 'Download HTML', QA_MAIN_DOMAIN ) ); ?>
                                             </button>
                                         </div>
-                                        <div id="table_1"></div>
+                                        <div id="table_1" style="width: 100%"></div>
                                         <script>
                                             //custom max min header filter
                                             var minMaxFilterEditor = function (cell, onRendered, success, cancel, editorParams) {
@@ -279,10 +285,9 @@ if ( $tmp ) {
                                 </div>
                             </div>
                         </div>
-                        <div class="card" <?php if ( ! isset( $_GET['supplier_id'] ) && ! isset( $_GET['new'] ) ) { ?>style="display: none"<?php } ?>>
-                            <div class="card-body">
+                        <div>
+                            <div class="card-body" style="padding-left: 0;">
                                 <div class="main-content-label mg-b-5">
-									<?php if ( ! isset( $_GET['supplier_id'] ) ) { ?>New<?php } ?><?php echo esc_html( __( 'Supplier Details', QA_MAIN_DOMAIN ) ); ?>
                                 </div>
                                 <p class="mg-b-20"></p>
                                 <div class="row">
@@ -328,8 +333,6 @@ if ( $tmp ) {
                                                         <input type="text" class="form-control" name="supplier_code" required="required" value="<?php echo  esc_attr( $supplier['supplier_code'] ); ?>" placeholder="Supplier Code*"/>
                                                         <label><?php echo esc_html( __( 'TAX / VAT Number', QA_MAIN_DOMAIN ) ); ?></label>
                                                         <input type="text" class="form-control" name="tax_vat_number" value="<?php echo  esc_attr( $supplier['tax_vat_number'] ); ?>" placeholder="TAX / VAT Number"/>
-                                                        <label><?php echo esc_html( __( 'Phone Number', QA_MAIN_DOMAIN ) ); ?></label>
-                                                        <input type="text" class="form-control" name="phone_number" value="<?php echo  esc_attr( $supplier['phone_number'] ); ?>" placeholder="Phone Number"/>
                                                         <label><?php echo esc_html( __( 'Website', QA_MAIN_DOMAIN ) ); ?></label>
                                                         <input type="text" class="form-control" name="website" value="<?php echo  esc_attr( $supplier['website'] ); ?>" placeholder="Website"/>
                                                         <label><?php echo esc_html( __( 'Email for Ordering', QA_MAIN_DOMAIN ) ); ?>*</label>
@@ -337,7 +340,7 @@ if ( $tmp ) {
                                                         <label><?php echo esc_html( __( 'General Email Address', QA_MAIN_DOMAIN ) ); ?></label>
                                                         <input type="text" class="form-control" name="general_email_address" value="<?php echo  esc_attr( $supplier['general_email_address'] ); ?>" placeholder="General Email Address"/> <label><?php echo esc_html( __( 'Description', QA_MAIN_DOMAIN ) ); ?></label>
                                                         <textarea class="form-control" name="description" placeholder="Description"><?php echo  esc_textarea( $supplier['description'] ); ?></textarea> <br>
-                                                        <input type="submit" class="btn btn-success" value="<?php if ( ! isset( $_GET['supplier_id'] ) ) { ?>Add New Supplier<?php } else { ?>Save<?php } ?>"/>
+                                                        <input type="submit" class="btn btn-success new-des-btn" value="<?php if ( ! isset( $_GET['supplier_id'] ) ) { ?>Add New Supplier<?php } else { ?>Save<?php } ?>"/>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label><?php echo esc_html( __( 'Currency', QA_MAIN_DOMAIN ) ); ?>
@@ -356,6 +359,8 @@ if ( $tmp ) {
                                                         </label> <input type="text" class="form-control" name="account_id" value="<?php echo  esc_attr( $supplier['account_id'] ); ?>" placeholder="Account ID"/>
                                                     </div>
                                                     <div class="col-md-4">
+                                                    <label><?php echo esc_html( __( 'Phone', QA_MAIN_DOMAIN ) ); ?></label>
+                                                    <input type="text" class="form-control" name="phone_number" value="<?php echo  esc_attr( $supplier['phone_number'] ); ?>" placeholder="Phone"/>
                                                         <label><?php echo esc_html( __( 'Assigned To', QA_MAIN_DOMAIN ) ); ?></label>
                                                         <input type="text" class="form-control" name="assigned_to" required="required" value="<?php echo  esc_attr( $supplier['assigned_to'] ); ?>" placeholder="Assigned To"/>
                                                         <label><?php echo esc_html( __( 'Ship To Location', QA_MAIN_DOMAIN ) ); ?></label>
@@ -376,10 +381,12 @@ if ( $tmp ) {
                                     </div>
                                 </div>
                             </div>
+                            <?php include __DIR__ . '/../' . "popups.php"; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 <?php require_once __DIR__ . '/../' . 'footer.php';

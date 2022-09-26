@@ -20,80 +20,122 @@
             position: absolute;
             left: 0;
         }
+
+        .side-menu__label, .side-menu__item {
+            color: #EBEBEB !important;
+        }
+
+        .side-menu__item.active .side-menu__label {
+          color: #EBEBEB !important;
+        }
+
+        .side-menu__item.active, .side-menu__label:hover, .side-menu__item:hover, .side-menu__item:focus {
+          color: #EBEBEB !important;
+        }
+
+        .slide:hover .side-menu__label, .slide:hover .angle, .slide:hover .side-menu__icon {
+          color: #EBEBEB !important;
+          fill: #EBEBEB !important;
+        }
+
+        .side-menu__label {
+          font-family: 'Lato' !important;
+          font-weight: 700 !important;
+          font-size: 14px !important;
+          line-height: 20px !important;
+        }
+
+        .app-sidebar .slide .side-menu__item.active::before {
+          background: none !important;
+        }
+
+        .svg-inline--fa {
+          display: none !important;
+        }
+
+.sidebar-title {
+  font-family: "Lato";
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 24px;
+  color: #FFF;
+  margin-left: 32px;
+  margin-bottom: 10px;
+}
+
+.side-menu .slide .side-menu__item {
+  padding: 10px 20px 10px 32px;
+}
+
+.active > .side-menu .slide .side-menu__item {
+  padding: 10px 22px 10px 10px !important;
+}
+
+.active {
+    padding: 10px 22px 10px 10px !important;
+    margin: 0 20px 0 20px !important;
+    background-color: #874C5F !important;
+    border: 1px solid #707070;
+    border-radius: 4px !important;
+    display: flex;
+    height: 40px;
+}
+
+.app-sidebar {
+  width: 260px;
+  z-index: 1000000;
+}
+
+@media (max-width: 1400px) {
+  .app-sidebar {
+    width: 20%;
+  }
+}
+
     </style>
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <aside class="app-sidebar sidebar-scroll">
-        <div class="main-sidebar-header active">
-            <a class="desktop-logo logo-light active" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><img src="<?php echo esc_url(plugin_dir_url(__FILE__)); ?>assets/img/brand/logo.png?1" class="main-logo" style="width: 199px; height: 28px;" alt="logo"></a>
-        </div>
+    <aside class="app-sidebar sidebar-scroll" style="background: #131313">
+
         <div class="main-sidemenu">
             <ul class="side-menu">
-                <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_retail_insights') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_retail_insights')); ?>"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Store Performance', QA_MAIN_DOMAIN)); ?></span></a>
+                <li class="slide d-flex" style="margin-bottom: 25px;">
+                    <a class="side-menu__item" href="<?php echo esc_url(admin_url('admin.php?page=wc-admin')); ?>">
+                    <svg style="margin-right: 10px" xmlns="http://www.w3.org/2000/svg" width="7.339" height="13.264" viewBox="0 0 7.339 13.264"><g transform="translate(3778.779 -2967.459) rotate(-45)"><line x2="8.379" transform="translate(-4774.5 -568.5)" fill="none" stroke="#b8b8b8" stroke-width="2"/><line x2="8.379" transform="translate(-4774.5 -568.5) rotate(90)" fill="none" stroke="#b8b8b8" stroke-width="2"/></g></svg>
+                    <span style="color: #B8B8B8 !important" class="side-menu__label"><?php echo esc_html(__('WooCommerce Home', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
+
+                <h2 class="sidebar-title">Inventory</h2>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><i class="fa fa-tachometer"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Stock Analyses', QA_MAIN_DOMAIN)); ?></span></a>
-                </li>
-                <li class="sub-slide">
-                    <a class="side-menu__item" href="#" onclick="jQuery('#id-menu-po-root').slideToggle(); return false;"><i class="fa
-                    fa-tasks"></i>&nbsp; &nbsp;<span class="side-menu__label"><?php echo esc_html(__('Purchase Orders', QA_MAIN_DOMAIN)); ?></span></a>
-                    <ul style="<?php echo esc_attr(in_array(sanitize_text_field($_GET['page']), array(
-                                    'shelf_planner_purchase_orders',
-                                    'shelf_planner_po_create_po',
-                                    'shelf_planner_po_orders',
-                                )) ? '' : 'display: none'); ?>" id="id-menu-po-root" class="side-menu">
-                        <li class="slide">
-                            <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_po_create_po' ? 'sub-slide_active active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_po_create_po')); ?>"><span style="margin-left: 12px" class="side-menu__label"> <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;<?php echo esc_html(__('New Order', QA_MAIN_DOMAIN)); ?></span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_po_orders' ? 'sub-slide_active active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_po_orders')); ?>"><span style="margin-left: 12px" class="side-menu__label"> <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;<?php echo esc_html(__('Orders History', QA_MAIN_DOMAIN)); ?></span></a>
-                        </li>
-                    </ul>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_home') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_home')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Home (!)', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers')); ?>"><i class="fa fa-truck"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Suppliers', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Inventory (!)', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_warehouses' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_warehouses')); ?>"><i class="fa fa-archive"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Warehouses', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_order_proposals' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_order_proposals')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Purchase Orders', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_product_management' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_product_management')); ?>"><i class="fa fa-database"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Product Management', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_product_management' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_product_management')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Product Management', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_backorder' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_backorder')); ?>"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Backorder', QA_MAIN_DOMAIN)); ?></span></a>
-                </li>
-                <li class="sub-slide">
-                    <a class="side-menu__item" href="#" onclick="jQuery('#id-menu-settings-root').slideToggle(); return false"><i class="fa fa-wrench"></i>&nbsp; &nbsp;<span class="side-menu__label"><?php echo esc_html(__('Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                    <ul style="<?php echo esc_attr(in_array(sanitize_text_field($_GET['page']), array(
-                                    'shelf_planner_settings_forecast',
-                                    'shelf_planner_settings_po',
-                                    'shelf_planner_settings_product',
-                                    'shelf_planner_settings_store',
-                                    'shelf_planner_settings_category_mapping',
-                                )) ? '' : 'display: none'); ?>" id="id-menu-settings-root" class="side-menu">
-                        <li class="slide">
-                            <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_forecast' ? 'sub-slide_active active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_forecast')); ?>"><span style="margin-left: 12px" class="side-menu__label"> <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;<?php echo esc_html(__('Forecast Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_po' ? 'sub-slide_active active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_po')); ?>"><span style="margin-left: 12px" class="side-menu__label"> <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;<?php echo esc_html(__('PO Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_product' ? 'sub-slide_active active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_product')); ?>"><span style="margin-left: 12px" class="side-menu__label"> <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;<?php echo esc_html(__('Product Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_store' ? 'sub-slide_active active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_store')); ?>"><span style="margin-left: 12px" class="side-menu__label"> <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;<?php echo esc_html(__('Store Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        </li>
-                        <li class="slide">
-                            <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_category_mapping' ? 'sub-slide_active active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_category_mapping')); ?>"><span style="margin-left: 12px" class="side-menu__label"> <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;<?php echo esc_html(__('Category Mapping', QA_MAIN_DOMAIN)); ?></span></a>
-                        </li>
-                    </ul>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Suppliers', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'sp_integrations' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=sp_integrations')); ?>"><i class="fa fa-cloud-upload"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Integrations', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_warehouses' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_warehouses')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Warehouses', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item" href="<?php echo esc_url(admin_url('')); ?>"><i class="fa fa-reply-all"></i>&nbsp;&nbsp;<span class="side-menu__label"><?php echo esc_html(__('Exit to WP Admin', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_overview_integrations' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_overview_integrations')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Integrations (!)', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_store' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_store')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Settings', QA_MAIN_DOMAIN)); ?></span></a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item" href="#"><span class="side-menu__label"><?php echo esc_html(__('Help Center (!!)', QA_MAIN_DOMAIN)); ?></span></a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_my_account' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_my_account')); ?>"><span class="side-menu__label"><?php echo esc_html(__('My Account (!!)', QA_MAIN_DOMAIN)); ?></span></a>
+              </li>
+
             </ul>
         </div>
     </aside><!-- main-sidebar -->
@@ -102,5 +144,4 @@
             jQuery("#id-menu-settings-root").slideToggle();
         }
     </script>
-
 <?php endif; ?>

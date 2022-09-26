@@ -62,6 +62,44 @@ if ( $tmp ) {
 
 ?>
 <?php require_once __DIR__ . '/../' . 'header.php'; ?>
+<style>
+  .tabulator .tabulator-header .tabulator-col {
+    background: #F9FAFB !important;
+  }
+
+  .tabulator {
+    width: 1056px;
+  }
+
+  .tabulator .tabulator-header .tabulator-col {
+    border: none;
+    text-align: center;
+  }
+
+  .tabulator .tabulator-header .tabulator-col {
+    background: #F9FAFB !important;
+  }
+
+  .tabulator .tabulator-header {
+    background: #F9FAFB !important;
+    padding: 7.5px 0;
+  }
+
+  .tabulator-col-title {
+    font-family: "Lato";
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  input {
+    display: none;
+  }
+
+  .tabulator-col-sorter {
+    display: none !important;
+  }
+</style>
 
     <div class="sp-admin-overlay">
 
@@ -73,29 +111,28 @@ if ( $tmp ) {
             <div class="main-content horizontal-content">
 
                 <div class="page">
+                <?php include __DIR__ . '/../' . "page_header.php"; ?>
                     <!-- container opened -->
-                    <div class="container">
+                    <div class="ml-40 mr-40">
 	                    <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
 
-                        <h2><?php echo esc_html(__( 'Warehouses', QA_MAIN_DOMAIN )); ?></h2>
+                        <h2 class="purchase-or-title"><?php echo esc_html(__( 'Warehouses', QA_MAIN_DOMAIN )); ?></h2>
+
+                        <div class="d-flex nav-link-line" style="margin-top: 40px;">
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_warehouses' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_warehouses')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Warehouses', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_warehouses_add_new' ? 'not-active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_warehouses_add_new')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Create New Warehouse', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_warehouses_add_new' ? 'not-active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_warehouses')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Settings', QA_MAIN_DOMAIN)); ?></span></a>
+                        </div>
                         <?php do_action( 'after_page_header' ); ?>
 
-                        <div class="card">
-                            <div class="card-body">
+                        <div>
+                            <div class="card-body" style="padding-left: 0 !important; margin-top: 30px;">
                                 <div class="main-content-label mg-b-5">
-									<?php echo esc_html( __( 'Add New', QA_MAIN_DOMAIN ) ); ?>
                                 </div>
                                 <p class="mg-b-20"></p>
                                 <div class="row">
                                     <div class="col-md-12 col">
 
-                                        <div style="text-align: left; margin-bottom:
-										5px">
-                                            <button id="js-add-new"
-                                                    onclick="window.location = '<?php echo esc_url( get_admin_url() ); ?>admin.php?page=shelf_planner_warehouses&new';"
-                                                    class="btn btn-sm btn-success">Add New
-                                            </button>
-                                        </div>
                                         <div id="table_1"></div>
 
                                         <script>
@@ -192,7 +229,6 @@ if ( $tmp ) {
                                                     {
                                                         title: "<?php echo __( 'Email', QA_MAIN_DOMAIN );?>",
                                                         field: "warehouse_email",
-                                                        headerFilter: "input",
                                                         formatter: "link",
                                                         formatterParams: {
                                                             labelField: "email_for_ordering",
@@ -228,7 +264,7 @@ if ( $tmp ) {
                         </div>
 
                         <div class="card"
-						     <?php if ( ! isset( $_GET['warehouse_id'] ) && ! isset( $_GET['new'] ) ) { ?>style="display: none"<?php } ?>>
+    <?php if ( ! isset( $_GET['warehouse_id'] ) && ! isset( $_GET['new'] ) ) { ?>style="display: none"<?php } ?>>
                             <div class="card-body">
                                 <div class="main-content-label mg-b-5">
 									<?php if ( ! isset( $_GET['warehouse_id'] ) ) { ?>New <?php }
@@ -342,6 +378,7 @@ if ( $tmp ) {
                             </div>
                         </div>
                     </div>
+                    <?php include __DIR__ . '/../' . "popups.php"; ?>
                 </div>
             </div>
         </div>

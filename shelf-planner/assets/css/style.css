@@ -83,6 +83,7 @@ License        :   Licensed under ThemeForest License
 /* ######## FONT ######## */
 /* ############### FONTS IMPORT ############### */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900");
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,500,700,900");
 
 /* ######## BOOTSTRAP ######## */
 /*Color variables*/
@@ -84401,7 +84402,40 @@ a.text-dark:focus {
 .filters-enabled > div {
     margin-right: 15px;
     line-height: 15px;
+}
 
 .filters-enabled > div label {
     margin: 0;
+}
+
+body {
+    font-family: "Lato" !important;
+}
+
+.td-set-forecast {
+    font-family: "Lato" !important;
+    font-size: 14px !important;
+    opacity: 1 !important;
+}
+
+label {
+    font-size: 14px !important;
+}
+
+.sphd-p {
+    font-size: 14px !important;
+}
+
+.select-rows-leaderboards {
+    position: absolute;
+    display: none;
+}
+
+.select-rows-leaderboards.shows {
+    display: block;
+}
+
+.filters-enabled > div {
+    margin-right: 15px;
+    line-height: 30px !important;
 }
