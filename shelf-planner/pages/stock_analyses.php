@@ -20,20 +20,57 @@ function sp_calc_stock_analyses() {
 		'order_value_cost'     => 0,
 		'order_value_retail'   => 0,
 		'weeks_to_stock_out'   => 0,
+		'sales_l26w'           => 0,
+		'sales_l8w'            => 0,
 		'sales_l4w'            => 0,
 		'sales_n4w'            => 0,
+		'sales_n8w'            => 0,
+		'sales_n26w'           => 0,
+        'backorders'           => 0,
+        'stock_value' => 0
 	);
+
+	// Calculate Backorders count
+	$backorders = wc_get_orders(array(
+			'limit' => -1,
+			'type' => 'shop_order',
+			'status' => array('wc-backordered'),
+		)
+	);
+
+	$backorders_stats = [];
+	foreach($backorders as $backorder) {
+	    $back_order = wc_get_order($backorder->ID);
+
+		// Get and Loop Over Order Items
+		foreach ( $back_order->get_items() as $item ) {
+
+		    // Add Stats to Products
+			$product_id = $item->get_product_id();
+			$quantity = $item->get_quantity();
+			$backorders_stats['products'][$product_id] = isset($backorders_stats['products'][$product_id]) ? $backorders_stats['products'][$product_id] + $quantity : $quantity;
+
+			// Add Stats tp Categories
+			$terms = get_the_terms ( $product_id, 'product_cat' );
+			if(!empty($terms)) {
+				foreach ( $terms as $term ) {
+					$backorders_stats['categories'][$term->id] = isset($backorders_stats['categories'][$term->id]) ? $backorders_stats['categories'][$term->id] + $quantity : $quantity;;
+				}
+            }
+        }
+    }
 
 	foreach ( $categories as $category_id => &$categories_item ) {
 		$categories_item = array(
 			'term_id' => $category_id,
 			'name'    => htmlspecialchars_decode( $categories_item ),
-			'cat_url' => get_term_link( (int) $category_id, 'product_cat' )
+			'cat_url' => get_term_link( (int) $category_id, 'product_cat' ),
+            'backorders' => isset($backorders_stats['categories'][$category_id]) ? $backorders_stats['categories'][$category_id] : 0
 		);
 		$categories_item = array_merge( $categories_item, $category_fields );
 	}
 
-	foreach ( $products_data as $product_id => $product_item ) {
+	foreach ( $products_data as $product_id => &$product_item ) {
 		if ( $product_item['sp_primary_category'] == 0 ) {
 			$category_id = \QAMain_Core::get_product_primary_category_id( $product_id );
 			$wpdb->update( $wpdb->product_settings, array( 'sp_primary_category' => $category_id ), array( 'product_id' => $product_item['term_id'] ) );
@@ -43,13 +80,25 @@ function sp_calc_stock_analyses() {
 
 		$group_by = &$categories[ $category_id ];
 
+		$product_item['backorders'] = isset($backorders_stats['products'][$product_item['term_id']]) ? $backorders_stats['products'][$product_item['term_id']] : 0;
+		$product_item['sales_l26w'] = get_last_orders_by_week(26, $product_item['term_id']);
+		$product_item['sales_l8w'] = get_last_orders_by_week(8, $product_item['term_id']);
+		$product_item['sales_n8w'] = $product_item['next_8_weeks'];
+		$product_item['sales_n26w'] = $product_item['next_26_weeks'];
+		$product_item['stock_value'] = intval(get_post_meta( $product_item['term_id'], '_stock', true )) * intval($product_item['cost_price']);
+
+        $group_by['stock_value']          += intval( $product_item['stock_value'] );
 		$group_by['ideal_stock']          += intval( $product_item['ideal_stock'] );
 		$group_by['current_stock']        += intval( $product_item['current_stock'] );
 		$group_by['inbound_stock']        += intval( $product_item['inbound_stock'] );
 		$group_by['order_proposal_units'] += intval( $product_item['order_proposal_units'] );
 		$group_by['weeks_to_stock_out']   += intval( $product_item['weeks_to_stock_out'] );
+		$group_by['sales_l26w']           += intval($product_item['sales_l26w']);
+		$group_by['sales_l8w']            += intval($product_item['sales_l8w']);
 		$group_by['sales_l4w']            += intval( $product_item['sales_l4w'] );
 		$group_by['sales_n4w']            += floatval( $product_item['sales_n4w'] );
+		$group_by['sales_n8w']            += floatval( $product_item['next_8_weeks'] );
+		$group_by['sales_n26w']           += floatval( $product_item['next_26_weeks'] );
 
 		$group_by['order_value_cost']   += floatval( $product_item['order_value_cost'] );
 		$group_by['order_value_retail'] += floatval( $product_item['order_value_retail'] );
@@ -116,83 +165,78 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                             }
                         </style>
                         <h2 class="purchase-or-title"><?php echo esc_html(__( 'Inventory', QA_MAIN_DOMAIN )); ?></h2>
-                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'A breadcrumb is used to show hierarchy between content', QA_MAIN_DOMAIN )); ?></span>
+                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'Manage, analyse and control your current and incoming stock, backorders and safety stock.', QA_MAIN_DOMAIN )); ?></span>
                         <div class="d-flex nav-link-line" style="margin-top: 40px;">
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Perfomance', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_inventory' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_inventory')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Analyses', QA_MAIN_DOMAIN)); ?></span></a>
                           <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_manage_store' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_manage_store')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Manage Inventory', QA_MAIN_DOMAIN)); ?></span></a>
                           <!-- <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Detail', QA_MAIN_DOMAIN)); ?></span></a> -->
                         </div>
                         <h2 class="purchase-or-title" style="margin-top: 50px;"><?php echo esc_html(__( 'Stock Analyses', QA_MAIN_DOMAIN )); ?></h2>
+                        <?php
+                            $first_columns = ['term_id', 'name', 'ideal_stock', 'current_stock', 'inbound_stock', 'order_proposal_units', 'sales_l4w', 'sales_n4w', 'weeks_to_stock_out'];
+                        ?>
                         <div class="filters-enabled mt-20 mb-20">
-                                            <div class="filter-groupe">
-                                                <input id="product_id_input" type="checkbox" value="product_id" <?php if(in_array('product_id', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="product_id_input">Product ID</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="product_product_name_input" type="checkbox" value="product_product_name" <?php if(in_array('product_product_name', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="product_product_name_input">Product Name</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_supplier_id_input" type="checkbox" value="sp_supplier_id" <?php if(in_array('sp_supplier_id', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_supplier_id_input">Supplier</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_ideal_stock_input" type="checkbox" value="sp_ideal_stock" <?php if(in_array('sp_ideal_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_ideal_stock_input">Ideal Stock</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_current_stock_input" type="checkbox" value="sp_current_stock" <?php if(in_array('sp_current_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_current_stock_input">Current Stock</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_inbound_stock_input">Inbound Stock</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_product_replenishment_date_input" type="checkbox" value="sp_product_replenishment_date" <?php if(in_array('sp_product_replenishment_date', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_product_replenishment_date_input">Replenishment Date</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock_limit', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_inbound_stock_input">Inbound Stock Limit</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_backorders_input" type="checkbox" value="sp_backorders" <?php if(in_array('sp_backorders', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_backorders_input">Backorders</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_order_proposal_units_input" type="checkbox" value="sp_order_proposal_units" <?php if(in_array('sp_order_proposal_units', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_order_proposal_units_input">Order Proposal Units</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_sales_l26w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l26w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_sales_l26w_input">Sales L26W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_sales_l8w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l8w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_sales_l8w_input">Sales L8W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_sales_l4w_input" type="checkbox" value="sp_sales_l4w" <?php if(in_array('sp_sales_l4w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_sales_l4w_input">Sales L4W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_forecast_26w_input" type="checkbox" value="sp_forecast_26w" <?php if(in_array('sp_forecast_26w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_forecast_26w_input">Forecast N26W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_forecast_8w_input" type="checkbox" value="sp_forecast_8w" <?php if(in_array('sp_forecast_8w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_forecast_8w_input">Forecast N8W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_forecast_4w_input" type="checkbox" value="sp_forecast_4w" <?php if(in_array('sp_forecast_4w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_forecast_4w_input">Forecast N4W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_weeks_out_of_stock_input" type="checkbox" value="sp_weeks_out_of_stock" <?php if(in_array('sp_weeks_out_of_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_weeks_out_of_stock_input">Weeks To Stock Out</label>
-                                            </div>
-                                        </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="product_id_input" type="checkbox" value="term_id" <?php if(in_array('term_id', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="product_id_input">Product ID</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="product_product_name_input" type="checkbox" value="name" <?php if(in_array('name', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="product_product_name_input">Category</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="product_stock_value_input" type="checkbox" value="stock_value" <?php if(in_array('stock_value', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="product_stock_value_input">Stock Value</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_ideal_stock_input" type="checkbox" value="ideal_stock" <?php if(in_array('ideal_stock', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_ideal_stock_input">Ideal Stock</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_current_stock_input" type="checkbox" value="current_stock" <?php if(in_array('current_stock', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_current_stock_input">Current Stock</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_inbound_stock_input" type="checkbox" value="inbound_stock" <?php if(in_array('inbound_stock', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_inbound_stock_input">Inbound Stock</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_backorders_input" type="checkbox" value="backorders" <?php if(in_array('backorders', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_backorders_input">Backorders</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_order_proposal_units_input" type="checkbox" value="order_proposal_units" <?php if(in_array('order_proposal_units', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_order_proposal_units_input">Order Proposal Units</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_sales_l26w_input" type="checkbox" value="sales_l26w" <?php if(in_array('sales_l26w', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_sales_l26w_input">Sales L26W</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_sales_l8w_input" type="checkbox" value="sales_l8w" <?php if(in_array('sales_l8w', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_sales_l8w_input">Sales L8W</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_sales_l4w_input" type="checkbox" value="sales_l4w" <?php if(in_array('sales_l4w', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_sales_l4w_input">Sales L4W</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_forecast_26w_input" type="checkbox" value="sales_n26w" <?php if(in_array('sales_n26w', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_forecast_26w_input">Forecast N26W</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_forecast_8w_input" type="checkbox" value="sales_n8w" <?php if(in_array('sales_n8w', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_forecast_8w_input">Forecast N8W</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_forecast_4w_input" type="checkbox" value="sales_n4w" <?php if(in_array('sales_n4w', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_forecast_4w_input">Forecast N4W</label>
+                            </div>
+                            <div class="filter-groupe first-table-select-column">
+                                <input id="sp_weeks_out_of_stock_input" type="checkbox" value="weeks_to_stock_out" <?php if(in_array('weeks_to_stock_out', $first_columns)) {echo esc_attr('checked');}?>>
+                                <label for="sp_weeks_out_of_stock_input">Weeks To Stock Out</label>
+                            </div>
+                        </div>
                         <?php do_action( 'after_page_header' ); ?>
 						<?php
 
@@ -297,7 +341,6 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                                             return true; //must return a boolean, true if it passes the filter.
                                         }
 
-
                                         var tabledata = <?php echo json_encode( $categories_data );?>;
 
                                         var table = new Tabulator("#table_1", {
@@ -332,6 +375,23 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                                                         target: "_blank",
                                                         urlField: "cat_url"
                                                     }
+                                                },
+                                                {
+                                                    title: "Backorders",
+                                                    field: "backorders",
+                                                    hozAlign: "left",
+                                                    headerFilter: "input",
+                                                    visible: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Stock Value', QA_MAIN_DOMAIN );?>",
+                                                    field: "stock_value",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
                                                 },
                                                 {
                                                     title: "<?php echo __( 'Ideal Stock', QA_MAIN_DOMAIN );?>",
@@ -379,6 +439,28 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                                                     */
                                                 },
                                                 {
+                                                    title: "<?php echo __( 'Sales L26W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_cost",
+                                                    field: "sales_l26w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Sales L8W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_cost",
+                                                    field: "sales_l8w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
+                                                },
+                                                {
                                                     title: "<?php echo __( 'Sales L4W', QA_MAIN_DOMAIN );?>",
                                                     // field: "order_value_cost",
                                                     field: "sales_l4w",
@@ -397,6 +479,28 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                                                     headerFilter: minMaxFilterEditor,
                                                     headerFilterFunc: minMaxFilterFunction,
                                                     headerFilterLiveFilter: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Forecast N8W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_retail",
+                                                    field: "sales_n8w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Forecast N26W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_retail",
+                                                    field: "sales_n26w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
                                                 },
                                                 {
                                                     title: "<?php echo __( 'Weeks to Stock Out', QA_MAIN_DOMAIN );?>",
@@ -444,74 +548,73 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                             </div>
                         </div>
                         <div style="margin-top: 100px">
+	                        <?php
+	                            $two_columns = ['term_id', 'name', 'ideal_stock', 'current_stock', 'inbound_stock', 'order_proposal_units', 'sales_l4w', 'sales_n4w', 'weeks_to_stock_out'];
+	                        ?>
                         <div class="filters-enabled mt-20 mb-20">
-                                        <div class="filter-groupe">
-                                            <input id="product_id_input" type="checkbox" value="product_id" <?php if(in_array('product_id', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="product_id_input">Product ID</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="product_id_input_two" type="checkbox" value="term_id" <?php if(in_array('term_id', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="product_id_input_two">Product ID</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="product_product_name_input" type="checkbox" value="product_product_name" <?php if(in_array('product_product_name', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="product_product_name_input">Product Name</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="product_product_name_input_two" type="checkbox" value="name" <?php if(in_array('name', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="product_product_name_input_two">Product Name</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_supplier_id_input" type="checkbox" value="sp_supplier_id" <?php if(in_array('sp_supplier_id', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_supplier_id_input">Supplier</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_supplier_id_input_two" type="checkbox" value="supplier_name" <?php if(in_array('supplier_name', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_supplier_id_input_two">Supplier</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_ideal_stock_input" type="checkbox" value="sp_ideal_stock" <?php if(in_array('sp_ideal_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_ideal_stock_input">Ideal Stock</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="product_stock_value_input_two" type="checkbox" value="stock_value" <?php if(in_array('stock_value', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="product_stock_value_input_two">Stock Value</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_current_stock_input" type="checkbox" value="sp_current_stock" <?php if(in_array('sp_current_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_current_stock_input">Current Stock</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_ideal_stock_input_two" type="checkbox" value="ideal_stock" <?php if(in_array('ideal_stock', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_ideal_stock_input_two">Ideal Stock</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_inbound_stock_input">Inbound Stock</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_current_stock_input_two" type="checkbox" value="current_stock" <?php if(in_array('current_stock', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_current_stock_input_two">Current Stock</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_product_replenishment_date_input" type="checkbox" value="sp_product_replenishment_date" <?php if(in_array('sp_product_replenishment_date', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_product_replenishment_date_input">Replenishment Date</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_inbound_stock_input_two" type="checkbox" value="inbound_stock" <?php if(in_array('inbound_stock', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_inbound_stock_input_two">Inbound Stock</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock_limit', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_inbound_stock_input">Inbound Stock Limit</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_backorders_input_two" type="checkbox" value="backorders" <?php if(in_array('backorders', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_backorders_input_two">Backorders</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_backorders_input" type="checkbox" value="sp_backorders" <?php if(in_array('sp_backorders', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_backorders_input">Backorders</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_order_proposal_units_input_two" type="checkbox" value="order_proposal_units" <?php if(in_array('order_proposal_units', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_order_proposal_units_input_two">Order Proposal Units</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_order_proposal_units_input" type="checkbox" value="sp_order_proposal_units" <?php if(in_array('sp_order_proposal_units', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_order_proposal_units_input">Order Proposal Units</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_sales_l26w_input_two" type="checkbox" value="sales_l26w" <?php if(in_array('sales_l26w', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_sales_l26w_input_two">Sales L26W</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_sales_l26w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l26w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_sales_l26w_input">Sales L26W</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_sales_l8w_input_two" type="checkbox" value="sales_l8w" <?php if(in_array('sales_l8w', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_sales_l8w_input_two">Sales L8W</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_sales_l8w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l8w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_sales_l8w_input">Sales L8W</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_sales_l4w_input_two" type="checkbox" value="sales_l4w" <?php if(in_array('sales_l4w', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_sales_l4w_input_two">Sales L4W</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_sales_l4w_input" type="checkbox" value="sp_sales_l4w" <?php if(in_array('sp_sales_l4w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_sales_l4w_input">Sales L4W</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_forecast_26w_input_two" type="checkbox" value="sales_n26w" <?php if(in_array('sales_n26w', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_forecast_26w_input_two">Forecast N26W</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_forecast_26w_input" type="checkbox" value="sp_forecast_26w" <?php if(in_array('sp_forecast_26w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_forecast_26w_input">Forecast N26W</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_forecast_8w_input_two" type="checkbox" value="sales_n8w" <?php if(in_array('sales_n8w', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_forecast_8w_input_two">Forecast N8W</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_forecast_8w_input" type="checkbox" value="sp_forecast_8w" <?php if(in_array('sp_forecast_8w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_forecast_8w_input">Forecast N8W</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_forecast_4w_input_two" type="checkbox" value="sales_n4w" <?php if(in_array('sales_n4w', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_forecast_4w_input_two">Forecast N4W</label>
                                         </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_forecast_4w_input" type="checkbox" value="sp_forecast_4w" <?php if(in_array('sp_forecast_4w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_forecast_4w_input">Forecast N4W</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_weeks_out_of_stock_input" type="checkbox" value="sp_weeks_out_of_stock" <?php if(in_array('sp_weeks_out_of_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_weeks_out_of_stock_input">Weeks To Stock Out</label>
+                                        <div class="filter-groupe two-table-select-column">
+                                            <input id="sp_weeks_out_of_stock_input_two" type="checkbox" value="weeks_to_stock_out" <?php if(in_array('weeks_to_stock_out', $two_columns)) {echo esc_attr('checked');}?>>
+                                            <label for="sp_weeks_out_of_stock_input_two">Weeks To Stock Out</label>
                                         </div>
                                     </div>
                             <div class="main-content-label mg-b-5">
@@ -574,6 +677,30 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                                                     }
                                                 },
                                                 {
+                                                    title: "Supplier",
+                                                    field: "supplier_name",
+                                                    hozAlign: "left",
+                                                    headerFilter: "input",
+                                                    visible: false
+                                                },
+                                                {
+                                                    title: "Backorders",
+                                                    field: "backorders",
+                                                    hozAlign: "left",
+                                                    headerFilter: "input",
+                                                    visible: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Stock Value', QA_MAIN_DOMAIN );?>",
+                                                    field: "stock_value",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
+                                                },
+                                                {
                                                     title: "<?php echo __( 'Ideal Stock', QA_MAIN_DOMAIN );?>",
                                                     field: "ideal_stock",
                                                     hozAlign: "center",
@@ -617,6 +744,28 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                                                     }
                                                 },
                                                 {
+                                                    title: "<?php echo __( 'Sales L26W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_cost",
+                                                    field: "sales_l26w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Sales L8W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_cost",
+                                                    field: "sales_l8w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
+                                                },
+                                                {
                                                     title: "<?php echo __( 'Sales L4W', QA_MAIN_DOMAIN );?>",
                                                     // field: "order_value_cost",
                                                     field: "sales_l4w",
@@ -635,6 +784,28 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
                                                     headerFilter: minMaxFilterEditor,
                                                     headerFilterFunc: minMaxFilterFunction,
                                                     headerFilterLiveFilter: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Forecast N8W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_retail",
+                                                    field: "sales_n8w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
+                                                },
+                                                {
+                                                    title: "<?php echo __( 'Forecast N26W', QA_MAIN_DOMAIN );?>",
+                                                    // field: "order_value_retail",
+                                                    field: "sales_n26w",
+                                                    hozAlign: "center",
+                                                    sorter: "number",
+                                                    headerFilter: minMaxFilterEditor,
+                                                    headerFilterFunc: minMaxFilterFunction,
+                                                    headerFilterLiveFilter: false,
+                                                    visible: false
                                                 },
                                                 {
                                                     title: "<?php echo __( 'Weeks to Stock Out', QA_MAIN_DOMAIN );?>",

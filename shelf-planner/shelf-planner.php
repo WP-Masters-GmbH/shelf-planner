@@ -325,8 +325,8 @@ register_activation_hook( __FILE__, function () {
 	if ( ! isset( $was_installed ) ) {
 		update_option( 'sp.wizard_in_progress', 1 );
 	}
-	add_option('sp.full_screen', true);
-	add_option('sp.default_currency', get_woocommerce_currency());
+	update_option('sp.full_screen', true);
+	update_option('sp.default_currency', get_woocommerce_currency());
 } );
 
 register_deactivation_hook( __FILE__, function () {
@@ -1012,7 +1012,7 @@ function sp_rewrites_init() {
 	$wp_rewrite->flush_rules();
 }
 
-add_action( 'init', 'sp_rewrites_init' );
+//add_action( 'init', 'sp_rewrites_init' );
 
 add_action( 'wp_ajax_sp-ajax', 'find_sp_ajax__ajax_callback' );
 function find_sp_ajax__ajax_callback() {
@@ -1052,7 +1052,7 @@ add_action( 'wp_ajax_sp-ajax-xlsx', 'find_sp_ajax_xlsx__ajax_callback' );
 function find_sp_ajax_xlsx__ajax_callback() {
 	global $wpdb;
 
-	require_once __DIR__ . '/includes/simple_xlsx.class.php';
+	//require_once __DIR__ . '/includes/simple_xlsx.class.php';
 	require_once __DIR__ . '/includes/core.php';
 
 	if ( $_FILES && isset( $_FILES['excel'] ) ) {

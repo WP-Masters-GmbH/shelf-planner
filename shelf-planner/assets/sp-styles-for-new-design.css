@@ -1,0 +1,51 @@
+.main-sidemenu {
+  background-color: #131313 !important;
+}
+
+.side-menu__item.active, .side-menu__label:hover, .side-menu__item:hover, .side-menu__item:focus {
+  color: #EBEBEB !important;
+}
+
+.side-menu__item.active .side-menu__label {
+  color: #EBEBEB !important;
+}
+
+.app-sidebar .slide .side-menu__item.active::before {
+  content: none;
+}
+
+.side-menu__label, .side-menu__item {
+  color: #EBEBEB!important;
+}
+
+.slide:hover .side-menu__label, .slide:hover .angle, .slide:hover .side-menu__icon {
+  color: #EBEBEB !important;
+  fill: #EBEBEB !important;
+}
+
+.svg-inline--fa {
+  display: none !important;
+}
+
+.app-sidebar {
+  background: #131313 !important;
+}
+
+.main-sidebar-header {
+  display: none;
+  background: #131313 !important;
+}
+
+.active {
+  padding: 10px 22px 10px 10px !important;
+  margin: 0 10px 0 10px !important;
+  background-color: #874C5F !important;
+  border: 1px solid #707070;
+  border-radius: 4px !important;
+  display: flex;
+  height: 40px;
+}
+
+.app-sidebar {
+  width: 252px;
+}

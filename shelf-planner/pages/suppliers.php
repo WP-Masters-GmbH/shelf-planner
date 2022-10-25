@@ -83,8 +83,8 @@ if ( $tmp ) {
                     <!-- container opened -->
                     <div class="ml-40 mr-40">
                     <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
-                        <h2 class="purchase-or-title"><?php echo esc_html(__( 'A breadcrumb is used to show hierarchy between content', QA_MAIN_DOMAIN )); ?></h2>
-                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'A breadcrumb is used to show hierarchy between content', QA_MAIN_DOMAIN )); ?></span>
+                        <h2 class="purchase-or-title"><?php echo esc_html(__( 'Suppliers', QA_MAIN_DOMAIN )); ?></h2>
+                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'Add and manage suppliers, contact details, lead times and delivery terms.', QA_MAIN_DOMAIN )); ?></span>
                         <div class="d-flex nav-link-line" style="margin-top: 40px;">
                           <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Suppliers', QA_MAIN_DOMAIN)); ?></span></a>
                           <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers_add_new' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers_add_new')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Create New Supplier', QA_MAIN_DOMAIN)); ?></span></a>
