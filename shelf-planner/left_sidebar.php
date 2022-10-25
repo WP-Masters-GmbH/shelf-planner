@@ -1,4 +1,5 @@
-<?php if (display_admin_part() == false) : ?>
+<?php 
+if (display_admin_part() == false) : ?>
 
     <!-- main-sidebar -->
     <style>
@@ -106,34 +107,31 @@
 
                 <h2 class="sidebar-title">Inventory</h2>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_home') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_home')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Home (!)', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner') || ($_GET['page'] == 'shelf_planner_retail_insights') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Home', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Inventory (!)', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_inventory') || ($_GET['page'] == 'shelf_planner_manage_store') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_inventory')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Inventory', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_order_proposals' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_order_proposals')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Purchase Orders', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_order_proposals') || ($_GET['page'] == 'shelf_planner_po_create_po') || ($_GET['page'] == 'shelf_planner_po_orders') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_order_proposals')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Replenishment', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
                     <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_product_management' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_product_management')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Product Management', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Suppliers', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_suppliers') || ($_GET['page'] == 'shelf_planner_suppliers_add_new') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_suppliers')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Suppliers', QA_MAIN_DOMAIN)); ?></span></a>
+                </li>
+                <!--<li class="slide">
+                    <a class="side-menu__item <?php /*echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_warehouses' ? 'active' : ''); */?>" href="<?php /*echo esc_url(admin_url('admin.php?page=shelf_planner_warehouses')); */?>"><span class="side-menu__label"><?php /*echo esc_html(__('Warehouses', QA_MAIN_DOMAIN)); */?></span></a>
+                </li>-->
+                <li class="slide">
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_overview_integrations') || ($_GET['page'] == 'sp_integrations') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_overview_integrations')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Integrations', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_warehouses' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_warehouses')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Warehouses', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_settings_store') || ($_GET['page'] == 'shelf_planner_settings_forecast') || ($_GET['page'] == 'shelf_planner_settings_product') || ($_GET['page'] == 'shelf_planner_settings_po') || ($_GET['page'] == 'shelf_planner_backorder') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_store')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Settings', QA_MAIN_DOMAIN)); ?></span></a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_overview_integrations' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_overview_integrations')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Integrations (!)', QA_MAIN_DOMAIN)); ?></span></a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_store' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_store')); ?>"><span class="side-menu__label"><?php echo esc_html(__('Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item" href="#"><span class="side-menu__label"><?php echo esc_html(__('Help Center (!!)', QA_MAIN_DOMAIN)); ?></span></a>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_my_account' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_my_account')); ?>"><span class="side-menu__label"><?php echo esc_html(__('My Account (!!)', QA_MAIN_DOMAIN)); ?></span></a>
+                    <a class="side-menu__item <?php echo esc_attr(sanitize_text_field($_GET['page'] == 'shelf_planner_my_account') || ($_GET['page'] == 'shelf_planner_plans_payments') ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_my_account')); ?>"><span class="side-menu__label"><?php echo esc_html(__('My Account', QA_MAIN_DOMAIN)); ?></span></a>
               </li>
 
             </ul>

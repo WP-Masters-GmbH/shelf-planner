@@ -273,19 +273,19 @@ a:hover {
 .notiflication-body {
   background-color: #42273A;
   padding: 30px 20px 70px 20px;
-  width: 21%;
+  width: 30%;
   min-height: 100vh;
   position: fixed;
   overflow-y: auto;
-  top:70px;
-  bottom:0;
-  right: 100%;
+  top: 63px;
+  bottom: 0;
+  right: -100%;
   z-index: 100000;
   transition: all 0.4s;
 }
 
 .notiflication-body-active {
-  right: 500px;
+  right: 0;
 }
 
 .gap-15 > .user-img-header {
@@ -313,7 +313,7 @@ a:hover {
                 <div class="container">
                     <h2 class="purchase-or-title"><?php echo esc_html(__( 'Store Performance', QA_MAIN_DOMAIN )); ?></h2>
                     <div class="d-flex nav-link-line" style="margin-top: 40px;">
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_home' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_home')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Home', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Home', QA_MAIN_DOMAIN)); ?></span></a>
                           <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_retail_insights' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_retail_insights')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Store Perfomance', QA_MAIN_DOMAIN)); ?></span></a>
                         </div>
                     <?php do_action('after_page_header'); ?>

@@ -178,7 +178,6 @@ if ( $show_form ) {
 require_once __DIR__ . '/../' . 'header.php'; ?>
 <style>
 
-
   </style>
     <div class="sp-admin-overlay">
         <div class="sp-admin-container">
@@ -267,7 +266,7 @@ require_once __DIR__ . '/../' . 'header.php'; ?>
                                         <option value="<?php echo  esc_attr( $tmp_supplier['supplier_name'] ); ?>" <?php echo esc_attr( ( isset( $_GET['supplier'] ) && sanitize_text_field($_GET['supplier']) == $tmp_supplier['supplier_name'] ) ? 'selected' : '' ); ?>><?php echo  esc_html( $tmp_supplier['supplier_name'] ); ?></option>
                                     <?php } ?>
                                 </select>
-                                <!-- <button class="btn btn-sm btn-info" style="margin-top: 1px;max-height: 30px; font-family: 'Lato'; font-weight: 700; background: #F98AB1 !important;" onclick="search_supplier(); return false"><?php echo esc_html(__( 'Search', QA_MAIN_DOMAIN )); ?></button> -->
+                                <button class="btn btn-sm btn-info" style="margin-top: 1px;max-height: 30px; font-family: 'Lato'; font-weight: 700; background: #F98AB1 !important;" onclick="search_supplier(); return false"><?php echo esc_html(__( 'Search', QA_MAIN_DOMAIN )); ?></button>
                             </div>
         
                             <div class="row">
@@ -295,13 +294,13 @@ require_once __DIR__ . '/../' . 'header.php'; ?>
                                             <label><?php echo esc_html(__( 'Deliver To:', QA_MAIN_DOMAIN )); ?></label>&nbsp;&nbsp;&nbsp;
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="r1"><?php echo esc_html(__( 'Warehouse', QA_MAIN_DOMAIN )); ?></label> <input type="radio" name="deliver_to" id="r1" value="warehouse" class="form-control" checked/>
+                                            <label for="r1"><?php echo esc_html(__( 'Warehouse', QA_MAIN_DOMAIN )); ?></label> <input type="radio" name="deliver_to" id="r1" value="warehouse" class="form-control form-create-check" checked/>
                                         </div>
                                         <div class="col-md-2">
-                                            <label disabled="disabled" for="r2"><?php echo esc_html(__( 'Customer', QA_MAIN_DOMAIN )); ?></label> <input disabled="disabled" type="radio" name="deliver_to" id="r2" value="customer" class="form-control"/>
+                                            <label disabled="disabled" for="r2"><?php echo esc_html(__( 'Customer', QA_MAIN_DOMAIN )); ?></label> <input disabled="disabled" type="radio" name="deliver_to" id="r2" value="customer" class="form-control form-create-check"/>
                                         </div>
                                         <div class="col-md-3">
-                                            <select name="warehouse_id" class="form-control">
+                                            <select name="warehouse_id" class="form-control form-create-select">
                                                 <?php foreach ( $warehouses as $warehouse ) { ?>
                                                     <option value="<?php echo esc_attr((int) $warehouse['id']); ?>"><?php echo  esc_html( $warehouse['warehouse_name'] ) ?></option>
                                                 <?php } ?>
@@ -310,19 +309,19 @@ require_once __DIR__ . '/../' . 'header.php'; ?>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label><?php echo esc_html(__( 'Purchase Order #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control" placeholder="Purchase Order #" name="purchase_order_num" value="<?php echo  esc_attr( get_option( 'sp.settings.po_prefix', 'PO-' ) ) ?><?php echo esc_html(sp_get_next_po()); ?>"/>
+                                            <label><?php echo esc_html(__( 'Purchase Order #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control form-create-input" placeholder="Purchase Order #" name="purchase_order_num" value="<?php echo  esc_attr( get_option( 'sp.settings.po_prefix', 'PO-' ) ) ?><?php echo esc_html(sp_get_next_po()); ?>"/>
                                         </div>
                                         <div class="col-md-3">
-                                            <label><?php echo esc_html(__( 'Reference Number #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control" name="reference_number" readonly="readonly" placeholder="Reference Number #" value="RN-<?php echo  esc_attr( sp_get_next_rn() ) ?>"/>
+                                            <label><?php echo esc_html(__( 'Reference Number #', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="text" class="form-control form-create-input" name="reference_number" readonly="readonly" placeholder="Reference Number #" value="RN-<?php echo  esc_attr( sp_get_next_rn() ) ?>"/>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label><?php echo esc_html(__( 'Order Date', QA_MAIN_DOMAIN )); ?>
-                                            </label> <input required="required" type="date" class="form-control" name="order_date" value="<?php echo esc_attr(date( 'Y-m-d' )); ?>"/>
+                                            </label> <input required="required" type="date" class="form-control form-create-input" name="order_date" value="<?php echo esc_attr(date( 'Y-m-d' )); ?>"/>
                                         </div>
                                         <div class="col-md-3">
-                                            <label><?php echo esc_html(__( 'Expected Delivery Date', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="date" class="form-control" name="expected_delivery_date" value="<?php echo esc_attr(date( 'Y-m-d', $form_lead_time )); ?>"/>
+                                            <label><?php echo esc_html(__( 'Expected Delivery Date', QA_MAIN_DOMAIN )); ?></label> <input required="required" type="date" class="form-control form-create-input" name="expected_delivery_date" value="<?php echo esc_attr(date( 'Y-m-d', $form_lead_time )); ?>"/>
                                         </div>
                                     </div>
                                     <div class="row">

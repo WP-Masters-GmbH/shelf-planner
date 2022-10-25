@@ -4,6 +4,34 @@ jQuery(document).ready(function($) {
     var bulk_search = "";
     var columns = [];
 
+
+    $("body").on("change input","#select-proposal-category, #select-proposals-suppliers, #select-proposals-rows, #search-name-proposal",function() {
+
+        var category = $('#select-proposal-category').val();
+        var suppliers = $('#select-proposals-suppliers').val();
+        var max_rows = $('#select-proposals-rows').val();
+        var search = $('#search-name-proposal').val()
+
+        $.ajax({
+            url: admin.ajaxurl,
+            data: {
+                'action': 'proposal_filter_data',
+                'category': category,
+                'suppliers': suppliers,
+                'max_rows': max_rows,
+                'search': search,
+                'nonce': admin.nonce
+            },
+            type:'POST',
+            dataType: 'json',
+            success:function(response) {
+                if(response.status === 'true') {
+                    $('#proposal-table').replaceWith(response.html);
+                }
+            }
+        });
+    });
+
     $("body").on("click","#prev-bulk-page-sp, #prev-bulk-page-sp",function() {
         bulk_page = $(this).data('page');
         get_products_sp();
@@ -11,6 +39,16 @@ jQuery(document).ready(function($) {
 
     $("body").on("click","#toggle-select-rows-home",function() {
         $('.select-rows-leaderboards').toggleClass('shows');
+    });
+
+    $("body").on("change",".first-table-select-column input",function() {
+        var column = $(this).val();
+        table.toggleColumn(column);
+    });
+
+    $("body").on("change",".two-table-select-column input",function() {
+        var column = $(this).val();
+        table2.toggleColumn(column);
     });
 
     $("body").on("input","#bulk-search-sp",function() {
@@ -21,6 +59,42 @@ jQuery(document).ready(function($) {
     $("body").on("change",".filters-enabled input",function() {
         get_products_sp();
     });
+
+    $("body").on("change","#replenish-stat-selector",function() {
+        $.ajax({
+            url: admin.ajaxurl,
+            data: {
+                'action': 'replenish_stat_select',
+                'weeks': $(this).val(),
+                'nonce': admin.nonce
+            },
+            type:'POST',
+            dataType: 'json',
+            success:function(response) {
+                if(response.status === 'true') {
+                    $('#replenish-table-stat').replaceWith(response.html);
+                }
+            }
+        });
+    });
+
+    $("body").on("change","#replenish-stat-selector-second",function() {
+      $.ajax({
+          url: admin.ajaxurl,
+          data: {
+              'action': 'replenish_stat_select_second',
+              'weeks': $(this).val(),
+              'nonce': admin.nonce
+          },
+          type:'POST',
+          dataType: 'json',
+          success:function(response) {
+              if(response.status === 'true') {
+                  $('#replenish-table-stat-second').replaceWith(response.html);
+              }
+          }
+      });
+  });
 
     $("body").on("change","#inspector-select-control-2",function() {
         $.ajax({
@@ -68,6 +142,43 @@ jQuery(document).ready(function($) {
             }
         });
     }
+
+
+
+    $("body").on("click","#save-proposal-table",function() {
+
+        var products_data = [];
+        $(".proposal-item").each(function() {
+            var product_id = $(this).data('product-id');
+
+            products_data.push({
+                'product_id': product_id,
+                'current_stock': $(this).find('.proposal-current-stock').val(),
+                'inbound_stock': $(this).find('.proposal-inbound-stock').val(),
+                'order_proposal_units': $(this).find('.proposal-order-proposal-units').val()
+            })
+        });
+
+        if(products_data.length > 0) {
+            $.ajax({
+                url: admin.ajaxurl,
+                data: {
+                    'action': 'save_proposals_table',
+                    'products_data': products_data,
+                    'nonce': admin.nonce
+                },
+                type:'POST',
+                dataType: 'json',
+                success:function(response) {
+                    if(response.status === 'true') {
+                        alert('Data is saved!');
+                    }
+                }
+            });
+        }
+    });
+
+
 
     $("body").on("click","#save-qa-bulk-sp",function() {
 

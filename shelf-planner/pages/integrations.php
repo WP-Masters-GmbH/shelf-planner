@@ -43,8 +43,7 @@ require_once SP_ROOT_DIR . '/header.php'; ?>
                     <h2 class="purchase-or-title"><?php echo esc_html(__( 'Your Integrations', QA_MAIN_DOMAIN )); ?></h2>
                     <div class="d-flex nav-link-line" style="margin-top: 40px;">
                     <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_overview_integrations' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_overview_integrations')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Overview', QA_MAIN_DOMAIN)); ?></span></a>
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers' ? 'not-active' : ''); ?>" href="#"><span  class="side-menu__label"> <?php echo esc_html(__('API’s & Integrations', QA_MAIN_DOMAIN)); ?></span></a>
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'sp_integrations' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=sp_integrations')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Old Integrations(!)', QA_MAIN_DOMAIN)); ?></span></a>
+                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'sp_integrations' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=sp_integrations')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('API’s & Integrations', QA_MAIN_DOMAIN)); ?></span></a>
                         </div>
                         <div class="row" >
                             <div class="col">

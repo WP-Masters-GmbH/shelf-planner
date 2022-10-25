@@ -58,35 +58,6 @@ require_once __DIR__ . '/../' . 'header.php';
                             </form>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <span class="description-set">DESCRIPTION</span>
-                        <span class="description-set status-set">STATUS</span>
-                    </div>
-                    <div class="line first-line"></div>
-                    <div class="d-flex align-items-center justify-content-between" style="margin-right: 50px;">
-                      <div class="vert-pad-15">
-                        <h2 class="purchase-or-title fs-20 mt-0"><?php echo esc_html(__( 'Default Weeks of Stock', QA_MAIN_DOMAIN )); ?></h2>
-                        <span class="purchase-or-subtitle fs-14"><?php echo esc_html(__( 'Get the latest news, tools, and workflows powered by Shelf Planner delivered to your inbox monthly.', QA_MAIN_DOMAIN )); ?></span>
-                      </div>
-                      <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
-                      </div>
-                      <div class="line"></div>
-                      <div class="d-flex align-items-center justify-content-between" style="margin-right: 50px;">
-                      <div class="vert-pad-15">
-                        <h2 class="purchase-or-title fs-20 mt-0"><?php echo esc_html(__( 'Default Lead Time', QA_MAIN_DOMAIN )); ?></h2>
-                        <span class="purchase-or-subtitle fs-14"><?php echo esc_html(__( 'Here you can subscribe to news about our product releases, product updates and our development pipeline.', QA_MAIN_DOMAIN )); ?></span>
-                      </div>
-                      <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
-                      </div>
-                      <div class="line"></div>
-                      <div class="d-flex align-items-center justify-content-between" style="margin-right: 50px;">
-                      <div class="vert-pad-15">
-                        <h2 class="purchase-or-title fs-20 mt-0"><?php echo esc_html(__( 'Shelf Planner Offers', QA_MAIN_DOMAIN )); ?></h2>
-                        <span class="purchase-or-subtitle fs-14"><?php echo esc_html(__( 'Check this box if you would like to receive special offers from Shelf Planner.', QA_MAIN_DOMAIN )); ?></span>
-                      </div>
-                      <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
-                      </div>
-                      <div class="line"></div>
                 </div>
             </div>
             <?php include __DIR__ . '/../' . "popups.php"; ?>
