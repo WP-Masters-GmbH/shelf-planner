@@ -5,7 +5,6 @@
 /*shadow variables*/
 .app-sidebar .mCSB_draggerContainer {
     right: -11px !important;
-    background-color: #131313;
 }
 
 @media (min-width: 768px) {
@@ -556,14 +555,14 @@ slide is-expanded side-menu__item {
 .slide:hover .side-menu__label,
 .slide:hover .angle,
 .slide:hover .side-menu__icon {
-    color: #EBEBEB !important;
-    fill: #EBEBEB !important;
+    color: #0162e8 !important;
+    fill: #0162e8 !important;
 }
 
 .slide.is-expanded .side-menu__label,
 .slide.is-expanded .side-menu__icon,
 .slide.is-expanded .angle {
-    color: #EBEBEB !important;
+    color: #0162e8 !important;
 }
 
 .slide-item.active,
@@ -577,7 +576,7 @@ slide is-expanded side-menu__item {
 .slide-item:hover,
 .slide-item:focus {
     text-decoration: none;
-    color: #EBEBEB !important;
+    color: #0162e8 !important;
 }
 
 .slide-menu .sub-slide-menu {
@@ -640,12 +639,10 @@ slide is-expanded side-menu__item {
     white-space: nowrap;
     color: #5b6e88;
     position: relative;
-    font-size: 14px;
-    font-family: 'Lato' !important;
-    font-weight: 700;
+    font-size: 13.5px;
     line-height: 1;
     vertical-align: middle;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .app-sidebar .slide .side-menu__item.active::before {

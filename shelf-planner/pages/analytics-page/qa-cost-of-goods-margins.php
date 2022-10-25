@@ -110,7 +110,7 @@ function initialize()
             require_once __DIR__ . '/vendor/autoload.php';
         }
 
-        //( new Helpers\TemplateSP(QA_COG_BASE_PATHSP . '/src/Templates/') );
+        ( new Helpers\TemplateSP(QA_COG_BASE_PATHSP . 'src/Templates/') );
         ( new Assets\AssetsSP() )->init();
         ( new Admin\PageSP() )->init();
         // Cost of goods

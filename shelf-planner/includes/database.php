@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `{$wpdb->product_settings}` (
  * Migrations
  */
 $sp_db_version        = get_option( 'sp.settings.db_version', 0 );
-$sp_migration_applied = false;
+/*$sp_migration_applied = false;
 if ( $sp_db_version < 10 ) {
 	$wpdb->query( "
 ALTER TABLE `{$wpdb->product_settings}` ADD `sp_supplier_product_id` INT(11) NULL
@@ -147,7 +147,7 @@ ALTER TABLE `{$wpdb->product_settings}` ADD `sp_supplier_product_reference` VARC
 
 if ( $sp_migration_applied ) {
 	update_option( 'sp.settings.db_version', $sp_db_version );
-}
+}*/
 
 $wpdb->query( "
 CREATE TABLE IF NOT EXISTS `{$wpdb->warehouses}` (

@@ -92,52 +92,50 @@ require_once __DIR__ . '/admin_page_header.php';
 require_once __DIR__ . '/../' . 'header.php';
 
 ?>
-<style>
-  .switch {
-    margin-top: 64px;
-  }
-</style>
 <div class="sp-admin-overlay">
     <div class="sp-admin-container">
 		<?php include __DIR__ . '/../' . "left_sidebar.php"; ?>
         <!-- main-content opened -->
         <div class="main-content horizontal-content">
             <div class="page">
-            <?php include __DIR__ . '/../' . "page_header.php"; ?>
                 <!-- container opened -->
-                <div class="ml-40 mr-40">
+                <div class="container">
 	                <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
-<h2 class="purchase-or-title"><?php echo esc_html(__( 'Settings', QA_MAIN_DOMAIN )); ?></h2>
-                    <span class='purchase-or-subtitle mb-30'><?php echo esc_html(__( 'Here you can manage general settings for your store, forecast, orders, etc.', QA_MAIN_DOMAIN )); ?></span>                    <?php do_action( 'after_page_header' ); ?>
-                    <div class="d-flex nav-link-line" style="margin-top: 40px;">
-                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_store' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_store')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Store Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_forecast' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_forecast')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Forecast Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_product' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_product')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Product Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_settings_po' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_settings_po')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('PO Settings', QA_MAIN_DOMAIN)); ?></span></a>
-                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_backorder' ? 'active nav-link-page_active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_backorder')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Backorder', QA_MAIN_DOMAIN)); ?></span></a>
-                    </div>
+                    <style>
+                        .sp-settings-form p {
+                            margin-top: 3%;
+                            font-size: inherit;
+                        }
+
+                        .sp-settings-po-table {
+                            margin-top: 2em;
+                            width: 80%;
+                        }
+
+                        .sp-settings-po-table th {
+                            text-align: center;
+                        }
+
+                        .sp-settings-po-table td {
+                            padding-bottom: 2em;
+                            text-align: center;
+                        }
+                    </style>
+                    <h2><?php echo esc_html(__( 'Settings', QA_MAIN_DOMAIN )); ?></h2>
+                    <?php do_action( 'after_page_header' ); ?>
                     <?php if ( display_admin_part() == true ) include SP_PLUGIN_DIR_PATH . "pages/settings/tabs.php" ?>
-                    <div>
+                    <div class="card">
                         <div class="card-body">
-                            <h4 class="purchase-or-title"><?php echo esc_html( __( 'Purchase Order Settings', QA_MAIN_DOMAIN ) ); ?></h4>
-                            <span class='purchase-or-subtitle'><?php echo esc_html(__( 'Here you can manage general settings for your store, forecast, orders, etc.', QA_MAIN_DOMAIN )); ?></span>                    <?php do_action( 'after_page_header' ); ?>
-                            <div class="d-flex align-items-center" style="gap: 50%;">
-                              <div>
-                                <h4 class="purchase-or-title fs-20 mb-2"><?php echo esc_html( __( 'Import Purchase Orders', QA_MAIN_DOMAIN ) ); ?></h4>
-                                <span class='purchase-or-subtitle mb-30'><?php echo esc_html(__( 'Use 3rd Party Integrations or a manual upload via Excel to manage your incoming stock.', QA_MAIN_DOMAIN )); ?></span>
-                              </div>
-                              <div>
-                                <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
-                              </div>
-                            </div>
-                            
+                            <h4><?php echo esc_html( __( 'Purchase Order Settings', QA_MAIN_DOMAIN ) ); ?></h4>
+                            <p class="mg-b-20"></p>
                             <form method="post" enctype="multipart/form-data">
+                                <p style="font-weight: bold; font-size: inherit"><?php echo esc_html( __( 'Here you can define the content and layout of your Purchase Orders.This information is included in the Purchase Order. If you do not wish to share this information, please leave blank.', QA_MAIN_DOMAIN ) ); ?></p>
                                 <!-- begin new form -->
-                                <div class="row mt-60 mb-30" id="js-add-new-supplier">
+                                <div class="row" id="js-add-new-supplier">
                                     <div class="col-md-4 ">
                                         <label><?php echo esc_html( __( 'Company Name', QA_MAIN_DOMAIN ) ); ?>*</label> <input type="text" class="form-control" name="po-company-name" required="required" value="<?php echo  esc_attr( $po_company_name ); ?>" placeholder="Company Name*"/> <label><?php echo esc_html( __( 'Company Address', QA_MAIN_DOMAIN ) ); ?>*</label> <input type="text" class="form-control" name="po-company-address" required="required" value="<?php echo  esc_attr( $po_company_address ); ?>" placeholder="Company Address*"/> <label><?php echo esc_html( __( 'Postal Code', QA_MAIN_DOMAIN ) ); ?>*</label> <input type="text" class="form-control" name="po-postal-code" required="required" value="<?php echo  esc_attr( $po_postal_code ); ?>" placeholder="Postal Code*"/> <label><?php echo esc_html( __( 'City', QA_MAIN_DOMAIN ) ); ?>*</label> <input type="text" class="form-control" name="po-city" required="required" value="<?php echo  esc_attr( $po_city ); ?>" placeholder="City*"/>
                                         <label><?php echo esc_html( __( 'Country', QA_MAIN_DOMAIN ) ); ?>*</label> <input type="text" class="form-control" name="po-country" required="required" placeholder="Country*" value="<?php echo  esc_attr( $po_country ); ?>"/>
-                                        <label><?php echo esc_html( __( 'Additional Information', QA_MAIN_DOMAIN ) ); ?></label> <textarea class="form-control" name="po-description" style="color: #B5B5B5" placeholder="Additional Information"><?php echo  esc_textarea( $po_description ); ?></textarea> <br>
+                                        <label><?php echo esc_html( __( 'Additional Information', QA_MAIN_DOMAIN ) ); ?></label> <textarea class="form-control" name="po-description" placeholder="Additional Information"><?php echo  esc_textarea( $po_description ); ?></textarea> <br>
                                     </div>
                                     <div class="col-md-4">
                                         <label><?php echo esc_html( __( 'Phone', QA_MAIN_DOMAIN ) ); ?></label> <input type="text" class="form-control" name="po-phone" value="<?php echo  esc_attr( $po_phone ); ?>" placeholder="Phone"/> <label><?php echo esc_html( __( 'Website', QA_MAIN_DOMAIN ) ); ?></label> <input type="text" class="form-control" name="po-website" value="<?php echo  esc_attr( $po_website ); ?>" placeholder="Website"/> <label><?php echo esc_html( __( 'Email', QA_MAIN_DOMAIN ) ); ?></label> <input type="text" class="form-control" name="po-email" value="<?php echo  esc_attr( $po_email ); ?>" placeholder="Email"/> <label><?php echo esc_html( __( 'VAT Registration Number', QA_MAIN_DOMAIN ) ); ?></label> <input type="text" class="form-control" name="po-vat-number" value="<?php echo  esc_attr( $po_vat_number ); ?>" placeholder="VAT Registration Number"/> <label><?php echo esc_html( __( 'Your company logo', QA_MAIN_DOMAIN ) ); ?></label>
@@ -158,35 +156,40 @@ require_once __DIR__ . '/../' . 'header.php';
                                     </div>
                                 </div>
                                 <!-- end new form -->
-                                <p class="settings-text-new"><?php echo esc_html( __( 'Your purchase order numbers are set on auto-generate mode to save you time.', QA_MAIN_DOMAIN ) ); ?></p>
-                                <p class="settings-text-new"><?php echo esc_html( __( 'Do you want to change settings?', QA_MAIN_DOMAIN ) ); ?></p>
-                                <div class="d-flex">
-                                <div class="d-flex flex-column" style="margin-right: 75px">
-                                <div style="margin-bottom: 20px; margin-top: 21px;">
-                                    <input type="radio" name="po-auto-generate" value="auto" <?php echo esc_attr( $po_autogenerate_orders_type == 'auto' ? 'checked="checked"' : '' ); ?> /><?php echo esc_html( __( 'Continue auto-generating purchase order numbers', QA_MAIN_DOMAIN ) ); ?>
-                                </div>
-                                <div>
-                                    <input type="radio" name="po-auto-generate" value="manual"<?php echo esc_attr( $po_autogenerate_orders_type == 'manual' ? 'checked="checked"' : '' ); ?>/><?php echo esc_html( __( 'I will add them manually each time', QA_MAIN_DOMAIN ) ); ?>
-                                    </div>
-                                  </div>
-                                <div class="d-flex">
-                                  <label class="label-for-pref" style="margin-right: 75px">
-                                    <?php echo esc_html( __( 'Prefix', QA_MAIN_DOMAIN ) ); ?>
-                                    <input class="prefix-inp" type="text" name="po-prefix" value="<?php echo  esc_attr( $po_prefix ) ?>"/>
-                                  </label>
-                                  <label class="label-for-pref">
-                                    <?php echo esc_html( __( 'Next Number', QA_MAIN_DOMAIN ) ); ?>
-                                    <input class="prefix-inp" type="text" name="po-next-number" value="<?php echo  esc_attr( $po_next_number ) ?>"/>
-                                  </label>
-                                  </div>
-                                </div>
+                                <p style="font-weight: bold; font-size: inherit"><?php echo esc_html( __( 'Your purchase order numbers are set on auto-generate mode to save you time.', QA_MAIN_DOMAIN ) ); ?></p>
+                                <p style="font-weight: bold; font-size: inherit"><?php echo esc_html( __( 'Do you want to change settings?', QA_MAIN_DOMAIN ) ); ?></p>
+                                <table class="sp-settings-po-table">
+                                    <tr>
+                                        <th></th>
+                                        <th><?php echo esc_html( __( 'Prefix', QA_MAIN_DOMAIN ) ); ?></th>
+                                        <th><?php echo esc_html( __( 'Next Number', QA_MAIN_DOMAIN ) ); ?></th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 40%; text-align: left; font-weight: bold"><input type="radio" name="po-auto-generate" value="auto"
+												<?php echo esc_attr( $po_autogenerate_orders_type == 'auto' ? 'checked="checked"' : '' ); ?>
+                                            /><?php echo esc_html( __( 'Continue auto-generating purchase order numbers', QA_MAIN_DOMAIN ) ); ?>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="po-prefix" value="<?php echo  esc_attr( $po_prefix ) ?>"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="po-next-number" value="<?php echo  esc_attr( $po_next_number ) ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: left; font-weight: bold"><input type="radio" name="po-auto-generate" value="manual"
+												<?php echo esc_attr( $po_autogenerate_orders_type == 'manual' ? 'checked="checked"' : '' ); ?>
+                                            /><?php echo esc_html( __( 'I will add them manually each time', QA_MAIN_DOMAIN ) ); ?>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <p class="mg-b-20"></p>
-                                <input style="margin-top: 2em" type="submit" class="button-settings-po" value="<?php echo esc_attr( __( 'Save Settings', QA_MAIN_DOMAIN ) ); ?>" name="save-po-settings"/>
+                                <input style="margin-top: 2em" type="submit" class="btn btn-sm
+                                    btn-success" value="<?php echo esc_attr( __( 'Save Settings', QA_MAIN_DOMAIN ) ); ?>" name="save-po-settings"/>
                             </form>
                         </div>
                     </div>
                 </div>
-                <?php include __DIR__ . '/../' . "popups.php"; ?>
             </div>
         </div>
     </div>

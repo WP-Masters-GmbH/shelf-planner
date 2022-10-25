@@ -20,41 +20,29 @@ require_once SP_ROOT_DIR . '/header.php'; ?>
         .header-menu {
             max-width: 100%;
         }
-
-  #json_textarea {
-    position: relative;
-    left: 100%;
-  }
-
-  .ml-40.mr-40 {
-    min-height: 100vh;
-  }
     </style>
     <div class="sp-admin-overlay">
         <div class="sp-admin-container">
 			<?php include SP_ROOT_DIR . "/left_sidebar.php"; ?>
             <!-- main-content opened -->
             <div class="main-content horizontal-content">
-                <div class="page" style="margin-top: 64px;">
-                <?php include __DIR__ . '/../' . "page_header.php"; ?>
-
+                <div class="page">
                     <!-- container opened -->
-                    <div class="ml-40 mr-40">
-                    <h2 class="purchase-or-title"><?php echo esc_html(__( 'Your Integrations', QA_MAIN_DOMAIN )); ?></h2>
-                    <div class="d-flex nav-link-line" style="margin-top: 40px;">
-                    <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_overview_integrations' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_overview_integrations')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Overview', QA_MAIN_DOMAIN)); ?></span></a>
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_suppliers' ? 'not-active' : ''); ?>" href="#"><span  class="side-menu__label"> <?php echo esc_html(__('API’s & Integrations', QA_MAIN_DOMAIN)); ?></span></a>
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'sp_integrations' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=sp_integrations')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Old Integrations(!)', QA_MAIN_DOMAIN)); ?></span></a>
+                    <div class="container">
+                        <div class="breadcrumb-header justify-content-between">
+                            <div class="my-auto">
+                                <div class="d-flex"><h4 class="content-title mb-0 my-auto"><?php echo esc_html(__( 'Integrations', QA_MAIN_DOMAIN )); ?></h4></div>
+                            </div>
                         </div>
-                        <div class="row" >
+                        <div class="row">
                             <div class="col">
                                 <?php do_action( 'after_page_header' ); ?>
                             </div>
                         </div>
                         <div class="row row-sm">
-                            <div class="col-xl-12 col-md-12 col-lg-12" style="max-width: 800px;">
-                                <div>
-                                    <div class="card-body" style="margin-top: 50px;">
+                            <div class="col-xl-12 col-md-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
                                         <div class="main-content-label mg-b-5">
 											<?php echo esc_html(__( 'Settings', QA_MAIN_DOMAIN )); ?>
                                         </div>
@@ -71,16 +59,16 @@ require_once SP_ROOT_DIR . '/header.php'; ?>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div class="card">
                                     <div class="card-header pb-0">
                                         <h3 class="card-title mb-2"><?php echo esc_html(__( 'Orders Analytics', QA_MAIN_DOMAIN )); ?></h3>
-                                        <p class="tx-12 mb-0 text-muted" style="max-width: 480px">
+                                        <p class="tx-12 mb-0 text-muted">
 											<?php echo esc_html(__( 'Shelf Planner collects and analyze your store historical data in order to build forecasts. This diagram shows the orders import progress.', QA_MAIN_DOMAIN )); ?>
                                             <br><br>
                                         </p>
                                     </div>
-                                    <div class="card-body sales-info ot-0 pt-0 pb-0" style="max-width: 525px;">
-                                        <div id="chart-sp" class="ht-150" style="margin-bottom: -2em !important;"></div>
+                                    <div class="card-body sales-info ot-0 pt-0 pb-0">
+                                        <div id="chart-sp" class="ht-150" style="margin-bottom: 2em !important;"></div>
                                         <div class="row sales-infomation pb-0 mb-0 mx-auto wd-100p">
                                             <div class="col-md-6 col">
                                                 <p class="mb-0 d-flex"><span class="legend bg-primary brround"></span>Analyzed </p>
@@ -99,20 +87,20 @@ require_once SP_ROOT_DIR . '/header.php'; ?>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div class="card">
                                     <div class="card-body">
                                         <div class="main-content-label mg-b-5">
 											<?php echo esc_html(__( 'Debug Log', QA_MAIN_DOMAIN )); ?>
                                         </div>
                                         <p class="mg-b-20"></p>
-                                        <div class="row" style="position: relative; bottom: -150px;">
+                                        <div class="row">
                                             <div class="col-md-12 col">
                                                 <div class="d-flex">
-                                                    <p style="margin: 0;">
-                                                        <a href="<?php echo esc_url(admin_url( 'admin.php?page=shelf_planner_api_logs' )); ?>" target="_blank" style="width: 146px" class="btn btn-info"><i class="fa fa-eye"></i> <?php echo esc_html(__( 'View Debug Log', QA_MAIN_DOMAIN )); ?></a>
+                                                    <p class="">
+                                                        <a href="<?php echo esc_url(admin_url( 'admin.php?page=shelf_planner_api_logs' )); ?>" target="_blank" class="btn btn-info"><i class="fa fa-eye"></i> <?php echo esc_html(__( 'View Debug Log', QA_MAIN_DOMAIN )); ?></a>
                                                         <!--<a href="<?php /*echo  plugin_dir_url( SP_FILE_INDEX ) */?>api.log?<?php /*echo  time(); */?>" target="_blank" class="btn btn-info"><i class="fa fa-eye"></i> <?php /*echo  __( 'View Debug Log', QA_MAIN_DOMAIN ); */?></a>-->
                                                         <a href="javascript:void(0)"
-                                                            onclick="sp_get_forecast_json(jQuery(this).data('json-url'))" style="width: 176px" class="btn btn-info">
+                                                            onclick="sp_get_forecast_json(jQuery(this).data('json-url'))" class="btn btn-info">
                                                             <i class="fa fa-download"></i>
 		                                                    <?php echo esc_html(__( 'Update Forecast Data', QA_MAIN_DOMAIN )); ?></a>
                                                         <br><br>
@@ -151,7 +139,6 @@ require_once SP_ROOT_DIR . '/header.php'; ?>
                         </div>
                     </div>
                 </div>
-                <?php include __DIR__ . '/../' . "popups.php"; ?>
             </div>
         </div>
     </div>
@@ -161,5 +148,4 @@ require_once SP_ROOT_DIR . '/header.php'; ?>
         jQuery('#json_textarea').toggle();
     }
 </script>
-
 <?php require_once SP_ROOT_DIR . '/footer.php';

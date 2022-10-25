@@ -24,25 +24,6 @@ function sp_settings_get_radio_1( $option, $text ) {
  *
  * @return string
  */
-function sp_settings_get_radio_3( $option, $text ) {
-	static $tmpl = '<input type="radio" name="%s" %s value="%s" /> <span class="warehouses-radio"> %3$s %s</span>';
-	static $name = 'business-model';
-	static $option_business_model = null;
-
-	if ( ! isset( $option_business_model ) ) {
-		$option_business_model = get_option( 'sp.settings.business_model' );
-	}
-	$checked = $option_business_model == $option ? 'checked="checked"' : '';
-
-	return sprintf( $tmpl, esc_attr( $name ), esc_attr( $checked ), esc_html( $option ), esc_html( __( $text, QA_MAIN_DOMAIN ) ) );
-}
-
-/**
- * @param $option
- * @param $text
- *
- * @return string
- */
 function sp_settings_get_radio_2( $option, $text ) {
 	static $tmpl = '<input type="radio" name="%s" %s value="%s" /> <span class="sphd-p">Option %3$s: %s.</span>';
 	static $name = 'assortment-size';
@@ -74,7 +55,7 @@ function sp_settings_get_checkbox( $text ) {
 	$name    = "industry-{$id}";
 	$id      = "id-{$name}";
 
-	return '<input type="checkbox" id="' . esc_attr($id) . '" name="' . esc_attr($name) . '"' . $checked . '>' . '<label class="settings-store-label" for="' . esc_attr($id) . '" style="font-weight: normal"> ' . esc_html( __( $text, QA_MAIN_DOMAIN ) ) . '</label>';
+	return '<input type="checkbox" id="' . esc_attr($id) . '" name="' . esc_attr($name) . '"' . $checked . '>' . '<label for="' . esc_attr($id) . '" style="font-weight: normal"> ' . esc_html( __( $text, QA_MAIN_DOMAIN ) ) . '</label>';
 }
 
 /**

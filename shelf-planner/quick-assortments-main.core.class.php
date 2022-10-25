@@ -20,7 +20,7 @@ class QAMain_Core {
 
 		// Return saved category if exists
 		$tmp = self::get_product_settings( $product_id );
-		if ( $tmp['sp_primary_category'] ) {
+		if ( isset($tmp['sp_primary_category']) ) {
 			return $tmp['sp_primary_category'];
 		}
 

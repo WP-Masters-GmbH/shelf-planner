@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-<?php $my_account_settings = unserialize(get_option('sp_my_account_settings')); ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280, initial-scale=0.1, shrink-to-fit=yes">

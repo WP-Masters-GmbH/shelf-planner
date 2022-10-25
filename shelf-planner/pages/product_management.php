@@ -86,14 +86,12 @@ require_once SP_ROOT_DIR . '/pages/admin_page_header.php';
             <!-- main-content opened -->
             <div class="main-content horizontal-content">
                 <div class="page">
-                <?php include __DIR__ . '/../' . "page_header.php"; ?>
                     <!-- container opened -->
-                    <div class="ml-40 mr-40">
-                        <h2 class="purchase-or-title"><?php echo esc_html(__( 'Product Management', QA_MAIN_DOMAIN )); ?></h2>
-                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'Here you can manage and update your product data, cost prices, lead-time, etc.', QA_MAIN_DOMAIN )); ?></span>
+                    <div class="container">
+                        <h2><?php echo esc_html(__( 'Product Management', QA_MAIN_DOMAIN )); ?></h2>
                         <?php do_action( 'after_page_header' ); ?>
-                        <div style="margin-top: 40px;">
-                            <div class="card-body-product-man card-body">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="qa-bulk-edit-costs">
                                         <div class="qa-bulk-header">
@@ -353,8 +351,8 @@ require_once SP_ROOT_DIR . '/pages/admin_page_header.php';
                         </div>
 
 
-                        <div style="margin: 40px 0;">
-                            <div class="card-body" style="padding-left: 0 !important;">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="main-content-label mg-b-5">
 									<?php echo  esc_html( __( 'Settings Import/Export', QA_MAIN_DOMAIN ) ); ?>
                                 </div>
@@ -382,8 +380,8 @@ require_once SP_ROOT_DIR . '/pages/admin_page_header.php';
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="card-body" style="padding-left: 0 !important">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="main-content-label mg-b-5">
 									<?php echo esc_html( __( 'Get Product Info', QA_MAIN_DOMAIN ) ); ?>
                                 </div>
@@ -517,8 +515,8 @@ require_once SP_ROOT_DIR . '/pages/admin_page_header.php';
                                 </div>
                             </div>
                         </div>
-                        <div style="margin-top: 40px">
-                            <div class="card-body" style="padding-left: 0 !important;">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="main-content-label mg-b-5">
 									<?php echo esc_html( __( 'Settings Reference', QA_MAIN_DOMAIN ) ); ?>
                                 </div>
@@ -551,9 +549,7 @@ require_once SP_ROOT_DIR . '/pages/admin_page_header.php';
                         </div>
                     </div>
                 </div>
-                <?php include __DIR__ . '/../' . "popups.php"; ?>
             </div>
         </div>
     </div>
-
 <?php require_once SP_ROOT_DIR . '/footer.php';

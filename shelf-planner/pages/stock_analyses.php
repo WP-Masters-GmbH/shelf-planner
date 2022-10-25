@@ -43,23 +43,23 @@ function sp_calc_stock_analyses() {
 
 		$group_by = &$categories[ $category_id ];
 
-		$group_by['ideal_stock']          += intval( $product_item['ideal_stock'] );
-		$group_by['current_stock']        += intval( $product_item['current_stock'] );
-		$group_by['inbound_stock']        += intval( $product_item['inbound_stock'] );
-		$group_by['order_proposal_units'] += intval( $product_item['order_proposal_units'] );
-		$group_by['weeks_to_stock_out']   += intval( $product_item['weeks_to_stock_out'] );
-		$group_by['sales_l4w']            += intval( $product_item['sales_l4w'] );
-		$group_by['sales_n4w']            += floatval( $product_item['sales_n4w'] );
+		$group_by['ideal_stock']          += isset($product_item['ideal_stock']) ? intval( $product_item['ideal_stock'] ) : 0;
+		$group_by['current_stock']        += isset($product_item['current_stock']) ? intval( $product_item['current_stock'] ) : 0;
+		$group_by['inbound_stock']        += isset($product_item['inbound_stock']) ? intval( $product_item['inbound_stock'] ) : 0;
+		$group_by['order_proposal_units'] += isset($product_item['order_proposal_units']) ? intval( $product_item['order_proposal_units'] ) : 0;
+		$group_by['weeks_to_stock_out']   += isset($product_item['weeks_to_stock_out']) ? intval( $product_item['weeks_to_stock_out'] ) : 0;
+		$group_by['sales_l4w']            += isset($product_item['sales_l4w']) ? intval( $product_item['sales_l4w'] ) : 0;
+		$group_by['sales_n4w']            += isset($product_item['sales_n4w']) ? floatval( $product_item['sales_n4w'] ) : 0;
 
-		$group_by['order_value_cost']   += floatval( $product_item['order_value_cost'] );
-		$group_by['order_value_retail'] += floatval( $product_item['order_value_retail'] );
+		$group_by['order_value_cost']   += isset($product_item['order_value_cost']) ? floatval( $product_item['order_value_cost'] ) : 0;
+		$group_by['order_value_retail'] += isset($product_item['order_value_retail']) ? floatval( $product_item['order_value_retail'] ) : 0;
 
 		$group_by['count_of_products'] ++;
 	}
 
 	foreach ( $categories as &$category_item ) {
-		$category_item['order_value_cost']   = sp_get_price( $category_item['order_value_cost'] );
-		$category_item['order_value_retail'] = sp_get_price( $category_item['order_value_retail'] );
+		$category_item['order_value_cost']   = isset($category_item['order_value_cost']) ? sp_get_price( $category_item['order_value_cost'] ) : 0;
+		$category_item['order_value_retail'] = isset($category_item['order_value_retail']) ? sp_get_price( $category_item['order_value_retail'] ) : 0;
 		$category_item['weeks_to_stock_out'] = floor( $category_item['weeks_to_stock_out'] / max( $category_item['count_of_products'], 1 ) );
 		$category_item['sales_n4w']          = round( $category_item['sales_n4w'], 1 );
 	}
@@ -82,613 +82,442 @@ list ( $products_data, $categories_data ) = sp_calc_stock_analyses();
             <!-- main-content opened -->
             <div class="main-content horizontal-content">
                 <div class="page">
-                <?php include __DIR__ . '/../' . "page_header.php"; ?>
                     <!-- container opened -->
-                    <div class="ml-40 mr-40">
+                    <div class="container">
                         <?php include SP_PLUGIN_DIR_PATH ."pages/header_js.php"; ?>
                         <style>
-                            .purchase-or-subtitle {
-    color: #000000;
-    font-size: 16px;
-    line-height: 22px;
-    opacity: 0.7;
-    font-family: "Lato";
-    font-weight: 400;
-  }
-
-  .mt-20 {
-    margin-top: 20px;
-  }
-
-  .mb-20 {
-    margin-bottom: 20px;
-  }
-
-  .create-btn:hover, .create-btn:focus {
-  color: #FFF !important;
-  outline: none;
-  box-shadow: none;
-}
                             @media (min-width: 1200px) {
                                 .container, .container-lg, .container-md, .container-sm, .container-xl {
                                     max-width: 95% !important;
                                 }
                             }
                         </style>
-                        <h2 class="purchase-or-title"><?php echo esc_html(__( 'Inventory', QA_MAIN_DOMAIN )); ?></h2>
-                        <span class='purchase-or-subtitle'><?php echo esc_html(__( 'A breadcrumb is used to show hierarchy between content', QA_MAIN_DOMAIN )); ?></span>
-                        <div class="d-flex nav-link-line" style="margin-top: 40px;">
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Perfomance', QA_MAIN_DOMAIN)); ?></span></a>
-                          <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_manage_store' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_manage_store')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Manage Inventory', QA_MAIN_DOMAIN)); ?></span></a>
-                          <!-- <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Detail', QA_MAIN_DOMAIN)); ?></span></a> -->
-                        </div>
-                        <h2 class="purchase-or-title" style="margin-top: 50px;"><?php echo esc_html(__( 'Stock Analyses', QA_MAIN_DOMAIN )); ?></h2>
-                        <div class="filters-enabled mt-20 mb-20">
-                                            <div class="filter-groupe">
-                                                <input id="product_id_input" type="checkbox" value="product_id" <?php if(in_array('product_id', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="product_id_input">Product ID</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="product_product_name_input" type="checkbox" value="product_product_name" <?php if(in_array('product_product_name', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="product_product_name_input">Product Name</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_supplier_id_input" type="checkbox" value="sp_supplier_id" <?php if(in_array('sp_supplier_id', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_supplier_id_input">Supplier</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_ideal_stock_input" type="checkbox" value="sp_ideal_stock" <?php if(in_array('sp_ideal_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_ideal_stock_input">Ideal Stock</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_current_stock_input" type="checkbox" value="sp_current_stock" <?php if(in_array('sp_current_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_current_stock_input">Current Stock</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_inbound_stock_input">Inbound Stock</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_product_replenishment_date_input" type="checkbox" value="sp_product_replenishment_date" <?php if(in_array('sp_product_replenishment_date', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_product_replenishment_date_input">Replenishment Date</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock_limit', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_inbound_stock_input">Inbound Stock Limit</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_backorders_input" type="checkbox" value="sp_backorders" <?php if(in_array('sp_backorders', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_backorders_input">Backorders</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_order_proposal_units_input" type="checkbox" value="sp_order_proposal_units" <?php if(in_array('sp_order_proposal_units', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_order_proposal_units_input">Order Proposal Units</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_sales_l26w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l26w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_sales_l26w_input">Sales L26W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_sales_l8w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l8w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_sales_l8w_input">Sales L8W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_sales_l4w_input" type="checkbox" value="sp_sales_l4w" <?php if(in_array('sp_sales_l4w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_sales_l4w_input">Sales L4W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_forecast_26w_input" type="checkbox" value="sp_forecast_26w" <?php if(in_array('sp_forecast_26w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_forecast_26w_input">Forecast N26W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_forecast_8w_input" type="checkbox" value="sp_forecast_8w" <?php if(in_array('sp_forecast_8w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_forecast_8w_input">Forecast N8W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_forecast_4w_input" type="checkbox" value="sp_forecast_4w" <?php if(in_array('sp_forecast_4w', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_forecast_4w_input">Forecast N4W</label>
-                                            </div>
-                                            <div class="filter-groupe">
-                                                <input id="sp_weeks_out_of_stock_input" type="checkbox" value="sp_weeks_out_of_stock" <?php if(in_array('sp_weeks_out_of_stock', $columns)) {echo esc_attr('checked');}?>>
-                                                <label for="sp_weeks_out_of_stock_input">Weeks To Stock Out</label>
-                                            </div>
-                                        </div>
+                        <h2><?php echo esc_html(__( 'Stock Analyses', QA_MAIN_DOMAIN )); ?></h2>
                         <?php do_action( 'after_page_header' ); ?>
 						<?php
 
 						require_once __DIR__ . '/admin_page_header.php';
 
 						?>
-                        <div>
-                            <div class="main-content-label mg-b-5">
-                                <div style="float:left; height:2.5em; text-align: left;margin-bottom: 5px;width:30%">
-                                    <?php echo esc_html( __( 'Stock Review by Category', QA_MAIN_DOMAIN ) ); ?>
-                                </div>
-                                <div style="float:right;height:2.5em; margin-bottom: 5px;width:50%; position: relative; right: -270px;">
-                                    <button id="download-csv" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download CSV', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                    <button id="download-json" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download JSON', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                    <button id="download-xlsx" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download XLSX', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                    <button id="download-html" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download HTML', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="mg-b-20"></p>
-                            <div class="row" style="width: 100% !important">
-                                <div class="col-md-12 col">
-                                    <div id="table_1" style="width:100%;"></div>
-                                    <script>
-                                        //custom max min header filter
-                                        let minMaxFilterEditor = function (cell, onRendered, success, cancel, editorParams) {
-
-                                            let end;
-                                            let container = document.createElement("span");
-
-                                            //create and style inputs
-                                            let start = document.createElement("input");
-                                            start.setAttribute("type", "number");
-                                            start.setAttribute("placeholder", "Min");
-                                            start.style.padding = "4px";
-                                            start.style.width = "50%";
-                                            start.style.boxSizing = "border-box";
-
-                                            start.value = cell.getValue();
-
-                                            function buildValues() {
-                                                success({
-                                                    start: start.value,
-                                                    end: end.value,
-                                                });
-                                            }
-
-                                            function keypress(e) {
-                                                if (e.keyCode == 13) {
-                                                    buildValues();
-                                                } else if (e.keyCode == 27) {
-                                                    cancel();
-                                                }
-                                            }
-
-                                            end = start.cloneNode();
-                                            end.setAttribute("placeholder", "Max");
-
-                                            start.addEventListener("change", buildValues);
-                                            start.addEventListener("blur", buildValues);
-                                            start.addEventListener("keydown", keypress);
-
-                                            end.addEventListener("change", buildValues);
-                                            end.addEventListener("blur", buildValues);
-                                            end.addEventListener("keydown", keypress);
-
-
-                                            container.appendChild(start);
-                                            container.appendChild(end);
-
-                                            return container;
-                                        }
-
-                                        //custom max min filter function
-                                        function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams) {
-                                            //headerValue - the value of the header filter element
-                                            //rowValue - the value of the column in this row
-                                            //rowData - the data for the row being filtered
-                                            //filterParams - params object passed to the headerFilterFuncParams property
-
-                                            if (rowValue) {
-                                                if (headerValue.start != "") {
-                                                    if (headerValue.end != "") {
-                                                        return rowValue >= headerValue.start && rowValue <= headerValue.end;
-                                                    } else {
-                                                        return rowValue >= headerValue.start;
-                                                    }
-                                                } else {
-                                                    if (headerValue.end != "") {
-                                                        return rowValue <= headerValue.end;
-                                                    }
-                                                }
-                                            }
-
-                                            return true; //must return a boolean, true if it passes the filter.
-                                        }
-
-
-                                        var tabledata = <?php echo json_encode( $categories_data );?>;
-
-                                        var table = new Tabulator("#table_1", {
-                                            // height:"311px",
-                                            layout: "fitColumns",
-                                            responsiveLayout: "collapse",
-                                            data: tabledata,
-                                            pagination: "local",
-                                            paginationSize: 20,
-                                            paginationSizeSelector: [20, 50, 100],
-                                            initialSort: [
-                                                {column: "ideal_stock", dir: "desc"},
-                                            ],
-                                            columns: [
-                                                {
-                                                    title: "ID",
-                                                    field: "term_id",
-                                                    hozAlign: "left",
-                                                    sorter: "number",
-                                                    headerFilter: "input",
-                                                    headerFilterLiveFilter: false,
-                                                    width: 50
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Category', QA_MAIN_DOMAIN );?>",
-                                                    field: "name",
-                                                    headerFilter: "input",
-                                                    formatter: "link",
-                                                    formatterParams: {
-                                                        labelField: "name",
-                                                        urlPrefix: "",
-                                                        target: "_blank",
-                                                        urlField: "cat_url"
-                                                    }
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Ideal Stock', QA_MAIN_DOMAIN );?>",
-                                                    field: "ideal_stock",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Current Stock', QA_MAIN_DOMAIN );?>",
-                                                    field: "current_stock",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Inbound Stock', QA_MAIN_DOMAIN );?>",
-                                                    field: "inbound_stock",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Order Proposal Units', QA_MAIN_DOMAIN );?>",
-                                                    field: "order_proposal_units",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false,
-                                                    /*
-                                                    formatter: "link",
-                                                    formatterParams: {
-                                                        labelField: "order_proposal_units",
-                                                        urlPrefix: "",
-                                                        target: "_blank",
-                                                        urlField: "cat_url_purchase_order"
-                                                    }
-                                                    */
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Sales L4W', QA_MAIN_DOMAIN );?>",
-                                                    // field: "order_value_cost",
-                                                    field: "sales_l4w",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Forecast N4W', QA_MAIN_DOMAIN );?>",
-                                                    // field: "order_value_retail",
-                                                    field: "sales_n4w",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Weeks to Stock Out', QA_MAIN_DOMAIN );?>",
-                                                    field: "weeks_to_stock_out",
-                                                    hozAlign: "left",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false,
-                                                    formatter: "progress",
-                                                    formatterParams: {
-                                                        min: -1,
-                                                        max: 20,
-                                                        legend: true,
-                                                        color: ["red", "orange", "green"],
-                                                        legendColor: "#000000",
-                                                        legendAlign: "center",
-                                                    }
-                                                },
-
-                                            ],
-                                        });
-
-                                        //trigger download of data.csv file
-                                        document.getElementById("download-csv").addEventListener("click", function () {
-                                            table.download("csv", "data.csv");
-                                        });
-
-                                        //trigger download of data.json file
-                                        document.getElementById("download-json").addEventListener("click", function () {
-                                            table.download("json", "data.json");
-                                        });
-
-                                        //trigger download of data.xlsx file
-                                        document.getElementById("download-xlsx").addEventListener("click", function () {
-                                            table.download("xlsx", "data.xlsx", {sheetName: "My Data"});
-                                        });
-
-                                        //trigger download of data.html file
-                                        document.getElementById("download-html").addEventListener("click", function () {
-                                            table.download("html", "data.html", {style: true});
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 100px">
-                        <div class="filters-enabled mt-20 mb-20">
-                                        <div class="filter-groupe">
-                                            <input id="product_id_input" type="checkbox" value="product_id" <?php if(in_array('product_id', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="product_id_input">Product ID</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="product_product_name_input" type="checkbox" value="product_product_name" <?php if(in_array('product_product_name', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="product_product_name_input">Product Name</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_supplier_id_input" type="checkbox" value="sp_supplier_id" <?php if(in_array('sp_supplier_id', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_supplier_id_input">Supplier</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_ideal_stock_input" type="checkbox" value="sp_ideal_stock" <?php if(in_array('sp_ideal_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_ideal_stock_input">Ideal Stock</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_current_stock_input" type="checkbox" value="sp_current_stock" <?php if(in_array('sp_current_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_current_stock_input">Current Stock</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_inbound_stock_input">Inbound Stock</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_product_replenishment_date_input" type="checkbox" value="sp_product_replenishment_date" <?php if(in_array('sp_product_replenishment_date', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_product_replenishment_date_input">Replenishment Date</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_inbound_stock_input" type="checkbox" value="sp_inbound_stock" <?php if(in_array('sp_inbound_stock_limit', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_inbound_stock_input">Inbound Stock Limit</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_backorders_input" type="checkbox" value="sp_backorders" <?php if(in_array('sp_backorders', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_backorders_input">Backorders</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_order_proposal_units_input" type="checkbox" value="sp_order_proposal_units" <?php if(in_array('sp_order_proposal_units', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_order_proposal_units_input">Order Proposal Units</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_sales_l26w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l26w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_sales_l26w_input">Sales L26W</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_sales_l8w_input" type="checkbox" value="sp_sales_l8w" <?php if(in_array('sp_sales_l8w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_sales_l8w_input">Sales L8W</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_sales_l4w_input" type="checkbox" value="sp_sales_l4w" <?php if(in_array('sp_sales_l4w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_sales_l4w_input">Sales L4W</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_forecast_26w_input" type="checkbox" value="sp_forecast_26w" <?php if(in_array('sp_forecast_26w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_forecast_26w_input">Forecast N26W</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_forecast_8w_input" type="checkbox" value="sp_forecast_8w" <?php if(in_array('sp_forecast_8w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_forecast_8w_input">Forecast N8W</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_forecast_4w_input" type="checkbox" value="sp_forecast_4w" <?php if(in_array('sp_forecast_4w', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_forecast_4w_input">Forecast N4W</label>
-                                        </div>
-                                        <div class="filter-groupe">
-                                            <input id="sp_weeks_out_of_stock_input" type="checkbox" value="sp_weeks_out_of_stock" <?php if(in_array('sp_weeks_out_of_stock', $columns)) {echo esc_attr('checked');}?>>
-                                            <label for="sp_weeks_out_of_stock_input">Weeks To Stock Out</label>
-                                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    <div style="float:left; height:2.5em; text-align: left;margin-bottom: 5px;width:30%">
+										<?php echo esc_html( __( 'Stock Review by Category', QA_MAIN_DOMAIN ) ); ?>
                                     </div>
-                            <div class="main-content-label mg-b-5">
-                                <div style="float:left; height:2.5em; text-align: left;margin-bottom: 5px;width:50%">
-                                    <?php echo esc_html( __( 'Stock Review by Product', QA_MAIN_DOMAIN ) ); ?>
+                                    <div style="float:right;height:2.5em; text-align: right;margin-bottom: 5px;width:70%">
+                                        <button id="download-csv" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download CSV', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                        <button id="download-json" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download JSON', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                        <button id="download-xlsx" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download XLSX', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                        <button id="download-html" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download HTML', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div style="float:right;height:2.5em; text-align: right;margin-bottom: 5px;width:50%; position: relative; right: 80px;">
-                                    <button id="download-csv2" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download CSV', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                    <button id="download-json2" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download JSON', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                    <button id="download-xlsx2" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download XLSX', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                    <button id="download-html2" class="btn btn-sm btn-info">
-                                        <?php echo esc_html( __( 'Download HTML', QA_MAIN_DOMAIN ) ); ?>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="mg-b-20"></p>
-                            <div class="row" style="width: 100% !important">
-                                <div class="col-md-12 col">
-                                    <div id="table_2" style="width: 100% !important"></div>
-                                    <script>
-                                        var tabledata2 = <?php echo json_encode( $products_data );?>;
+                                <p class="mg-b-20"></p>
+                                <div class="row" style="width: 105% !important">
+                                    <div class="col-md-12 col">
+                                        <div id="table_1" style="width:99%;"></div>
+                                        <script>
+                                            //custom max min header filter
+                                            let minMaxFilterEditor = function (cell, onRendered, success, cancel, editorParams) {
 
-                                        var table2 = new Tabulator("#table_2", {
-                                            // height:"311px",
-                                            layout: "fitColumns",
-                                            responsiveLayout: "collapse",
-                                            data: tabledata2,
-                                            pagination: "local",
-                                            paginationSize: 50,
-                                            paginationSizeSelector: [50, 100, 500],
-                                            initialSort: [
-                                                {column: "ideal_stock", dir: "desc"},
-                                            ],
-                                            columns: [
-                                                {
-                                                    title: "ID",
-                                                    field: "term_id",
-                                                    hozAlign: "left",
-                                                    sorter: "number",
-                                                    headerFilter: "input",
-                                                    headerFilterLiveFilter: false,
-                                                    width: 50
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Product Name', QA_MAIN_DOMAIN );?>",
-                                                    field: "name",
-                                                    headerFilter: "input",
-                                                    formatter: "link",
-                                                    formatterParams: {
-                                                        labelField: "name",
-                                                        urlPrefix: "",
-                                                        target: "_blank",
-                                                        urlField: "cat_url"
+                                                let end;
+                                                let container = document.createElement("span");
+
+                                                //create and style inputs
+                                                let start = document.createElement("input");
+                                                start.setAttribute("type", "number");
+                                                start.setAttribute("placeholder", "Min");
+                                                start.style.padding = "4px";
+                                                start.style.width = "50%";
+                                                start.style.boxSizing = "border-box";
+
+                                                start.value = cell.getValue();
+
+                                                function buildValues() {
+                                                    success({
+                                                        start: start.value,
+                                                        end: end.value,
+                                                    });
+                                                }
+
+                                                function keypress(e) {
+                                                    if (e.keyCode == 13) {
+                                                        buildValues();
+                                                    } else if (e.keyCode == 27) {
+                                                        cancel();
                                                     }
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Ideal Stock', QA_MAIN_DOMAIN );?>",
-                                                    field: "ideal_stock",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Current Stock', QA_MAIN_DOMAIN );?>",
-                                                    field: "current_stock",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Inbound Stock', QA_MAIN_DOMAIN );?>",
-                                                    field: "inbound_stock",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Order Proposal Units', QA_MAIN_DOMAIN );?>",
-                                                    field: "order_proposal_units",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false,
-                                                    formatter: "link",
-                                                    formatterParams: {
-                                                        labelField: "order_proposal_units",
-                                                        urlPrefix: "",
-                                                        target: "_blank",
-                                                        urlField: "cat_url_purchase_order"
+                                                }
+
+                                                end = start.cloneNode();
+                                                end.setAttribute("placeholder", "Max");
+
+                                                start.addEventListener("change", buildValues);
+                                                start.addEventListener("blur", buildValues);
+                                                start.addEventListener("keydown", keypress);
+
+                                                end.addEventListener("change", buildValues);
+                                                end.addEventListener("blur", buildValues);
+                                                end.addEventListener("keydown", keypress);
+
+
+                                                container.appendChild(start);
+                                                container.appendChild(end);
+
+                                                return container;
+                                            }
+
+                                            //custom max min filter function
+                                            function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams) {
+                                                //headerValue - the value of the header filter element
+                                                //rowValue - the value of the column in this row
+                                                //rowData - the data for the row being filtered
+                                                //filterParams - params object passed to the headerFilterFuncParams property
+
+                                                if (rowValue) {
+                                                    if (headerValue.start != "") {
+                                                        if (headerValue.end != "") {
+                                                            return rowValue >= headerValue.start && rowValue <= headerValue.end;
+                                                        } else {
+                                                            return rowValue >= headerValue.start;
+                                                        }
+                                                    } else {
+                                                        if (headerValue.end != "") {
+                                                            return rowValue <= headerValue.end;
+                                                        }
                                                     }
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Sales L4W', QA_MAIN_DOMAIN );?>",
-                                                    // field: "order_value_cost",
-                                                    field: "sales_l4w",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Forecast N4W', QA_MAIN_DOMAIN );?>",
-                                                    // field: "order_value_retail",
-                                                    field: "sales_n4w",
-                                                    hozAlign: "center",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false
-                                                },
-                                                {
-                                                    title: "<?php echo __( 'Weeks to Stock Out', QA_MAIN_DOMAIN );?>",
-                                                    field: "weeks_to_stock_out",
-                                                    hozAlign: "left",
-                                                    sorter: "number",
-                                                    headerFilter: minMaxFilterEditor,
-                                                    headerFilterFunc: minMaxFilterFunction,
-                                                    headerFilterLiveFilter: false,
-                                                    formatter: "progress",
-                                                    formatterParams: {
-                                                        min: -1,
-                                                        max: 20,
-                                                        legend: true,
-                                                        color: ["red", "orange", "green"],
-                                                        legendColor: "#000000",
-                                                        legendAlign: "center",
-                                                    }
-                                                },
+                                                }
 
-                                            ],
-                                        });
+                                                return true; //must return a boolean, true if it passes the filter.
+                                            }
 
-                                        //trigger download of data.csv file
-                                        document.getElementById("download-csv2").addEventListener("click", function () {
-                                            table2.download("csv", "data.csv");
-                                        });
 
-                                        //trigger download of data.json file
-                                        document.getElementById("download-json2").addEventListener("click", function () {
-                                            table2.download("json", "data.json");
-                                        });
+                                            var tabledata = <?php echo json_encode( $categories_data );?>;
 
-                                        //trigger download of data.xlsx file
-                                        document.getElementById("download-xlsx2").addEventListener("click", function () {
-                                            table2.download("xlsx", "data.xlsx", {sheetName: "My Data"});
-                                        });
+                                            var table = new Tabulator("#table_1", {
+                                                // height:"311px",
+                                                layout: "fitColumns",
+                                                responsiveLayout: "collapse",
+                                                data: tabledata,
+                                                pagination: "local",
+                                                paginationSize: 20,
+                                                paginationSizeSelector: [20, 50, 100],
+                                                initialSort: [
+                                                    {column: "ideal_stock", dir: "desc"},
+                                                ],
+                                                columns: [
+                                                    {
+                                                        title: "ID",
+                                                        field: "term_id",
+                                                        hozAlign: "left",
+                                                        sorter: "number",
+                                                        headerFilter: "input",
+                                                        headerFilterLiveFilter: false,
+                                                        width: 50
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Category', QA_MAIN_DOMAIN );?>",
+                                                        field: "name",
+                                                        headerFilter: "input",
+                                                        formatter: "link",
+                                                        formatterParams: {
+                                                            labelField: "name",
+                                                            urlPrefix: "",
+                                                            target: "_blank",
+                                                            urlField: "cat_url"
+                                                        }
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Ideal Stock', QA_MAIN_DOMAIN );?>",
+                                                        field: "ideal_stock",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Current Stock', QA_MAIN_DOMAIN );?>",
+                                                        field: "current_stock",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Inbound Stock', QA_MAIN_DOMAIN );?>",
+                                                        field: "inbound_stock",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Order Proposal Units', QA_MAIN_DOMAIN );?>",
+                                                        field: "order_proposal_units",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false,
+                                                        /*
+														formatter: "link",
+														formatterParams: {
+															labelField: "order_proposal_units",
+															urlPrefix: "",
+															target: "_blank",
+															urlField: "cat_url_purchase_order"
+														}
+														*/
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Sales L4W', QA_MAIN_DOMAIN );?>",
+                                                        // field: "order_value_cost",
+                                                        field: "sales_l4w",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Forecast N4W', QA_MAIN_DOMAIN );?>",
+                                                        // field: "order_value_retail",
+                                                        field: "sales_n4w",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Weeks to Stock Out', QA_MAIN_DOMAIN );?>",
+                                                        field: "weeks_to_stock_out",
+                                                        hozAlign: "left",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false,
+                                                        formatter: "progress",
+                                                        formatterParams: {
+                                                            min: -1,
+                                                            max: 20,
+                                                            legend: true,
+                                                            color: ["red", "orange", "green"],
+                                                            legendColor: "#000000",
+                                                            legendAlign: "center",
+                                                        }
+                                                    },
 
-                                        //trigger download of data.html file
-                                        document.getElementById("download-html2").addEventListener("click", function () {
-                                            table2.download("html", "data.html", {style: true});
-                                        });
-                                    </script>
+                                                ],
+                                            });
+
+                                            //trigger download of data.csv file
+                                            document.getElementById("download-csv").addEventListener("click", function () {
+                                                table.download("csv", "data.csv");
+                                            });
+
+                                            //trigger download of data.json file
+                                            document.getElementById("download-json").addEventListener("click", function () {
+                                                table.download("json", "data.json");
+                                            });
+
+                                            //trigger download of data.xlsx file
+                                            document.getElementById("download-xlsx").addEventListener("click", function () {
+                                                table.download("xlsx", "data.xlsx", {sheetName: "My Data"});
+                                            });
+
+                                            //trigger download of data.html file
+                                            document.getElementById("download-html").addEventListener("click", function () {
+                                                table.download("html", "data.html", {style: true});
+                                            });
+                                        </script>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <a href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_po_create_po')); ?>" class="create-btn" style="margin-left: 0; margin-top: 30px;">
-                          Create PO
-                        </a>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    <div style="float:left; height:2.5em; text-align: left;margin-bottom: 5px;width:50%">
+										<?php echo esc_html( __( 'Stock Review by Product', QA_MAIN_DOMAIN ) ); ?>
+                                    </div>
+                                    <div style="float:right;height:2.5em; text-align: right;margin-bottom: 5px;width:50%">
+                                        <button id="download-csv2" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download CSV', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                        <button id="download-json2" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download JSON', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                        <button id="download-xlsx2" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download XLSX', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                        <button id="download-html2" class="btn btn-sm btn-info">
+											<?php echo esc_html( __( 'Download HTML', QA_MAIN_DOMAIN ) ); ?>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="mg-b-20"></p>
+                                <div class="row" style="width: 105% !important">
+                                    <div class="col-md-12 col">
+                                        <div id="table_2"></div>
+                                        <script>
+                                            var tabledata2 = <?php echo json_encode( $products_data );?>;
+
+                                            var table2 = new Tabulator("#table_2", {
+                                                // height:"311px",
+                                                layout: "fitColumns",
+                                                responsiveLayout: "collapse",
+                                                data: tabledata2,
+                                                pagination: "local",
+                                                paginationSize: 50,
+                                                paginationSizeSelector: [50, 100, 500],
+                                                initialSort: [
+                                                    {column: "ideal_stock", dir: "desc"},
+                                                ],
+                                                columns: [
+                                                    {
+                                                        title: "ID",
+                                                        field: "term_id",
+                                                        hozAlign: "left",
+                                                        sorter: "number",
+                                                        headerFilter: "input",
+                                                        headerFilterLiveFilter: false,
+                                                        width: 50
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Product Name', QA_MAIN_DOMAIN );?>",
+                                                        field: "name",
+                                                        headerFilter: "input",
+                                                        formatter: "link",
+                                                        formatterParams: {
+                                                            labelField: "name",
+                                                            urlPrefix: "",
+                                                            target: "_blank",
+                                                            urlField: "cat_url"
+                                                        }
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Ideal Stock', QA_MAIN_DOMAIN );?>",
+                                                        field: "ideal_stock",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Current Stock', QA_MAIN_DOMAIN );?>",
+                                                        field: "current_stock",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Inbound Stock', QA_MAIN_DOMAIN );?>",
+                                                        field: "inbound_stock",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Order Proposal Units', QA_MAIN_DOMAIN );?>",
+                                                        field: "order_proposal_units",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false,
+                                                        formatter: "link",
+                                                        formatterParams: {
+                                                            labelField: "order_proposal_units",
+                                                            urlPrefix: "",
+                                                            target: "_blank",
+                                                            urlField: "cat_url_purchase_order"
+                                                        }
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Sales L4W', QA_MAIN_DOMAIN );?>",
+                                                        // field: "order_value_cost",
+                                                        field: "sales_l4w",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Forecast N4W', QA_MAIN_DOMAIN );?>",
+                                                        // field: "order_value_retail",
+                                                        field: "sales_n4w",
+                                                        hozAlign: "center",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false
+                                                    },
+                                                    {
+                                                        title: "<?php echo __( 'Weeks to Stock Out', QA_MAIN_DOMAIN );?>",
+                                                        field: "weeks_to_stock_out",
+                                                        hozAlign: "left",
+                                                        sorter: "number",
+                                                        headerFilter: minMaxFilterEditor,
+                                                        headerFilterFunc: minMaxFilterFunction,
+                                                        headerFilterLiveFilter: false,
+                                                        formatter: "progress",
+                                                        formatterParams: {
+                                                            min: -1,
+                                                            max: 20,
+                                                            legend: true,
+                                                            color: ["red", "orange", "green"],
+                                                            legendColor: "#000000",
+                                                            legendAlign: "center",
+                                                        }
+                                                    },
+
+                                                ],
+                                            });
+
+                                            //trigger download of data.csv file
+                                            document.getElementById("download-csv2").addEventListener("click", function () {
+                                                table2.download("csv", "data.csv");
+                                            });
+
+                                            //trigger download of data.json file
+                                            document.getElementById("download-json2").addEventListener("click", function () {
+                                                table2.download("json", "data.json");
+                                            });
+
+                                            //trigger download of data.xlsx file
+                                            document.getElementById("download-xlsx2").addEventListener("click", function () {
+                                                table2.download("xlsx", "data.xlsx", {sheetName: "My Data"});
+                                            });
+
+                                            //trigger download of data.html file
+                                            document.getElementById("download-html2").addEventListener("click", function () {
+                                                table2.download("html", "data.html", {style: true});
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <?php include __DIR__ . '/../' . "popups.php"; ?>
             </div>
         </div>
     </div>
-
 <?php require_once __DIR__ . '/../' . 'footer.php';

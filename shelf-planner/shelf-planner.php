@@ -6,20 +6,18 @@
  *
  * Plugin Name: Shelf Planner
  * Plugin URI: https://shelfplanner.com/
- * Version: 1.0.5
+ * Version: 1.0.7
  * Author: Quick Assortments AB
  * Description: Shelf Planner helps you reduce waste and minimize spillage, all whilst improving your business and bottom line.
  * Text Domain: shelf-planner
  *
  * @author      Quick Assortments AB
- * @version     v.1.0.5 (18/07/22)
+ * @version     v.1.0.7 (20/10/22)
  * @copyright   Copyright (c) 2022
  */
 
 const QA_MAIN_DOMAIN = 'shelf_planner';
 const SP_TEXT_DOMAIN = 'shelf_planner';
-
-// delete_option( 'sp.wizard_in_progress' );
 
 /**
  * Industries list for mapping
@@ -306,20 +304,6 @@ $sp_countries_normilized = [
 /**
  * Setup Wizard
  */
-add_action('admin_head', 'shelf_planner_replace_admin_menu_icons_css', 99);
-function shelf_planner_replace_admin_menu_icons_css() {
-	?>
-    <style>
-        #toplevel_page_shelf_planner {
-            display: none !important;
-        }
-    </style>
-	<?php
-}
-
-/**
- * Setup Wizard
- */
 register_activation_hook( __FILE__, function () {
 	$was_installed = get_option( 'sp.wizard_in_progress', null );
 	if ( ! isset( $was_installed ) ) {
@@ -337,8 +321,8 @@ register_deactivation_hook( __FILE__, function () {
 	// $wpdb->query("DROP TABLE IF EXISTS `{$wpdb->prefix}suppliers`");
 	// $wpdb->query("DROP TABLE IF EXISTS `{$wpdb->prefix}product_settings`");
 	// $wpdb->query("DROP TABLE IF EXISTS `{$wpdb->prefix}warehouses`");
-	// delete_option( 'sp.wizard_in_progress' );
-	// delete_option( 'sp.full_screen' );
+	delete_option( 'sp.wizard_in_progress' );
+	delete_option( 'sp.full_screen' );
 } );
 
 function sphd_start_wizard( $plugin ) {
@@ -1301,234 +1285,4 @@ function content_parent_link() {
 
 function display_admin_part(){
 	return ( get_option('sp.full_screen') ) ? false : true ;
-}
-
-// Initialize RestAPI
-add_action('rest_api_init', 'initialize_rest_api_init', 99);
-
-/**
- * Add Rest Routes for API
- */
-function initialize_rest_api_init()
-{
-	register_rest_route('sp/v1', '/orders_sp', array(
-		'methods' => 'POST',
-		'callback' => 'retrieve_sp_orders'
-	));
-}
-
-/**
- * Get Orders Details
- */
-function retrieve_sp_orders(WP_REST_Request $request)
-{
-	global $wpdb;
-
-	// Get Data from Request
-	$data = $request->get_params();
-
-	if(isset($data['orderLimit']) && isset($data['orderOffset'])) {
-
-        // Get Orders by API request
-        $args = [
-            'post_status' => 'any',
-            'post_type' => 'shop_order',
-            'posts_per_page' => sanitize_text_field($data['orderLimit']),
-            'offset' => sanitize_text_field($data['orderOffset']),
-            'fields' => 'ids'
-        ];
-        $order_ids = get_posts($args);
-
-        $sales_row = [];
-
-        foreach ( $order_ids as $order_id ) {
-            // Allow code execution only once
-            if ( ! get_post_meta( $order_id, SP_META_KEY_PROCESSED, true ) || 1) {
-                // Get an instance of the WC_Order object
-                $order = wc_get_order( $order_id );
-
-                $order->update_meta_data( SP_META_KEY_PROCESSED, date( 'd.m.Y H:i:s' ) );
-                $order->save();
-
-                if ( ! $order ) {
-                    spApiLog( "Request denied: wrong order_id {$order_id}, not found", 'error' );
-                    continue;
-                }
-
-                spApiLog( "Start Processing: order_id {$order_id} with " . count( $order->get_items() ) . ' item(s)' );
-
-                // Loop through order items
-                foreach ( $order->get_items() as $item_id => $item ) {
-                    if ( ! method_exists( $order, 'get_date_paid' ) ) {
-                        spApiLog( "Skip Non Order Item: {$order_id}" );
-                        continue;
-                    }
-
-                    spApiLog( "Start Processing Order Item: order_id {$order_id}, product_id " . $item->get_product_id() );
-
-                    $variation_id = $item->get_variation_id();
-                    if ( ! empty( $variation_id ) ) {
-                        spApiLog( "VARIATION FOUND: {$variation_id}, PARENT PRODUCT: " . $item->get_product_id() );
-                    }
-
-                    $product = new WC_Product( $item->get_product_id() );
-
-                    if ( $product->get_status() != 'publish' ) {
-                        continue;
-                    }
-
-                    /**
-                     * Fill all the data in
-                     */
-                    $tmp                    = [];
-                    $tmp['creation_date']   = date( "Y-m-d", strtotime( $order->get_date_created() ) );
-                    $tmp['affiliate_id']    = str_replace( 'www.', '', ( $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : AFFILIATE_ID ) );
-                    $tmp['order_id']        = $order_id;
-                    $tmp['segment_id']      = 3;
-                    $primary_category_id    = QAMain_Core::get_product_primary_category_id( $item->get_product_id() );
-                    $tmp['raw_category_id'] = empty( $primary_category_id ) ? 0 : $primary_category_id;
-
-                    $date_payed = $order->get_date_paid();
-                    if ( $date_payed ) {
-                        $date_payed = $date_payed->getTimestamp();
-                    }
-                    if ( ! $date_payed ) {
-                        $date_payed = $order->get_date_created()->getTimestamp();
-                    }
-                    $tmp['order_date'] = $tmp['shipping_date'] = date( "Y-m-d", $date_payed );
-
-                    $tmp['product_stock'] = $product->get_stock_quantity();
-                    if ( ! empty( $variation_id ) ) {
-                        $tmp['product_id'] = $variation_id;
-                    } else {
-                        $tmp['product_id'] = $item->get_product_id();
-                    }
-                    $tmp['product_creation_date'] = date( "Y-m-d", strtotime( $product->get_date_created() ) );
-                    $tmp['product_sku']           = $product->get_sku();
-
-                    if ( $item->get_variation_id() ) {
-                        $tmp['product_options'] = [ $item->get_variation_id() ];
-                    } else {
-                        $tmp['product_options'] = [];
-                    }
-                    $tmp['product_options']          = "";
-                    $tmp['product_strong_option1']   = 0;
-                    $tmp['product_strong_option2']   = 0;
-                    $tmp['product_strong_option3']   = 0;
-                    $tmp['product_strong_option4']   = 0;
-                    $tmp['product_quantity_ordered'] = $item->get_quantity();
-
-                    $tmp['product_cost_price']     = sp_get_cost_price( $tmp['product_id'] );
-                    $tmp['product_original_price'] = (string) floatval( $product->get_regular_price() );
-                    $tmp['product_final_price']    = (string) floatval( $product->get_price() );
-
-                    $with_tax    = wc_get_price_including_tax( $product );
-                    $without_tax = wc_get_price_excluding_tax( $product );
-
-                    if ( ! is_numeric( $with_tax ) || ! is_numeric( $without_tax ) ) {
-                        $with_tax    = $product->get_price_including_tax();
-                        $without_tax = $product->get_price_excluding_tax();
-                    }
-
-                    if ( ! is_numeric( $with_tax ) || ! is_numeric( $without_tax ) ) {
-                        $with_tax    = 0;
-                        $without_tax = 0;
-                    }
-
-                    $tax_amount         = $with_tax - $without_tax;
-                    $tmp['product_vat'] = round( ( $tax_amount / max( $without_tax, 0.01 ) ) * 100, 1 );
-
-                    $shipping_class_id = $product->get_shipping_class_id();
-                    $shipping_class    = $product->get_shipping_class();
-                    $fee               = 0;
-                    if ( $shipping_class_id ) {
-                        $flat_rates = get_option( "woocommerce_flat_rates" );
-                        $fee        = ( is_array( $flat_rates ) ) ? $flat_rates[ $shipping_class ]['cost'] : 0;
-                    }
-                    $flat_rate_settings = get_option( "woocommerce_flat_rate_settings" );
-
-                    $flat_rate_cost = ( is_array( $flat_rate_settings ) ) ? $flat_rate_settings['cost_per_order'] : 0;
-
-                    $tmp['product_shipping_price'] = $flat_rate_cost + $fee;
-                    $tmp['order_grandtotal']       = $order->get_total();
-                    $tmp['order_discount']         = $order->get_total_discount();
-
-                    $tmp['shipping_country'] = addslashes( $order->get_shipping_country() );
-                    $tmp['shipping_town']    = addslashes( $order->get_shipping_city() );
-                    $tmp['billing_country']  = addslashes( $order->get_billing_country() );
-                    $tmp['billing_town']     = addslashes( $order->get_billing_city() );
-
-                    // We need string here, not array! API expects string with commas inside!
-                    $tmp['industry_id']            = sp_get_industry_id();
-                    $tmp['normalized_category_id'] = sp_get_normalized_category_id( $tmp['industry_id'] );
-
-                    $product_id             = $item->get_product_id();
-                    $primary_category_id    = \QAMain_Core::get_product_primary_category_id( $product_id );
-                    $tmp['raw_category_id'] = empty( $primary_category_id ) ? 0 : $primary_category_id;
-
-                    $tmp['industry_id'] = \QAMain_Core::get_industry_by_category( $tmp['raw_category_id'] );
-
-                    $tmp['normalized_category_id'] = sp_get_normalized_category_id( $tmp['industry_id'] );
-                    $tmp['affiliate_country'] = strtoupper( get_option( 'sp.settings.country' ) );
-
-                    spApiLog( "[IMPORTANT] Product #{$product_id} - normalized category ID is {$tmp['normalized_category_id']}" );
-
-                    if ( $order->get_total() <= 0 || $order->get_item_count() <= 0 ) {
-                        continue;
-                    }
-
-                    $sales_row[] = $tmp;
-                }
-            } else {
-                spApiLog( "Order Ignored: order_id {$order_id}, it already has " . SP_META_KEY_PROCESSED . " meta key", 'notice' );
-            }
-        }
-
-        http_response_code(200);
-        $response = [
-            'SalesRow' => $sales_row
-        ];
-	} else {
-		http_response_code(403);
-		$response = [
-			'success' => 'false',
-			'message' => 'Missing required field(s)'
-		];
-	}
-
-	return $response;
-}
-
-add_shortcode( 'sp_stock' , 'sp_get_less_stock' );
-
-if ( !function_exists( 'sp_get_less_stock' ) ) {
-	/**
-	 * Get product with less stoks
-	 */
-	function sp_get_less_stock( $atts ) {
-		$count = $atts['count'] ?? 5;
-		$title = $atts['title'] ?? 'Last stocks';
-		$args = array(
-			'post_type' => 'product',
-			'posts_per_page' => $count,
-			'meta_key' => '_stock', 
-			'orderby' => 'meta_value_num'
-		);
-		
-		$products = new WP_Query( $args );
-		$result = '<h2>'.$title.'</h2><ul style="width:100%;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;list-style:none;" class="less-stock">';
-		
-		if ( $products->posts ) {
-			foreach ( $products->posts as $item ) {
-				$value = wc_get_product( $item->ID );
-				$name  = $value->get_name();
-				$price = $value->get_price_html();
-				$link =  get_permalink( $value->get_id() );
-				$image = get_the_post_thumbnail_url( $value->get_id(), 'thumbnail' );
-				$result .= "<li><a style='display:flex;flex-direction:column;justify-content:space-between;max-height:400px;' href='".$link."' style='display:block;'><img src=".$image." alt=".$name."><p>".$name."</p>".$price."</a></li>";
-			}
-		}
-		$result .= '</ul>';
-		return $result;
-	}
 }
