@@ -128,7 +128,7 @@ if ( $_POST && isset( $_POST['action'] ) ) {
                 <h2 class="purchase-or-title"><?php echo esc_html(__( 'Inventory', QA_MAIN_DOMAIN )); ?></h2>
                         <span class='purchase-or-subtitle'><?php echo esc_html(__( 'Manage, analyse and control your current and incoming stock, backorders and safety stock.', QA_MAIN_DOMAIN )); ?></span>
                         <div class="d-flex nav-link-line" style="margin-top: 40px;">
-                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_inventory' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_inventory')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Analyses', QA_MAIN_DOMAIN)); ?></span></a>
+                        <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_inventory' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_inventory')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Perfomance', QA_MAIN_DOMAIN)); ?></span></a>
                           <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner_manage_store' ? 'active' : ''); ?>" href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner_manage_store')); ?>"><span  class="side-menu__label"> <?php echo esc_html(__('Manage Inventory', QA_MAIN_DOMAIN)); ?></span></a>
                           <!-- <a class="nav-link-page <?php echo esc_attr(sanitize_text_field($_GET['page']) == 'shelf_planner' ? 'active' : ''); ?>"  href="<?php echo esc_url(admin_url('admin.php?page=shelf_planner')); ?>"><span class="side-menu__label"> <?php echo esc_html(__('Stock Detail', QA_MAIN_DOMAIN)); ?></span></a> -->
 
@@ -201,6 +201,7 @@ if ( $_POST && isset( $_POST['action'] ) ) {
                                     <td class="manage-tab-title" style="width: 115px">Current Stock</td>
                                     <td class="manage-tab-title" style="width: 115px">Backorders</td>
                                     <td class="manage-tab-title" style="width: 115px">Incoming Stock</td>
+                                    <td class="manage-tab-title" style="width: 115px">Override Inc.Stocks</td>
                                     <td class="manage-tab-title" style="width: 115px">Order Proposal</td>
                                 </tr>
 				                <?php
@@ -240,6 +241,9 @@ if ( $_POST && isset( $_POST['action'] ) ) {
                                         </td>
                                         <td class="manage-tab-title" style="width: 115px">
                                             <input class="manage-tab-num proposal-inbound-stock" type="number" value="<?php echo esc_attr($product['inbound_stock']); ?>">
+                                        </td>
+                                        <td class="manage-tab-title" style="width: 115px">
+                                            <input class="manage-tab-num proposal-inbound-stock-override" type="checkbox" value="yes" <?php if(get_post_meta( $product['term_id'], 'inbound_stock_override', true ) == 'yes') { echo esc_attr('checked'); } ?>>
                                         </td>
                                         <td class="manage-tab-title" style="width: 115px">
                                             <input readonly class="manage-tab-num proposal-order-proposal-units" type="number" value="<?php echo esc_attr($product['order_proposal_units']); ?>">

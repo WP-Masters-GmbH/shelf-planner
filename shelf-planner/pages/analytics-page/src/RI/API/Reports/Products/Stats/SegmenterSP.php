@@ -195,7 +195,7 @@ class SegmenterSP extends ReportsSegmenter
             'gross_revenue'    => "SUM($products_table.product_gross_revenue) as gross_revenue",
             'net_revenue'      => "SUM($products_table.product_net_revenue ) AS net_revenue",
             'net_profit'       => "SUM($products_table.product_net_profit ) AS net_profit",
-            'cost_of_goods_sold' => "SUM($products_table.product_net_profit ) AS cost_of_goods_sold",
+            'cost_of_goods_sold' => "SUM($products_table.product_cost ) AS cost_of_goods_sold",
             'products_count'   => "COUNT( DISTINCT $products_table.product_id ) AS products_count",
             'variations_count' => "COUNT( DISTINCT $products_table.variation_id ) AS variations_count",
         ];

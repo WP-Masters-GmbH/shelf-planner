@@ -155,11 +155,6 @@ require_once __DIR__ . '/../' . 'header.php';
                                     </tr>
                                 </table>
                                 <p class="mg-b-20"></p>
-                                <h4 class="purchase-or-title" style="margin-bottom: 1em"><?php echo esc_html( __( 'Please specify your business model and how you sell your products.', QA_MAIN_DOMAIN ) ); ?></h4>
-                                <p class="d-flex align-items-center"><?php echo sp_settings_get_radio_1( 'A', 'Retail - my site sells directly to consumers' ); ?></p>
-                                <p class="d-flex align-items-center"><?php echo sp_settings_get_radio_1( 'B', 'Wholesale – my site sells business to business' ); ?></p>
-                                <p class="d-flex align-items-center"><?php echo sp_settings_get_radio_1( 'C', 'Multichannel – my site sells to both end consumers as well as business to business' ); ?></p>
-                                <p class="mg-b-20"></p>
                                 <h4 class="purchase-or-title" style="margin: 2em 0 1em;"><?php echo esc_html( __( 'Please specify the breath of your store.', QA_MAIN_DOMAIN ) ); ?></h4>
                                 <p class="d-flex align-items-center"><?php echo sp_settings_get_radio_2( 'A', 'my store has less than 250 products' ); ?></p>
                                 <p class="d-flex align-items-center"><?php echo sp_settings_get_radio_2( 'B', 'my store has between 250 and 1000 products' ); ?></p>

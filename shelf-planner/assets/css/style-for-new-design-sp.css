@@ -2024,6 +2024,15 @@ a:hover {
   border-color: #A5A5A5 !important;
 }
 
+.proposal-item .manage-tab-title input.proposal-inbound-stock-override {
+  height: 20px;
+  width: 20px;
+}
+
+.proposal-item .manage-tab-title input.proposal-inbound-stock-override::before {
+  margin: -2px 0px 0px -1px;
+}
+
 .refresh {
   width: 36px;
   height: 36px;

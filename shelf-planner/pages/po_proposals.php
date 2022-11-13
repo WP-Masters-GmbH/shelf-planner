@@ -197,6 +197,7 @@ if ( $_POST && isset( $_POST['action'] ) ) {
                                         <td class="manage-tab-title" style="width: 115px">Current Stock</td>
                                         <td class="manage-tab-title" style="width: 115px">Backorders</td>
                                         <td class="manage-tab-title" style="width: 115px">Incoming Stock</td>
+                                        <td class="manage-tab-title" style="width: 115px">Override Inc.Stocks</td>
                                         <td class="manage-tab-title" style="width: 115px">Order Proposal</td>
                                     </tr>
                                     <?php
@@ -236,6 +237,9 @@ if ( $_POST && isset( $_POST['action'] ) ) {
                                             </td>
                                             <td class="manage-tab-title" style="width: 115px">
                                                 <input class="manage-tab-num proposal-inbound-stock" type="number" value="<?php echo esc_attr($product['inbound_stock']); ?>">
+                                            </td>
+                                            <td class="manage-tab-title" style="width: 115px">
+                                                <input class="manage-tab-num proposal-inbound-stock-override" type="checkbox" value="yes" <?php if(get_post_meta( $product['term_id'], 'inbound_stock_override', true ) == 'yes') { echo esc_attr('checked'); } ?>>
                                             </td>
                                             <td class="manage-tab-title" style="width: 115px">
                                                 <input readonly class="manage-tab-num proposal-order-proposal-units" type="number" value="<?php echo esc_attr($product['order_proposal_units']); ?>">

@@ -104,7 +104,7 @@ if($last_year_forecast_value > 0) {
 	$percent_compare_value = round($percent_compare_value);
 }
 
-?>
+?> 
 <style>
   .card-tab {
     border: 1px solid #ccd0d4 !important;
@@ -254,47 +254,45 @@ if($last_year_forecast_value > 0) {
                     </div>
                 </div>
                 <div class="card-body d-flex table-two-flex" style="padding-left: 0 !important;border-top: 0;">
-                <div class="card-tab h-100">
+                    <div class="card-tab h-100">
                         <label class="card-tab-label fs-14">
                             Date Range:
-                            <select id="replenish-stat-selector-second" class="card-tab-select">
+                            <select class="card-tab-select">
                                 <option value="this_week">This Week</option>
                                 <option value="next_week">Next Week</option>
                                 <option value="next_4_weeks">Next 4 Weeks</option>
                                 <option value="next_8_weeks">Next 8 Weeks</option>
                             </select>
                         </label>
-                        <table class="card-tab-second-table" id="replenish-table-stat-second">
+                        <table class="card-tab-second-table">
                             <tr>
                                 <td class="forecast-tab">
                                     Forecast Units
                                 </td>
                                 <td class="forecast-numbers">
-                                    <?php echo esc_html($current_forecast_units); ?>
-                                    <span class="numbers-grey">Previous Year:<br><?php echo esc_html($last_year_forecast_units); ?></span>
+                                    52
+                                    <span class="numbers-grey">Previous Year:<br>41</span>
                                 </td>
-                                <td class="card-tab-percent <?php if($last_year_forecast_units > $current_forecast_units && $last_year_forecast_units != 0) { echo esc_attr('lower'); } elseif($last_year_forecast_units < $current_forecast_units && $last_year_forecast_units != 0) { echo esc_attr('higher'); } else { echo esc_attr('zero'); } ?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="8.539" height="8.539" viewBox="0 0 8.539 8.539">
-                                        <path d="M436.93,55.229l-1.349,1.349v-6.22l-6.229,6.229-.96-.96L434.62,49.4H428.4l1.349-1.349h7.181Z" transform="translate(-428.391 -48.048)" fill="#00b050"/>
-                                    </svg>
-                                    <span><?php echo esc_html($percent_compare_units); ?> %</span>
+                                <td class="card-tab-percent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="8.539" height="8.539" viewBox="0 0 8.539 8.539"><path d="M436.93,55.229l-1.349,1.349v-6.22l-6.229,6.229-.96-.96L434.62,49.4H428.4l1.349-1.349h7.181Z" transform="translate(-428.391 -48.048)" fill="#00b050"/></svg>
+                                    <span>121 %</span>
                                 </td>
                             </tr>
+
                             <tr class="tab-second-row">
                                 <td class="forecast-tab">
                                     Forecast Value
                                 </td>
                                 <td class="forecast-numbers">
-                                    <?php echo esc_html(get_woocommerce_currency_symbol().$current_forecast_value); ?>
-                                    <span class="numbers-grey">Previous Year:<br><?php echo esc_html(get_woocommerce_currency_symbol().$last_year_forecast_value); ?></span>
+                                    €632.50
+                                    <span class="numbers-grey">Previous Year:<br>€123.45</span>
                                 </td>
-                                <td class="card-tab-percent <?php if($last_year_forecast_value > $current_forecast_value && $last_year_forecast_value != 0) { echo esc_attr('lower'); } elseif($last_year_forecast_value < $current_forecast_value && $last_year_forecast_value != 0) { echo esc_attr('higher'); } else { echo esc_attr('zero'); } ?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="8.539" height="8.539" viewBox="0 0 8.539 8.539">
-                                        <path d="M436.93,55.229l-1.349,1.349v-6.22l-6.229,6.229-.96-.96L434.62,49.4H428.4l1.349-1.349h7.181Z" transform="translate(-428.391 -48.048)" fill="#00b050"/>
-                                    </svg>
-                                    <span><?php echo esc_html($percent_compare_value); ?> %</span>
+                                <td class="card-tab-percent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="8.539" height="8.539" viewBox="0 0 8.539 8.539"><path d="M436.93,55.229l-1.349,1.349v-6.22l-6.229,6.229-.96-.96L434.62,49.4H428.4l1.349-1.349h7.181Z" transform="translate(-428.391 -48.048)" fill="#00b050"/></svg>
+                                    <span>143 %</span>
                                 </td>
                             </tr>
+
                         </table>
                     </div>
                     <div class="card-tab">

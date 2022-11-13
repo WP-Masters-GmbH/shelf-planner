@@ -103,7 +103,7 @@ function sp_get_products_data_home_last_year( $categories, $where_extra = array(
 
 		IFNULL( FLOOR(pms.`meta_value` / ROUND(0.01, 2) / 7), 0 ) AS weeks_to_stock_out,
 		IFNULL( ROUND(pms.`meta_value`, 0), 0 ) AS current_stock,
-		IFNULL( SUM(pop.`qty`), 0 ) AS inbound_stock,
+		IF(pmo.meta_value = 'yes', pmi.meta_value, IFNULL( SUM(pop.`qty`), 0 ) ) AS inbound_stock,
         {$stock_sub_query},
 		
         IFNULL(
@@ -144,6 +144,12 @@ function sp_get_products_data_home_last_year( $categories, $where_extra = array(
 
 	LEFT JOIN `{$wpdb->prefix}postmeta` pms ON pms.`post_id` = p.`ID` 
 		AND pms.`meta_key` = '_stock'
+	    
+	LEFT JOIN `{$wpdb->prefix}postmeta` pmi ON pmi.`post_id` = p.`ID` 
+		AND pmi.`meta_key` = 'inbound_stock'
+	LEFT JOIN `{$wpdb->prefix}postmeta` pmo ON pmo.`post_id` = p.`ID` 
+		AND pmo.`meta_key` = 'inbound_stock_override'
+	    
 	LEFT JOIN `{$wpdb->prefix}postmeta` pmp ON pmp.`post_id` = p.`ID`
 		AND pmp.`meta_key` = '_price'
 	LEFT JOIN `{$wpdb->prefix}postmeta` pma ON pma.`post_id` = p.`ID`
@@ -376,7 +382,7 @@ function sp_get_products_data_home( $categories, $where_extra = array()) {
 
 		IFNULL( FLOOR(pms.`meta_value` / ROUND(0.01, 2) / 7), 0 ) AS weeks_to_stock_out,
 		IFNULL( ROUND(pms.`meta_value`, 0), 0 ) AS current_stock,
-		IFNULL( SUM(pop.`qty`), 0 ) AS inbound_stock,
+		IF(pmo.meta_value = 'yes', pmi.meta_value, IFNULL( SUM(pop.`qty`), 0 ) ) AS inbound_stock,
         {$stock_sub_query},
 		
         IFNULL(
@@ -417,6 +423,12 @@ function sp_get_products_data_home( $categories, $where_extra = array()) {
 
 	LEFT JOIN `{$wpdb->prefix}postmeta` pms ON pms.`post_id` = p.`ID` 
 		AND pms.`meta_key` = '_stock'
+	    
+	LEFT JOIN `{$wpdb->prefix}postmeta` pmi ON pmi.`post_id` = p.`ID` 
+		AND pmi.`meta_key` = 'inbound_stock'
+	LEFT JOIN `{$wpdb->prefix}postmeta` pmo ON pmo.`post_id` = p.`ID` 
+		AND pmo.`meta_key` = 'inbound_stock_override'
+	    
 	LEFT JOIN `{$wpdb->prefix}postmeta` pmp ON pmp.`post_id` = p.`ID`
 		AND pmp.`meta_key` = '_price'
 	LEFT JOIN `{$wpdb->prefix}postmeta` pma ON pma.`post_id` = p.`ID`

@@ -391,12 +391,11 @@ final class DataSyncSP
             $product_id   = wc_get_order_item_meta($order_item_id, '_product_id');
             $variation_id = wc_get_order_item_meta($order_item_id, '_variation_id');
 
-            if ($variation_id && $variation_id > 0) {
-                $product_id = $variation_id;
-            }
-
-            $data = $wpdb->get_row("SELECT * FROM {$table} WHERE product_id='{$product_id}'");
-            $product_cost = $data->sp_cost;
+	        if ($variation_id && $variation_id > 0) {
+		        $product_cost = (float) Helpers\MethodsSP::get_cost($variation_id);
+	        } else {
+		        $product_cost = (float) Helpers\MethodsSP::get_cost($product_id);
+	        }
 
             $data   = [
                 'order_item_id'         => $order_item_id,

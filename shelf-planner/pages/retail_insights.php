@@ -273,19 +273,19 @@ a:hover {
 .notiflication-body {
   background-color: #42273A;
   padding: 30px 20px 70px 20px;
-  width: 30%;
+  width: 21%;
   min-height: 100vh;
   position: fixed;
   overflow-y: auto;
-  top: 63px;
-  bottom: 0;
-  right: -100%;
+  top:70px;
+  bottom:0;
+  right: 100%;
   z-index: 100000;
   transition: all 0.4s;
 }
 
 .notiflication-body-active {
-  right: 0;
+  right: 500px;
 }
 
 .gap-15 > .user-img-header {

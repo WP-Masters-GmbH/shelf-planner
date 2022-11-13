@@ -71,8 +71,10 @@ class CategoryLookupSP
      */
     public function init()
     {
-        add_action('qa_cog_retail_insight_page_callback', [$this, 'schedule_category_lookup_update']);
-        add_action('qa_cog_update_category_lookup_table', [$this, 'regenerate_category_lookup_table']);
+        add_action('shelf_planner_retail_insights_page_callback', [$this, 'schedule_category_lookup_update']);
+        if(isset($_GET['page']) && $_GET['page'] == 'shelf_planner_retail_insights') {
+	        add_action('init', [$this, 'regenerate_category_lookup_table']);
+        }
         add_action('edit_product_cat', [$this, 'before_edit'], 99);
         add_action('edited_product_cat', [$this, 'on_edit'], 99);
     }
@@ -87,7 +89,7 @@ class CategoryLookupSP
      */
     public function schedule_category_lookup_update()
     {
-        wp_schedule_single_event(time() + 10, 'qa_cog_update_category_lookup_table');
+        wp_schedule_single_event(time() + 10, 'sp_cog_update_category_lookup_table');
     }
 
     /**

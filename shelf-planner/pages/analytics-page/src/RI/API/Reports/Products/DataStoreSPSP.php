@@ -68,7 +68,7 @@ class DataStoreSPSP extends ReportsDataStore implements DataStoreInterfaceSP
         'gross_revenue' => 'SUM(product_gross_revenue) as gross_revenue',
         'net_revenue'   => 'SUM(product_net_revenue) AS net_revenue',
         'net_profit'    => 'SUM(product_net_profit) AS net_profit',
-        'cost_of_goods_sold' => 'SUM(product_net_profit) AS cost_of_goods_sold',
+        'cost_of_goods_sold' => 'SUM(product_cost) AS cost_of_goods_sold',
         'net_margin'    => 'SUM(product_margin_ex_tax)/SUM(product_qty) AS net_margin',
         'gross_margin'  => 'SUM(product_margin_in_tax)/SUM(product_qty) AS gross_margin',
         'items_sold'    => 'SUM(product_qty) as items_sold',

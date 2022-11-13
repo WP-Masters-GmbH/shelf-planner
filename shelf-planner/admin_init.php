@@ -34,8 +34,8 @@ class SPHD_Admin {
 	    add_action('wp_ajax_save_proposals_table', [__CLASS__, 'save_proposals_table']);
 
 
-        add_action( 'after_page_header', array(__CLASS__, 'add_header_menu') );
-        add_action('wp_ajax_replenish_stat_select_second', [__CLASS__, 'replenish_stat_select_second']);
+        //add_action( 'after_page_header', array(__CLASS__, 'add_header_menu') );
+
 	    add_action('wp_ajax_replenish_stat_select', [__CLASS__, 'replenish_stat_select']);
 	    add_action('wp_ajax_proposal_filter_data', [__CLASS__, 'proposal_filter_data']);
     }
@@ -51,6 +51,8 @@ class SPHD_Admin {
 			$products_data = $_POST['products_data'];
 			foreach($products_data as $item) {
 				update_post_meta($item['product_id'], '_stock', $item['current_stock']);
+				update_post_meta($item['product_id'], 'inbound_stock', $item['inbound_stock']);
+				update_post_meta($item['product_id'], 'inbound_stock_override', $item['inbound_stock_override']);
 			}
 
 			wp_send_json( [
@@ -97,30 +99,6 @@ class SPHD_Admin {
 		}
 
 		require_once __DIR__ . '/pages/ajax/replenish-table-stat.php';
-		$content = ob_get_clean();
-
-		wp_send_json( [
-			'status' => 'true',
-			'html' => $content
-		]);
-	}
-
-  public static function replenish_stat_select_second()
-	{
-		ob_start();
-		$weeks = sanitize_text_field($_POST['weeks']);
-
-		if($weeks == "this_week") {
-			$last_weeks = 'current';
-        } elseif($weeks == "next_week") {
-			$last_weeks = 1;
-        } elseif($weeks == "next_4_weeks") {
-			$last_weeks = 4;
-		} elseif($weeks == "next_8_weeks") {
-			$last_weeks = 8;
-		}
-
-		require_once __DIR__ . '/pages/ajax/replenish-table-stat-second.php';
 		$content = ob_get_clean();
 
 		wp_send_json( [

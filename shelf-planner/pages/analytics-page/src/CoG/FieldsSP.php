@@ -71,24 +71,24 @@ final class FieldsSP
         /**
          * Adding cost field to product data tab.
          */
-        add_action('woocommerce_product_options_pricing', [$this, 'add_cost_field_to_product_data_tab']);
+        //add_action('woocommerce_product_options_pricing', [$this, 'add_cost_field_to_product_data_tab']);
         // Adding fields to variation admin panel
-        add_action('woocommerce_variation_options_pricing', [$this, 'add_cost_field_to_variation_data_tab'], 10, 3);
-        add_action('woocommerce_product_options_general_product_data', [$this, 'add_generic_cost_field_to_variable_product'], 10);
+        //add_action('woocommerce_variation_options_pricing', [$this, 'add_cost_field_to_variation_data_tab'], 10, 3);
+        //add_action('woocommerce_product_options_general_product_data', [$this, 'add_generic_cost_field_to_variable_product'], 10);
 
         /**
          * Adding cost field to bulk edit.
          */
-        add_action('woocommerce_product_quick_edit_start', [$this, 'bulk_edit_cost_field']);
+        //add_action('woocommerce_product_quick_edit_start', [$this, 'bulk_edit_cost_field']);
 
         /**
          * Saving cost field data.
          */
-        add_action('woocommerce_admin_process_product_object', [$this, 'save_cost_field'], 10, 1);
-        add_action('woocommerce_product_quick_edit_save', [$this, 'save_cost_field'], 10, 1);
+        //add_action('woocommerce_admin_process_product_object', [$this, 'save_cost_field'], 10, 1);
+        //add_action('woocommerce_product_quick_edit_save', [$this, 'save_cost_field'], 10, 1);
         // Saving variation cost fields
-        add_action('woocommerce_save_product_variation', [$this, 'save_variation_cost_field'], 10, 2);
-        add_action('woocommerce_admin_process_product_object', [$this, 'save_variable_product_generic_cost_field'], 10, 1);
+        //add_action('woocommerce_save_product_variation', [$this, 'save_variation_cost_field'], 10, 2);
+        //add_action('woocommerce_admin_process_product_object', [$this, 'save_variable_product_generic_cost_field'], 10, 1);
 
         return $this;
     }

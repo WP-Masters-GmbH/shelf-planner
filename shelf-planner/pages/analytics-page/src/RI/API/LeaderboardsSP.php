@@ -202,19 +202,42 @@ final class LeaderboardsSP extends \WC_REST_Data_Controller
         $rows = [];
         $category_stats = [];
         foreach($products_data as $product) {
-            $category = null;
-            if(isset($product['extended_info']['category_ids'][0])) {
-                $category = get_term($product['extended_info']['category_ids'][0]);
-            }
+	        $category = null;
+            if(!empty($product['extended_info']['category_ids'])) {
+            	foreach($product['extended_info']['category_ids'] as $cat_id) {
+		            $category = get_term($cat_id);
 
-            if($category) {
-                $category_url = get_edit_term_link($category->term_id);
-                $category_name = $category->name;
+		            if($category) {
+			            $category_url = get_edit_term_link($category->term_id);
+			            $category_name = $category->name;
 
-                $category_stats[$category_name]['category_url'] = $category_url;
-                $category_stats[$category_name]['category_name'] = $category_name;
-                $category_stats[$category_name]['items_sold'] = isset($category_stats[$category_name]['items_sold']) ? $category_stats[$category_name]['items_sold'] + $product['items_sold'] : $product['items_sold'];
-                $category_stats[$category_name]['net_profit'] = isset($category_stats[$category_name]['net_profit']) ? $category_stats[$category_name]['net_profit'] + $product['net_profit'] : $product['net_profit'];
+			            $category_stats[$category_name]['category_url'] = $category_url;
+			            $category_stats[$category_name]['category_name'] = $category_name;
+			            $category_stats[$category_name]['items_sold'] = isset($category_stats[$category_name]['items_sold']) ? $category_stats[$category_name]['items_sold'] + $product['items_sold'] : $product['items_sold'];
+			            $category_stats[$category_name]['net_profit'] = isset($category_stats[$category_name]['net_profit']) ? $category_stats[$category_name]['net_profit'] + $product['net_profit'] : $product['net_profit'];
+		            }
+	            }
+            } else {
+	            $categories = get_the_terms( $product['product_id'], 'product_cat' );
+
+	            if(empty($categories)) {
+		            $variation = wc_get_product($product['product_id']);
+		            if($variation->get_parent_id()) {
+			            $categories = get_the_terms( $variation->get_parent_id(), 'product_cat' );
+		            }
+	            }
+
+	            if(!empty($categories)) {
+		            foreach ($categories as $category) {
+			            $category_url = get_edit_term_link($category->term_id);
+			            $category_name = $category->name;
+
+			            $category_stats[$category_name]['category_url'] = $category_url;
+			            $category_stats[$category_name]['category_name'] = $category_name;
+			            $category_stats[$category_name]['items_sold'] = isset($category_stats[$category_name]['items_sold']) ? $category_stats[$category_name]['items_sold'] + $product['items_sold'] : $product['items_sold'];
+			            $category_stats[$category_name]['net_profit'] = isset($category_stats[$category_name]['net_profit']) ? $category_stats[$category_name]['net_profit'] + $product['net_profit'] : $product['net_profit'];
+		            }
+	            }
             }
         }
 
@@ -354,25 +377,49 @@ final class LeaderboardsSP extends \WC_REST_Data_Controller
         )->data : [];
 
 
-        $rows = [];
-        $category_stats = [];
-        foreach($products_data as $product) {
-            $category = null;
-            if(isset($product['extended_info']['category_ids'][0])) {
-                $category = get_term($product['extended_info']['category_ids'][0]);
-            }
+	    $rows = [];
+	    $category_stats = [];
+	    foreach($products_data as $product) {
+		    $category = null;
+		    if(!empty($product['extended_info']['category_ids'])) {
+			    foreach ( $product['extended_info']['category_ids'] as $cat_id ) {
+				    $category = get_term( $cat_id );
 
-            if($category) {
-                $category_url = get_edit_term_link($category->term_id);
-                $category_name = $category->name;
+				    if ( $category ) {
+					    $category_url  = get_edit_term_link( $category->term_id );
+					    $category_name = $category->name;
 
-                $category_stats[$category_name]['category_url'] = $category_url;
-                $category_stats[$category_name]['category_name'] = $category_name;
-                $category_stats[$category_name]['items_sold'] = isset($category_stats[$category_name]['items_sold']) ? $category_stats[$category_name]['items_sold'] + $product['items_sold'] : $product['items_sold'];
-                $category_stats[$category_name]['net_margin'] = isset($category_stats[$category_name]['net_margin']) ? $category_stats[$category_name]['net_margin'] + $product['net_margin'] : $product['net_margin'];
-                $category_stats[$category_name]['net_margin_items'] = isset($category_stats[$category_name]['net_margin_items']) ? $category_stats[$category_name]['net_margin_items'] + 1 : 1;
-            }
-        }
+					    $category_stats[ $category_name ]['category_url']     = $category_url;
+					    $category_stats[ $category_name ]['category_name']    = $category_name;
+					    $category_stats[ $category_name ]['items_sold']       = isset( $category_stats[ $category_name ]['items_sold'] ) ? $category_stats[ $category_name ]['items_sold'] + $product['items_sold'] : $product['items_sold'];
+					    $category_stats[ $category_name ]['net_margin']       = isset( $category_stats[ $category_name ]['net_margin'] ) ? $category_stats[ $category_name ]['net_margin'] + $product['net_margin'] : $product['net_margin'];
+					    $category_stats[ $category_name ]['net_margin_items'] = isset( $category_stats[ $category_name ]['net_margin_items'] ) ? $category_stats[ $category_name ]['net_margin_items'] + 1 : 1;
+				    }
+			    }
+		    } else {
+			    $categories = get_the_terms( $product['product_id'], 'product_cat' );
+
+			    if(empty($categories)) {
+				    $variation = wc_get_product($product['product_id']);
+				    if($variation->get_parent_id()) {
+					    $categories = get_the_terms( $variation->get_parent_id(), 'product_cat' );
+				    }
+			    }
+
+			    if(!empty($categories)) {
+				    foreach ($categories as $category) {
+					    $category_url  = get_edit_term_link( $category->term_id );
+					    $category_name = $category->name;
+
+					    $category_stats[ $category_name ]['category_url']     = $category_url;
+					    $category_stats[ $category_name ]['category_name']    = $category_name;
+					    $category_stats[ $category_name ]['items_sold']       = isset( $category_stats[ $category_name ]['items_sold'] ) ? $category_stats[ $category_name ]['items_sold'] + $product['items_sold'] : $product['items_sold'];
+					    $category_stats[ $category_name ]['net_margin']       = isset( $category_stats[ $category_name ]['net_margin'] ) ? $category_stats[ $category_name ]['net_margin'] + $product['net_margin'] : $product['net_margin'];
+					    $category_stats[ $category_name ]['net_margin_items'] = isset( $category_stats[ $category_name ]['net_margin_items'] ) ? $category_stats[ $category_name ]['net_margin_items'] + 1 : 1;
+				    }
+			    }
+		    }
+	    }
 
         foreach($category_stats as &$state) {
             $state['net_margin'] = round($state['net_margin'] / $state['net_margin_items'], 2);

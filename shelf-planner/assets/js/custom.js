@@ -78,24 +78,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $("body").on("change","#replenish-stat-selector-second",function() {
-      $.ajax({
-          url: admin.ajaxurl,
-          data: {
-              'action': 'replenish_stat_select_second',
-              'weeks': $(this).val(),
-              'nonce': admin.nonce
-          },
-          type:'POST',
-          dataType: 'json',
-          success:function(response) {
-              if(response.status === 'true') {
-                  $('#replenish-table-stat-second').replaceWith(response.html);
-              }
-          }
-      });
-  });
-
     $("body").on("change","#inspector-select-control-2",function() {
         $.ajax({
             url: admin.ajaxurl,
@@ -155,6 +137,7 @@ jQuery(document).ready(function($) {
                 'product_id': product_id,
                 'current_stock': $(this).find('.proposal-current-stock').val(),
                 'inbound_stock': $(this).find('.proposal-inbound-stock').val(),
+                'inbound_stock_override': $(this).find('.proposal-inbound-stock-override').is(':checked') ? 'yes' : 'no',
                 'order_proposal_units': $(this).find('.proposal-order-proposal-units').val()
             })
         });

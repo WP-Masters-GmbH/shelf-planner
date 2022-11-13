@@ -4,22 +4,20 @@
  *
  * Shelf Planner helps you reduce waste and minimize spillage, all whilst improving your business and bottom line.
  *
- * Plugin Name: Shelf Planner
+ * Plugin Name: Inventory Management
  * Plugin URI: https://shelfplanner.com/
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Quick Assortments AB
- * Description: Shelf Planner helps you reduce waste and minimize spillage, all whilst improving your business and bottom line.
+ * Description: Inventory Management, Demand Forecasting, Automated Replenishment and Purchase Order Management for WooCommerce, all in one powerful tool.
  * Text Domain: shelf-planner
  *
  * @author      Quick Assortments AB
- * @version     v.1.0.5 (18/07/22)
+ * @version     v.1.0.6 (13/11/22)
  * @copyright   Copyright (c) 2022
  */
 
 const QA_MAIN_DOMAIN = 'shelf_planner';
 const SP_TEXT_DOMAIN = 'shelf_planner';
-
-// delete_option( 'sp.wizard_in_progress' );
 
 /**
  * Industries list for mapping
@@ -976,15 +974,19 @@ function sp_main_save_product_settings( $id, $post ) {
 /**
  * Custom Cost price for variations - display field
  */
-add_action( 'woocommerce_variation_options_pricing', 'sp_add_custom_field_to_variations', 10, 3 );
-function sp_add_custom_field_to_variations( $loop, $variation_data, $variation ) {
-	woocommerce_wp_text_input( array(
-		'id'    => 'variation_cost_price[' . $loop . ']',
-		'class' => 'short wc_input_price',
-		'style' => 'width: 100% !important',
-		'label' => __( 'Variation Cost Price', SP_TEXT_DOMAIN ) . ' (' . get_woocommerce_currency_symbol() . ')',
-		'value' => get_post_meta( $variation->ID, 'variation_cost_price', true )
-	) );
+add_action( 'woocommerce_variation_options_pricing', 'sp_add_custom_field_to_variations', 10, 99 );
+function sp_add_custom_field_to_variations( $loop, $variation_data, $variation ) { ?>
+        <div class="variation-div-sp" style="clear: both;"></div>
+            <?php
+            woocommerce_wp_text_input( array(
+                'id'    => 'variation_cost_price[' . $loop . ']',
+                'class' => 'short wc_input_price',
+                'style' => 'width: 100% !important',
+                'label' => __( 'Variation Cost Price', SP_TEXT_DOMAIN ) . ' (' . get_woocommerce_currency_symbol() . ')',
+                'value' => get_post_meta( $variation->ID, 'variation_cost_price', true )
+            ) ); ?>
+
+        <?php
 }
 
 /**
